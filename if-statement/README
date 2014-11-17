@@ -1,0 +1,6 @@
+README
+------
+
+This script demonstrates the if-elif-else statements. It reads a
+parameter from the commandline, and returns the according value from a
+car information database using if, elif, and else.
