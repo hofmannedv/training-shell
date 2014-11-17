@@ -1,0 +1,6 @@
+README
+------
+
+These scripts show how to do calculations in a bash:
+
+* script4.sh: do an addition using expr
