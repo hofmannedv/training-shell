@@ -1,0 +1,17 @@
+README
+------
+
+This example simulates reading from a text-based database, or CSV file
+(comma-separated value) using a shell script. fahrzeugdatenbank contains
+a car database whereas each line describes a single car. A single line
+contains of the following fields:
+
+car:colour:horse power:car image file
+
+script10.sh requires two parameters -- the name of the car (field #1),
+and the name of the car database file (fahrzeugdatenbank). It validates
+the parameters, reads the car database file, and outputs the record.
+
+sample call:
+
+./script10.sh Focus fahrzeugdatenbank
