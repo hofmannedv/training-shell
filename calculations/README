@@ -4,3 +4,5 @@ README
 These scripts show how to do calculations in a bash:
 
 * script4.sh: do an addition using expr
+* script5.sh: do an addition using expr and three parameters
+  example call: ./script5.sh 3 4 5
