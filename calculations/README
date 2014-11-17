@@ -11,3 +11,7 @@ These scripts show how to do calculations in a bash:
 * script6.sh: do an addition using expr, and a for loop working with
   as many parameters as given on the command line
   example call: ./script6.sh 3 4 5
+
+* script7.sh: do an addition using expr, and a for loop working with
+  as many parameters as given on the command line
+  example call: ./script7.sh 3 4 5
