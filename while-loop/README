@@ -7,3 +7,6 @@ for either "exit", "quit", or "raus" to end the loop.
 * script11.sh: using logical operators
 
 * script12.sh: using egrep evaluating the input as text patterns
+
+* script13.sh: reading vom stdin, and post-processing the output line by
+  line
