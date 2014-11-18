@@ -1,13 +1,13 @@
 README
 ------
 
-This example demonstrates using case statements. Depending on the call,
-and the given parameters the details for a certain car model will be
-displayed.
+This example demonstrates the usage of case statements. Depending on the
+call, and the given parameters to the script the details for a certain
+car model will be displayed.
 
 sample call:
 
 ./script10.sh Focus
 
 To continue you may have a look at the directory text-database reading
-the data from a text file (CSV file)
+the data from a text file (CSV file).
