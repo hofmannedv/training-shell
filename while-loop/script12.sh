@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# -----------------------------------------------------------
+# demonstrates the while loop and reading from stdin
+#o
+# (C) 2014 Frank Hofmann, Berlin, Germany
+# Released under GNU Public License (GPL)
+# email frank.hofmann@efho.de
+# -----------------------------------------------------------
+
 # Schleife beginnen
 while read zeile
   do
