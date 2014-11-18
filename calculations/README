@@ -3,9 +3,11 @@ README
 
 These scripts show how to do calculations in a bash:
 
-* script4.sh: do an addition using expr
+* script4.sh: do an addition using expr and fixed values as set in the
+  code
 
-* script5.sh: do an addition using expr and three parameters
+* script5.sh: do an addition using expr and three parameters as given on
+  the command line
   example call: ./script5.sh 3 4 5
 
 * script6.sh: do an addition using expr, and a for loop working with
