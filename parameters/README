@@ -1,0 +1,8 @@
+README
+------
+
+* script7a.sh: display the script parameters:
+  $0: name of the script file that is called
+  $#: number of parameters
+  $*: parameters as a single value
+  $1: value of the second parameter
