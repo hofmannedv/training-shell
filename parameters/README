@@ -6,3 +6,11 @@ README
   $#: number of parameters
   $*: parameters as a single value
   $1: value of the second parameter
+
+* script7b.sh: display the script parameters:
+  $0: name of the script file that is called
+  $#: number of parameters
+  $*: parameters as a single value
+
+  use the shift command to shift the parameters to the left
+
