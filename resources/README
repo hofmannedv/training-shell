@@ -1,0 +1,23 @@
+README
+------
+
+These resources are quite helpful to write shell scripts effectively:
+
+* Shell-Programmierung. Das umfassende Handbuch
+  Jürgen Wolff
+  Galileo Computing, ISBN 3-89842-683-1
+
+* Shell Scripting Recipes. A Problem-Solution Approach
+  By Chris Johnson
+  http://www.apress.com/9781590594711
+
+* shUnit2 - Bash Testing
+  By Michael Wright
+  http://www.mikewright.me/blog/2013/10/31/shunit2-bash-testing/
+
+* Defensive BASH Programming
+  By Kfir Lavi
+  http://www.kfirlavi.com/blog/2012/11/14/defensive-bash-programming/
+
+
+Thanks to Gerold Rupprecht for his kind advice, and helpful comments.
