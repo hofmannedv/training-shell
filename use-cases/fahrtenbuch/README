@@ -1,0 +1,34 @@
+README
+
+fahrtenbuch collects solutions to read a driver's logfile that has the
+following structure
+
+.fahrtenbuch.txt
+----
+count	from				to			distance	reason
+2		Berlin				Potsdam		30			training
+2		Frankfurt (Main)	Paris		575			Linux event
+1		Berlin				Hamburg		280			training
+----
+
+As a result, the total distance is printed. The following versions are
+included:
+
+* ./fahrtenbuch.sh
+
+  The script can be called like that:
+
+  ----
+  $ ./fahrtenbuch.sh
+  ----
+
+* distanz.awk
+
+  The solution as an awk script. The awk script can be called like that:
+
+  ----
+  awk -f distanz.awk fahrtenbuch.txt
+  ----
+
+  Thanks to Axel Beckert and Thomas Partzsch for help for the awk
+  solution.
