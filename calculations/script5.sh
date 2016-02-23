@@ -24,7 +24,7 @@ betrag2=$2
 betrag3=$3
 
 # Addition (komplexe Berechnung ...)
-summe=`expr $betrag1 + $betrag2 + $betrag3`
+summe=$(( $betrag1 + $betrag2 + $betrag3 ))
 
 # Ausgabe der Gesamtsumme
 echo "Gesamtsumme: $betrag1 + $betrag2 + $betrag3 = $summe"

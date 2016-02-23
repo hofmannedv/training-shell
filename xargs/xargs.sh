@@ -9,7 +9,7 @@
 # -----------------------------------------------------------
 
 # using a for loop
-for filename in `find . -name "*.sh"`
+for filename in $(find . -name "*.sh")
 do
 	ls -lah $filename
 done
@@ -19,4 +19,4 @@ find . -name "*.sh" -print | xargs ls -lah
 
 # alternative writing: using a specific find argument
 # order: find where-to-look criteria what-to-do
-find . -name "*.sh" -exec ls -lah '{}' \;
+find . -name "*.sh" -exec ls -lah '{}' \+

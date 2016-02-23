@@ -21,14 +21,14 @@ echo "Übermittelte Parameter: $*"
 summe=0
 
 # Prüfen, ob überhaupt Parameter da sind
-if [ $# -gt 0 ]
+if [[ $# -gt 0 ]]
 then
 
   # Schleife zur Ausgabe der Parameter
   for i in $*
     do
     # mach was und addiere zur Gesamtsumme
-    summe=`expr $summe + $i`
+	summe=$(( $summe + $i ))
     echo "Parameter: $i"
     done
 
