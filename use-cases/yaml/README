@@ -1,0 +1,55 @@
+README
+
+yaml collects small shell scripts to modify a yaml header:
+
+----
+author: 'aaaa'
+created: 'bbbb'
+export: 'cccc'
+source: 'dddd'
+title: 'Test 1'
+updated: 'eeee'
+...
+
+All scripts output to stdout unless you redirect the output to a file.
+
+* frontmatter.sh:
+  read the header of the yaml file
+
+  call: ./frontmatter.sh file.yaml
+
+* content.sh:
+  read the content of the yaml file
+
+  call: ./content.sh file.yaml
+
+* deleteline.sh:
+  delete the line with the keyword from the header
+
+  call: ./deleteline.sh keyword file.yaml
+
+* replace.sh:
+  replace a stored value in a yaml header having the given variable name
+
+  call: ./replace.sh variable newValue file.yaml
+
+* insert.sh:
+  insert a line to the yaml header having the given variable name
+
+  call: ./insert.sh variable newValue position file.yaml
+
+* insertvalue.sh:
+  insert a line to the yaml header having the given variable name and
+  value
+
+  call: ./insert.sh variable newValue file.yaml
+
+* reorder.sh:
+  reorder lines from a yaml header having the given variable name
+
+  call: ./reorder.sh variable position file.yaml
+
+* run.sh:
+  test all the scripts one after the other
+
+  call: ./run.sh file.yaml
