@@ -111,11 +111,25 @@ $
 
 === Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen ===
 
+.Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9
+----
+$ sed -n '9s/root/alex/p' logfile
+2016-01-12 14:57:10 login failed for user alex from 10.10.17.45
+$
+----
+
 .Ersetze alle Vorkommen von `root` durch `alex` in den Zeilen 4 bis 7
 ----
 $ sed -n '4,7s/root/user/p' logfile
 2016-01-12 14:45:12 login failed for user alex from 10.10.17.44
 2016-01-12 14:46:10 login failed for user alex from 10.10.17.45
+$
+----
+
+.Ersetze alle Vorkommen von `root` durch `alex` außerhalb der Zeilen 4 bis 7
+----
+$ sed -n '4,7!s/root/user/p' logfile
+2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $
 ----
 
