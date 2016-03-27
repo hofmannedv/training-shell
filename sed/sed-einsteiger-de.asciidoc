@@ -19,7 +19,10 @@ und in Shellskripten.
 
 == sed als Filter aufrufen ==
 
-* als direkten Parameter von `sed`
+`sed` akzeptiert verschiedene Wege, über die es Filter entgegennimmt.
+
+* als direkten Parameter beim Aufruf von `sed` -- über `stdin` oder als
+Parameter.
 
 .Filtern mittels `sed` nach einer Pipe
 ----
@@ -40,7 +43,16 @@ $ sed -f sed.skript datei
 
 == Mehrere Filter miteinander kombinieren ==
 
+Hierbei werden die einzelnen Anweisungen (Filter) in der Reihenfolge von
+`sed` verarbeitet, wie sie im Aufruf genannt sind.
+
 * einzelne Anweisungen (Filter) voneinander über ein Semikolon trennen
+
+.Mehrere Filter mittels `;` aneinanderreihen
+----
+$ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei
+----
+
 * jede Anweisung (Filter) mit `-e` einleiten
 
 .Mehrere Filter mittels `-e` aneinanderreihen
