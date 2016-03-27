@@ -1,8 +1,13 @@
 README
+------
 
 examples for sed
 
+Getting Started
+
+* sed-einsteiger-de.asciidoc 	first steps (German)
+
 example data to play with:
 
-* logfile:					demo logfile
-* logfile-with-empty-lines	demo logfile with empty lines after each day
+* logfile:						demo logfile
+* logfile-with-empty-lines		demo logfile with empty lines after each day

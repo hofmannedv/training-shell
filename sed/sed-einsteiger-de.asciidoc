@@ -1,0 +1,22 @@
+Der Streameditor sed. Erste Schritte.
+=========================================
+Frank Hofmann
+:subtitle:
+:doctype: book
+:copyright: Frank Hofmann
+:revnumber: 1.0
+:Author Initials: FH
+:edition: 1
+:lang: de
+:date: 27. März 2016
+:numbered:
+
+= Vorwort =
+
+sed als Streameditor. Sieht erstmal recht einfach aus, ist aber sehr
+mächtig und flexibel im Alltagsgebrauch als Filter in Shellskripten.
+
+== Weiterführende Dokumente ==
+
+* Dale Dougherty: sed & awk, O'Reilly, http://shop.oreilly.com/product/9781565922259.do
+* Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
