@@ -1,3 +1,8 @@
 README
 
 examples for sed
+
+example data to play with:
+
+* logfile:					demo logfile
+* logfile-with-empty-lines	demo logfile with empty lines after each day
