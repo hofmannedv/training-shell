@@ -1,4 +1,4 @@
-Der Streameditor sed. Erste Schritte.
+Der Streameditor `sed`. Erste Schritte.
 =========================================
 Frank Hofmann
 :subtitle:
@@ -13,8 +13,20 @@ Frank Hofmann
 
 = Vorwort =
 
-sed als Streameditor. Sieht erstmal recht einfach aus, ist aber sehr
-mächtig und flexibel im Alltagsgebrauch als Filter in Shellskripten.
+`sed` als Streameditor. Sieht erstmal recht einfach aus, ist aber sehr
+mächtig und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile
+und in Shellskripten.
+
+== sed als Filter aufrufen ==
+
+* als direkten Parameter von `sed`
+* in dem das `sed`-Skript in einer separaten Datei liegt (Referenzierung)
+
+== Mehrere Filter miteinander kombinieren ==
+
+* einzelne Anweisungen (Filter) voneinander über ein Semikolon trennen
+* jede Anweisung (Filter) mit `-e` einleiten
+* die Fähigkeiten der bash ausnutzen (mehrere Zeilen)
 
 == Weiterführende Dokumente ==
 
