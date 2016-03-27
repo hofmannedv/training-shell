@@ -62,6 +62,19 @@ $ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei
 
 * die Fähigkeiten der bash ausnutzen (mehrere Zeilen)
 
+== Die Ausgabe steuern ==
+
+* Standard: alle Zeilen der Eingabe werden ausgegeben
+* mit dem Schalter `-n`: nichts ausgeben
+* um nur die Zeilen der Eingabe ausgeben, in denen auch Veränderungen
+stattgefunden haben (Filter wurden angewendet), muss jeder Filter mit
+einem `p` abgeschlossen sein:
+
+.lediglich die Ersetzungen ausgeben
+----
+$ sed -n 's/alfred/friedrich/p' datei
+----
+
 == Weiterführende Dokumente ==
 
 * Dale Dougherty: sed & awk, O'Reilly, http://shop.oreilly.com/product/9781565922259.do
