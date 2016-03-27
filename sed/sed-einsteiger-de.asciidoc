@@ -118,6 +118,15 @@ $ sed -n '9s/root/alex/p' logfile
 $
 ----
 
+.Ersetze alle Vorkommen von `root` durch `alex` ab Zeile 6 bis zum Ende
+----
+$ sed -n '6,$s/root/alex/p' logfile
+2016-01-12 14:45:12 login failed for user alex from 10.10.17.44
+2016-01-12 14:46:10 login failed for user alex from 10.10.17.45
+2016-01-12 14:57:10 login failed for user alex from 10.10.17.45
+$
+----
+
 .Ersetze alle Vorkommen von `root` durch `alex` in den Zeilen 4 bis 7
 ----
 $ sed -n '4,7s/root/user/p' logfile
@@ -147,6 +156,16 @@ $ sed '/^$/d' logfile-with-empty-lines
 2016-01-12 14:46:10 login failed for user root from 10.10.17.45
 2016-01-12 14:55:05 user james logged out from /dev/tty1
 2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+=== Den ersten Absatz ausgeben ===
+
+.Alle Zeilen inklusive der ersten Leerzeile ausgeben
+----
+$ sed -n '1,/^$/p' logfile-with-empty-lines
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+
 $
 ----
 
