@@ -13,9 +13,12 @@ Frank Hofmann
 
 = Vorwort =
 
-`sed` als Streameditor. Sieht erstmal recht einfach aus, ist aber sehr
-mächtig und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile
-und in Shellskripten.
+`sed` steht für Streameditor -- ein Programm, welches einen Datenstrom
+mit Hilfe von Filtern verändert. Das beinhaltet bspw. das Löschen,
+Suchen und Ersetzen von Zeichenketten auf der Basis von Regulären
+Ausdrücken. `sed` sieht erstmal recht einfach aus, ist aber sehr mächtig
+und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile und in
+Shellskripten.
 
 == sed als Filter aufrufen ==
 
@@ -64,16 +67,20 @@ $ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei
 
 == Die Ausgabe steuern ==
 
-* Standard: alle Zeilen der Eingabe werden ausgegeben
-* mit dem Schalter `-n`: nichts ausgeben
-* um nur die Zeilen der Eingabe ausgeben, in denen auch Veränderungen
-stattgefunden haben (Filter wurden angewendet), muss jeder Filter mit
-einem `p` abgeschlossen sein:
+Im Standardfall gibt `sed` alle Zeilen der Eingabe aus. Um das zu
+unterdrücken, nutzen Sie den Schalter `-n`. Von Nutzen ist `-n`, um nur
+die Zeilen der Eingabe ausgeben, in denen ihr Filter tatsächlich
+Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit einem `p`
+am Ende ab:
 
-.lediglich die Ersetzungen ausgeben
+.Lediglich die Ersetzungen ausgeben
 ----
 $ sed -n 's/alfred/friedrich/p' datei
 ----
+
+== Beispiele ==
+
+* alle leeren Zeilen herausfiltern
 
 == Weiterführende Dokumente ==
 
