@@ -22,9 +22,11 @@ Shellskripten.
 
 == Struktur eines Filters ==
 
-* vier Teile
-** Reguläre Ausdrücke
-** Aktion
+* vier Teile: `[Adresse]Aktion/Muster/Ersetzung/Flag`
+** Adresse/Aktion:
+** Muster: Regulärer Ausdruck
+** Ersetzung: String
+** Flag: steuert die Aktion -- was passiert, wenn das Muster zutrifft
 
 == `sed` als Filter aufrufen ==
 
