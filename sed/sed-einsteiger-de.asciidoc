@@ -88,7 +88,7 @@ $ sed -n 's/alfred/friedrich/p' datei
 
 == Beispiele ==
 
-=== Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhaltet ===
+=== Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
 
 .Suche nach dem Muster `fho` in der Datei `logfile`, und Ausgabe aller betreffenden Zeilen
 ----
@@ -97,6 +97,25 @@ $ sed -n '/fho/p' logfile
 2016-01-11 08:30:10 user fho logged in on /dev/tty2
 2016-01-12 08:46:45 user fho logged in on /dev/pty1
 2016-01-12 12:13:10 user fho logged out from /dev/pty1
+$
+----
+
+.Suche alle Zeilen, die entweder auf 44 oder 45 enden
+----
+$ sed -n '/4[45]$/p' logfile
+2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+=== Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen ===
+
+.Ersetze alle Vorkommen von `root` durch `alex` in den Zeilen 4 bis 7
+----
+$ sed -n '4,7s/root/user/p' logfile
+2016-01-12 14:45:12 login failed for user alex from 10.10.17.44
+2016-01-12 14:46:10 login failed for user alex from 10.10.17.45
 $
 ----
 
