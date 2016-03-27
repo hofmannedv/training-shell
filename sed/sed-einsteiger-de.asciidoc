@@ -1,5 +1,5 @@
 Der Streameditor `sed`. Erste Schritte.
-=========================================
+=======================================
 Frank Hofmann
 :subtitle:
 :doctype: book
@@ -42,6 +42,12 @@ $ sed -f sed.skript datei
 
 * einzelne Anweisungen (Filter) voneinander über ein Semikolon trennen
 * jede Anweisung (Filter) mit `-e` einleiten
+
+.Mehrere Filter mittels `-e` aneinanderreihen
+----
+$ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei
+----
+
 * die Fähigkeiten der bash ausnutzen (mehrere Zeilen)
 
 == Weiterführende Dokumente ==
