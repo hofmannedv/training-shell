@@ -77,5 +77,6 @@ $ sed -n 's/alfred/friedrich/p' datei
 
 == Weiterführende Dokumente ==
 
-* Dale Dougherty: sed & awk, O'Reilly, http://shop.oreilly.com/product/9781565922259.do
+* Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
+* Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
 * Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
