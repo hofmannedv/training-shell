@@ -20,7 +20,13 @@ Ausdrücken. `sed` sieht erstmal recht einfach aus, ist aber sehr mächtig
 und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile und in
 Shellskripten.
 
-== sed als Filter aufrufen ==
+== Struktur eines Filters ==
+
+* vier Teile
+** Reguläre Ausdrücke
+** Aktion
+
+== `sed` als Filter aufrufen ==
 
 `sed` akzeptiert verschiedene Wege, über die es Filter entgegennimmt.
 
