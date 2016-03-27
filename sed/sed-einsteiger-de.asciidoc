@@ -20,7 +20,23 @@ und in Shellskripten.
 == sed als Filter aufrufen ==
 
 * als direkten Parameter von `sed`
+
+.Filtern mittels `sed` nach einer Pipe
+----
+$ cat datei | sed 's/alfred/friedrich/'
+----
+
+.Filtern mittels `sed` ohne Pipe und mit direktem Aufruf der Datei
+----
+$ sed 's/alfred/friedrich/' datei
+----
+
 * in dem das `sed`-Skript in einer separaten Datei liegt (Referenzierung)
+
+.Filtern mittels `sed` und dem Skript `sed.skript`
+----
+$ sed -f sed.skript datei
+----
 
 == Mehrere Filter miteinander kombinieren ==
 
