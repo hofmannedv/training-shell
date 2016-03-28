@@ -118,7 +118,7 @@ zeigen.
 
 .Den Inhalt einfach ausgeben
 ----
-$ cat logfile | nl | sed -n 'p'
+$ nl logfile | sed -n 'p'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
      3   2016-01-12 08:45:12 user james logged in on /dev/tty1
@@ -133,14 +133,14 @@ $
 
 .Nur die vierte Zeile ausgeben
 ----
-$ cat logfile | nl | sed -n '4p'
+$ nl logfile | sed -n '4p'
      4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
 $
 ----
 
 .Nur die Zeilen vier bis sechs ausgeben
 ----
-$ cat logfile | nl | sed -n '4,6p'
+$ nl logfile | sed -n '4,6p'
      4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
      5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
      6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
@@ -149,7 +149,7 @@ $
 
 .Ab Zeile 7 bis zum Dateiende ausgeben
 ----
-$ cat logfile | nl | sed -n '7,$p'
+$ nl logfile | sed -n '7,$p'
      7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
      8   2016-01-12 14:55:05 user james logged out from /dev/tty1
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
@@ -211,14 +211,14 @@ $
 
 .Ersetze alle Vorkommen von `root` durch `alex` außerhalb der Zeilen 4 bis 7
 ----
-$ cat logfile | nl | sed -n '4,7!s/root/user/p'
+$ nl logfile | sed -n '4,7!s/root/user/p'
      9   2016-01-12 14:57:10 login failed for user user from 10.10.17.45
 $
 ----
 
 .Ersetze alle Vorkommen der IP-Adresse `10.10.17.45` durch den Hostnamen `supercomputer` in allen Zeilen des Logfiles, in denen die Zeichenkette `2016-01-12` enthalten ist
 ----
-$ cat logfile | nl | sed -n '/2016-01-12/s/10.10.17.45/supercomputer/p'
+$ nl logfile | sed -n '/2016-01-12/s/10.10.17.45/supercomputer/p'
      7   2016-01-12 14:46:10 login failed for user root from supercomputer
      9   2016-01-12 14:57:10 login failed for user root from supercomputer
 $
