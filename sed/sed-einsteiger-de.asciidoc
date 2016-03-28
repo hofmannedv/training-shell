@@ -35,10 +35,10 @@ zutrifft.
 
 == `sed` als Filter aufrufen ==
 
-`sed` akzeptiert verschiedene Wege, über die es Filter entgegennimmt.
+`sed` akzeptiert verschiedene Wege, über die es Filter entgegennimmt und
+auf den Datenstrom anwendet.
 
-* als direkten Parameter beim Aufruf von `sed` -- über `stdin` oder als
-Parameter.
+* über `stdin` oder als direkten Parameter beim Aufruf von `sed`
 
 .Filtern mittels `sed` nach einer Pipe
 ----
@@ -50,7 +50,9 @@ $ cat datei | sed 's/alfred/friedrich/'
 $ sed 's/alfred/friedrich/' datei
 ----
 
-* in dem das `sed`-Skript in einer separaten Datei liegt (Referenzierung)
+* in dem das `sed`-Skript in einer separaten Datei liegt. Die
+Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
+für die Skriptdatei.
 
 .Filtern mittels `sed` und dem Skript `sed.skript`
 ----
@@ -59,24 +61,34 @@ $ sed -f sed.skript datei
 
 == Mehrere Filter miteinander kombinieren ==
 
-Hierbei werden die einzelnen Anweisungen (Filter) in der Reihenfolge von
-`sed` verarbeitet, wie sie im Aufruf genannt sind.
+Manchmal ist es einfacher, mehrere kleine Filter zu formulieren, als
+sich einen einzigen, komplexen Regulären Ausdruck auszudenken. `sed`
+kennt mehrere Varianten zur Verkettung der Filter. Hierbei werden die
+einzelnen Anweisungen (Filter) in der Reihenfolge von `sed` verarbeitet,
+wie sie im Aufruf genannt sind.
 
-* einzelne Anweisungen (Filter) voneinander über ein Semikolon trennen
+=== Einzelne Filter voneinander über ein Semikolon trennen ===
+
+Im Aufruf geben Sie zwischen den Filtern ein `;` an.
 
 .Mehrere Filter mittels `;` aneinanderreihen
 ----
 $ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei
 ----
 
-* jede Anweisung (Filter) mit `-e` einleiten
+=== Jeden Filter mit `-e` einleiten ===
+
+Über den Schalter `-e` teilen Sie `sed` mit, dass ein weiterer Filter
+folgt.
 
 .Mehrere Filter mittels `-e` aneinanderreihen
 ----
 $ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei
 ----
 
-* die Fähigkeiten der bash ausnutzen (mehrere Zeilen)
+=== Die Fähigkeiten der bash ausnutzen (mehrere Zeilen) ===
+
+ToDo
 
 == Die Ausgabe steuern ==
 
