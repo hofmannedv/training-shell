@@ -169,6 +169,22 @@ $ sed -n '4,7!s/root/user/p' logfile
 $
 ----
 
+=== Suchen und Ersetzen nach Vorkommen ===
+
+.Ersetze nur das zweite Vorkommen von `apple` durch `banana`
+----
+$ echo "apple orange melon apple" | sed 's/apple/banana/2'
+apple orange melon banana
+$
+----
+
+.Ersetze alle Vorkommen von `apple` durch `banana`
+----
+$ echo "apple orange melon apple" | sed 's/apple/banana/g'
+banana orange melon banana
+$
+----
+
 === Alle leeren Zeilen aus der Eingabe herausfiltern ===
 
 .Muster `^d` für leere Zeilen, `d` zum Löschen
