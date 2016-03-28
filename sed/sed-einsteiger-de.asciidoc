@@ -343,6 +343,40 @@ login failed
 $
 ----
 
+=== Spaltenweise agieren ===
+
+.Entferne die erste Spalte (Trennzeichen: `:`) in den Zeilen 1 bis 10 der Datei `/etc/passwd` (ersetze alles bis zum ersten `:` durch nichts)
+----
+$ sed -n '1,10s/[^:]\+://p' /etc/passwd
+x:0:0:root:/root:/bin/bash
+x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+x:2:2:bin:/bin:/usr/sbin/nologin
+x:3:3:sys:/dev:/usr/sbin/nologin
+x:4:65534:sync:/bin:/bin/sync
+x:5:60:games:/usr/games:/usr/sbin/nologin
+x:6:12:man:/var/cache/man:/usr/sbin/nologin
+x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+x:8:8:mail:/var/mail:/usr/sbin/nologin
+x:9:9:news:/var/spool/news:/usr/sbin/nologin
+$
+----
+
+.Nur die erste Spalte ausgeben, Trennzeichen ist `:` (entspricht `cut -d: -f1 /etc/passwd`)
+----
+$ sed -n '1,10s/:.*$//p' /etc/passwd
+root
+daemon
+bin
+sys
+sync
+games
+man
+lp
+mail
+news
+$
+----
+
 === Suchtreffer referenzieren ===
 
 .Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels `&`)
