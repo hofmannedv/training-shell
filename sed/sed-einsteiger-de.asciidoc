@@ -111,6 +111,12 @@ $ sed -n 's/alfred/friedrich/p' datei
 
 === Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
 
+Die nachfolgenden Aufrufe sind ähnlich zu `grep`, wobei hier die
+Verwandschaft der beiden Werkzeuge deutlich wird. Ob Sie im Alltag zur
+Lösung ihres Problems auf `grep`, `sed` oder `awk` zurückgreifen, ist
+häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
+lösen können.
+
 .Suche nach dem Muster `fho` in der Datei `logfile`, und Ausgabe aller betreffenden Zeilen
 ----
 $ sed -n '/fho/p' logfile
