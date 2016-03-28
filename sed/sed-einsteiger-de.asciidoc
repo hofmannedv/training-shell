@@ -186,11 +186,11 @@ $
 
 === Zeilen einfügen ===
 
-.Vier Bindestriche nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet
+.Vier `+` nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet
 ----
-$ nl logfile | sed '/2016-01-10/a----'
+$ nl logfile | sed '/2016-01-10/a+++'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
-----
+++++
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
      3   2016-01-12 08:45:12 user james logged in on /dev/tty1
      4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
@@ -204,11 +204,11 @@ $
 
 .Optische Trennung zwischen Datumswechseln
 ----
-$ nl logfile | sed -e '/2016-01-10/a---- 2016-01-10 ----' -e '/2016-01-11/a---- 2016-01-11 ----'
+$ nl logfile | sed -e '/2016-01-10/a++++ 2016-01-10 ++++' -e '/2016-01-11/a++++ 2016-01-11 ++++'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
----- 2016-01-10 ----
+++++ 2016-01-10 ++++
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
----- 2016-01-11 ----
+++++ 2016-01-11 ++++
      3   2016-01-12 08:45:12 user james logged in on /dev/tty1
      4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
      5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
