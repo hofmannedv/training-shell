@@ -377,6 +377,22 @@ news
 $
 ----
 
+.Eine weitere Spalte am Anfang hinzufügen (Inhalt: `A`)
+----
+$ sed -n '1,10s/.*/A:&/p' /etc/passwd
+A:root:x:0:0:root:/root:/bin/bash
+A:daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+A:bin:x:2:2:bin:/bin:/usr/sbin/nologin
+A:sys:x:3:3:sys:/dev:/usr/sbin/nologin
+A:sync:x:4:65534:sync:/bin:/bin/sync
+A:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+A:man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+A:lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+A:mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+$
+----
+
 === Suchtreffer referenzieren ===
 
 .Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels `&`)
