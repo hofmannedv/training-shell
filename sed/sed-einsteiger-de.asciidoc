@@ -211,8 +211,16 @@ $
 
 .Ersetze alle Vorkommen von `root` durch `alex` außerhalb der Zeilen 4 bis 7
 ----
-$ sed -n '4,7!s/root/user/p' logfile
-2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$ cat logfile | nl | sed -n '4,7!s/root/user/p'
+     9   2016-01-12 14:57:10 login failed for user user from 10.10.17.45
+$
+----
+
+.Ersetze alle Vorkommen der IP-Adresse `10.10.17.45` durch den Hostnamen `supercomputer` in allen Zeilen des Logfiles, in denen die Zeichenkette `2016-01-12` enthalten ist
+----
+$ cat logfile | nl | sed -n '/2016-01-12/s/10.10.17.45/supercomputer/p'
+     7   2016-01-12 14:46:10 login failed for user root from supercomputer
+     9   2016-01-12 14:57:10 login failed for user root from supercomputer
 $
 ----
 
