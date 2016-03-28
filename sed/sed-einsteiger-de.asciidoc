@@ -171,6 +171,13 @@ $
 
 === Suchen und Ersetzen nach Vorkommen ===
 
+.Ersetze alle Vorkommen von `apple` durch `banana`
+----
+$ echo "apple orange melon apple" | sed 's/apple/banana/g'
+banana orange melon banana
+$
+----
+
 .Ersetze nur das zweite Vorkommen von `apple` durch `banana`
 ----
 $ echo "apple orange melon apple" | sed 's/apple/banana/2'
@@ -178,10 +185,10 @@ apple orange melon banana
 $
 ----
 
-.Ersetze alle Vorkommen von `apple` durch `banana`
+.Ersetze ab dem zweiten Vorkommen jedes Mal `apple` durch `banana`
 ----
-$ echo "apple orange melon apple" | sed 's/apple/banana/g'
-banana orange melon banana
+$ echo "apple orange melon apple apple" | sed 's/apple/banana/2g'
+apple orange melon banana banana
 $
 ----
 
