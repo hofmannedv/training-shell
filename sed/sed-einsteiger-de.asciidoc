@@ -22,11 +22,16 @@ Shellskripten.
 
 == Struktur eines Filters ==
 
-* vier Teile: `[Adresse]Aktion/Muster/Ersetzung/Flag`
-** Adresse/Aktion:
-** Muster: Regulärer Ausdruck
-** Ersetzung: String
-** Flag: steuert die Aktion -- was passiert, wenn das Muster zutrifft
+Prinzipiell hat ein `sed`-Filter vier Teile:
+`[Adresse]Aktion/Muster/Ersetzung/Flag`. Jeder Teil wird durch einen `/`
+vom nächsten Teil separiert.
+
+* Adresse/Aktion: beschreibt die Zeilen und die Aktion, auf die das
+Muster angewendet werden soll
+* Muster: Beschreibung des Filters als Regulärer Ausdruck
+* Ersetzung: String, welcher das Muster ersetzt
+* Flag: steuert die Aktion. Es legt fest, was passiert, wenn das Muster
+zutrifft.
 
 == `sed` als Filter aufrufen ==
 
