@@ -109,6 +109,18 @@ $ sed -n 's/alfred/friedrich/p' datei
 
 == Beispiele ==
 
+=== Ausgeben einer Datei ====
+
+Diese Aufrufe haben ihre Entsprechung in den UNIX/Linux-Kommandos `cat`,
+`tac`, `head` und `tail`.
+
+.Den Inhalt einfach ausgeben
+----
+$ echo "Wir brauchen ein erstes Beispiel" | sed -n 'p'
+Wir brauchen ein erstes Beispiel
+$
+----
+
 === Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
 
 Die nachfolgenden Aufrufe sind ähnlich zu `grep`, wobei hier die
@@ -204,6 +216,13 @@ $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/'
 ----
 $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/g'
 (apple) orange melon (apple) (Apple)
+$
+----
+
+.Zwei Suchtreffer umgekehrt ausgeben (Back references)
+----
+$ echo "10247 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
+Berlin, 10247
 $
 ----
 
