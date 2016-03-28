@@ -65,7 +65,11 @@ Manchmal ist es einfacher, mehrere kleine Filter zu formulieren, als
 sich einen einzigen, komplexen Regulären Ausdruck auszudenken. `sed`
 kennt mehrere Varianten zur Verkettung der Filter. Hierbei werden die
 einzelnen Anweisungen (Filter) in der Reihenfolge von `sed` verarbeitet,
-wie sie im Aufruf genannt sind.
+wie sie im Aufruf genannt sind. 
+
+In den nachfolgenden Beispielen wird im ersten Schritt `alfred` durch
+`friedrich` ersetzt, und danach alle Vorkommen von `Holger` (mit großem
+und kleinem `h`) durch `michael`. Die Ausgabe erfolgt auf `stdout`.
 
 === Einzelne Filter voneinander über ein Semikolon trennen ===
 
