@@ -249,20 +249,20 @@ $
 
 === Suchtreffer referenzieren ===
 
-.Markiere nur den ersten Suchtreffer mit runden Klammern
+.Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels `&`)
 ----
 $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/'
 (apple) orange melon apple Apple
 ----
 
-.Markiere jeden Suchtreffer mit runden Klammern
+.Markiere jeden Suchtreffer mit runden Klammern (Referenz mittels `&`)
 ----
 $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/g'
 (apple) orange melon (apple) (Apple)
 $
 ----
 
-.Zwei Suchtreffer umgekehrt ausgeben (Back references)
+.Den ersten und zweiten Suchtreffer in umgekehrter Reihenfolge ausgeben ('back references')
 ----
 $ echo "10247 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
 Berlin, 10247
