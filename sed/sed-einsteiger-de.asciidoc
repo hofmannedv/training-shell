@@ -192,6 +192,21 @@ apple orange melon banana banana
 $
 ----
 
+=== Suchtreffer referenzieren ===
+
+.Markiere nur den ersten Suchtreffer mit runden Klammern
+----
+$ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/'
+(apple) orange melon apple Apple
+----
+
+.Markiere jeden Suchtreffer mit runden Klammern
+----
+$ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/g'
+(apple) orange melon (apple) (Apple)
+$
+----
+
 === Alle leeren Zeilen aus der Eingabe herausfiltern ===
 
 .Muster `^d` für leere Zeilen, `d` zum Löschen
