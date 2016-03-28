@@ -112,7 +112,9 @@ $ sed -n 's/alfred/friedrich/p' datei
 === Ausgeben einer Datei ===
 
 Diese Aufrufe haben ihre Entsprechung in den UNIX/Linux-Kommandos `cat`,
-`tac`, `head` und `tail`.
+`tac`, `head` und `tail`. Das Kommando `nl` kommt nur zum Einsatz, um
+die Zeilennummer zu illustrieren und die Wirkung des `sed`-Kommandos zu
+zeigen.
 
 .Den Inhalt einfach ausgeben
 ----
@@ -290,4 +292,5 @@ $
 
 * Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
 * Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
+* Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
 * Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
