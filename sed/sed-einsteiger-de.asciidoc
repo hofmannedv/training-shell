@@ -27,11 +27,11 @@ Prinzipiell hat ein `sed`-Filter vier Teile:
 vom nächsten Teil separiert.
 
 * `[Adresse]Aktion`: beschreibt die Zeilen und die Aktion, auf die das
-Muster angewendet werden soll
+Muster angewendet werden soll, bspw. `i` für `insert` (Zeile einfügen)
+und `s` für `substitute` (suchen und ersetzen)
 * `Muster`: Beschreibung des Filters als Regulärer Ausdruck
-* `Ersetzung`: String, welcher das Muster ersetzt
-* `Flag`: steuert die Aktion. Es legt fest, was passiert, wenn das Muster
-zutrifft.
+* `Ersetzung`: String, welcher den über das Muster gefundenen Suchtreffer ersetzt
+* `Flag`: steuert die Aktion. Es legt fest, was passiert, wenn das Muster zutrifft.
 
 == `sed` als Filter aufrufen ==
 
