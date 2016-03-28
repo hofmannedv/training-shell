@@ -109,7 +109,7 @@ $ sed -n 's/alfred/friedrich/p' datei
 
 == Beispiele ==
 
-=== Ausgeben einer Datei ====
+=== Ausgeben einer Datei ===
 
 Diese Aufrufe haben ihre Entsprechung in den UNIX/Linux-Kommandos `cat`,
 `tac`, `head` und `tail`.
@@ -118,6 +118,22 @@ Diese Aufrufe haben ihre Entsprechung in den UNIX/Linux-Kommandos `cat`,
 ----
 $ echo "Wir brauchen ein erstes Beispiel" | sed -n 'p'
 Wir brauchen ein erstes Beispiel
+$
+----
+
+.Nur die vierte Zeile ausgeben
+----
+$ cat logfile | nl | sed -n '4p'
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+$
+----
+
+.Nur die Zeilen vier bis sechs ausgeben
+----
+$ cat logfile | nl | sed -n '4,6p'
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
 $
 ----
 
