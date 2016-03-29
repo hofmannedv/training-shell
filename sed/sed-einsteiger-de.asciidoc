@@ -210,6 +210,13 @@ $ nl logfile | sed '1,/2016-01-11/d'
 $
 ----
 
+.Alles bis zum Ende ab der Zeile löschen, die das Suchmuster `2016-01-11` enthält
+----
+$ nl logfile | sed '/2016-01-11/,$d'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+$
+----
+
 === Zeilen einfügen ===
 
 .Vier `+` nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet
