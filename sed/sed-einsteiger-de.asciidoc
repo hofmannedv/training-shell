@@ -52,7 +52,7 @@ $ sed 's/alfred/friedrich/' datei
 
 * in dem das `sed`-Skript in einer separaten Datei liegt. Die
 Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
-für die Skriptdatei.
+für die Skriptdatei. GNU sed versteht auch den langen Schalter `--file`.
 
 .Filtern mittels `sed` und dem Skript `sed.skript`
 ----
@@ -83,7 +83,7 @@ $ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei
 === Jeden Filter mit `-e` einleiten ===
 
 Über den Schalter `-e` teilen Sie `sed` mit, dass ein weiterer Filter
-folgt.
+folgt. GNU sed versteht auch den langen Schalter `--expression`.
 
 .Mehrere Filter mittels `-e` aneinanderreihen
 ----
