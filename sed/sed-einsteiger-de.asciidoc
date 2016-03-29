@@ -393,6 +393,22 @@ A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $
 ----
 
+.Eine weitere Spalte am Ende hinzufügen (Inhalt: `B`)
+----
+$ sed -n '1,10s/.*/&:B/p' /etc/passwd
+root:x:0:0:root:/root:/bin/bash:B
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin:B
+bin:x:2:2:bin:/bin:/usr/sbin/nologin:B
+sys:x:3:3:sys:/dev:/usr/sbin/nologin:B
+sync:x:4:65534:sync:/bin:/bin/sync:B
+games:x:5:60:games:/usr/games:/usr/sbin/nologin:B
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin:B
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin:B
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin:B
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
+$
+----
+
 === Suchtreffer referenzieren ===
 
 .Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels `&`)
