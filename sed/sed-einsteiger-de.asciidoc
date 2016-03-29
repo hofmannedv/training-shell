@@ -341,6 +341,19 @@ Apple Banana
 $
 ----
 
+Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
+ist, hilft Ihnen der Schalter `=`.
+
+.Ausgabe der Zeilennummern der Zeilen, in denen das Muster enthalten ist
+----
+$ sed -n '/fho/ =' logfile
+1
+2
+4
+5
+$
+----
+
 === Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen ===
 
 .Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9
