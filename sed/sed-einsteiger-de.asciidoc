@@ -92,7 +92,15 @@ $ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei
 
 === Die Fähigkeiten der bash ausnutzen (mehrere Zeilen) ===
 
-ToDo
+Sie können die einzelnen Filter auch über mehrere Zeilen verteilen:
+
+.Jeden Filter in einer einzelnen Zeile
+----
+$ echo "apple banana" | sed -e 's/a/A/g' \
+> -e 's/e/E/g'
+ApplE bAnAnA
+$
+----
 
 == Die Ausgabe steuern ==
 
