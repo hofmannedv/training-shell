@@ -518,6 +518,7 @@ $
 
 == Weiterführende Dokumente ==
 
+* Sed - An Introduction and Tutorial by Bruce Barnett, http://www.grymoire.com/Unix/Sed.html
 * Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
 * Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
 * Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
