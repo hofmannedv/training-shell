@@ -553,5 +553,6 @@ $
 * Sed - An Introduction and Tutorial by Bruce Barnett, http://www.grymoire.com/Unix/Sed.html
 * Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
 * Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
+* Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), http://sed.sourceforge.net/sed1line.txt
 * Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
 * Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
