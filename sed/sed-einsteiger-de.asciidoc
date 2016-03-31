@@ -146,7 +146,7 @@ $ nl logfile | sed -n '4p'
 $
 ----
 
-.Nur die Zeilen vier bis sechs ausgeben
+.Nur die Zeilen vier bis sechs ausgeben (`output-content-line4-6.sed`)
 ----
 $ nl logfile | sed -n '4,6p'
      4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
