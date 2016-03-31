@@ -59,6 +59,9 @@ für die Skriptdatei. GNU sed versteht auch den langen Schalter `--file`.
 $ sed -f sed.skript datei
 ----
 
+TIP: Bei allen Listings finden Sie in Klammern den Dateinamen des
+`sed`-Beispiels.
+
 == Mehrere Filter miteinander kombinieren ==
 
 Manchmal ist es einfacher, mehrere kleine Filter zu formulieren, als
@@ -155,7 +158,7 @@ $ nl logfile | sed -n '4,6p'
 $
 ----
 
-.Ab Zeile 7 bis zum Dateiende ausgeben
+.Ab Zeile 7 bis zum Dateiende ausgeben (`output-content-line7-end.sed`)
 ----
 $ nl logfile | sed -n '7,$p'
      7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45

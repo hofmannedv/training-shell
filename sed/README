@@ -10,6 +10,7 @@ Examples for sed
 * output-content.sed:           print the content of the file
 * output-content-line4.sed:     print the 4th line of the file, only
 * output-content-line4-6.sed:   print from the 4th to the 6th line of the file
+* output-content-line7-end.sed: print from the 7th line to the end of the file
 
 Example data to play with:
 
