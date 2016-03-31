@@ -1,13 +1,16 @@
 README
 ------
 
-examples for sed
-
 Getting Started
 
 * sed-einsteiger-de.asciidoc 	first steps (German)
 
-example data to play with:
+Examples for sed
+
+* output-content.sed			print the content of the file
+
+Example data to play with:
 
 * logfile:						demo logfile
 * logfile-with-empty-lines		demo logfile with empty lines after each day
+
