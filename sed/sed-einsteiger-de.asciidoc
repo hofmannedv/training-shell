@@ -203,7 +203,7 @@ $ nl logfile | sed '3d'
 $
 ----
 
-.Die Zeilen 3 bis 5 löschen
+.Die Zeilen 3 bis 5 löschen (`delete-content-line3-5.sed`)
 ----
 $ nl logfile | sed '3,5d'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
