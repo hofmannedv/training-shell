@@ -119,12 +119,12 @@ $ sed -n 's/alfred/friedrich/p' datei
 
 === Ausgeben einer Datei ===
 
-Diese Aufrufe haben ihre Entsprechung in den UNIX/Linux-Kommandos `cat`,
-`tac`, `head` und `tail`. Das Kommando `nl` kommt nur zum Einsatz, um
-die Zeilennummer zu illustrieren und die Wirkung des `sed`-Kommandos zu
-zeigen.
+Die nachfolgenden Aufrufe haben ihre Entsprechung in den
+UNIX/Linux-Kommandos `cat`, `tac`, `head` und `tail`. Das Kommando `nl`
+kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
+des `sed`-Kommandos besser zu zeigen.
 
-.Den Inhalt einfach ausgeben
+.Den Inhalt einfach ausgeben (`output-content.sed`)
 ----
 $ nl logfile | sed -n 'p'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
