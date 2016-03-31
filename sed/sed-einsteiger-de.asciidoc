@@ -183,6 +183,12 @@ $
 
 === Zeilen löschen ===
 
+.Alle Zeilen löschen (`delete-content.sed`)
+----
+$ nl logfile | sed -n 'd'
+$
+----
+
 .Lediglich die dritte Zeile löschen
 ----
 $ nl logfile | sed '3d'
