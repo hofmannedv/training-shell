@@ -189,7 +189,7 @@ $ nl logfile | sed -n 'd'
 $
 ----
 
-.Lediglich die dritte Zeile löschen
+.Lediglich die dritte Zeile löschen (`delete-content-line3-sed`)
 ----
 $ nl logfile | sed '3d'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1

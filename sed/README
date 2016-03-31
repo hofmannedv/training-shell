@@ -3,11 +3,12 @@ README
 
 Getting Started
 
-* sed-einsteiger-de.asciidoc:   first steps (German)
+* sed-einsteiger-de.asciidoc:       first steps (German)
 
 Examples for sed
 
 * delete-content.sed:               delete all the lines of the file
+* delete-content-line3.sed:         delete the 3rd line of the file, only
 * output-content.sed:               print the content of the file
 * output-content-line4.sed:         print the 4th line of the file, only
 * output-content-line4-6.sed:       print from the 4th to the 6th line of the file
