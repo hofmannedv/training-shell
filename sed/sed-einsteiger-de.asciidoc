@@ -139,7 +139,7 @@ $ nl logfile | sed -n 'p'
 $
 ----
 
-.Nur die vierte Zeile ausgeben
+.Nur die vierte Zeile ausgeben (`output-content-line4.sed`)
 ----
 $ nl logfile | sed -n '4p'
      4   2016-01-12 08:46:45 user fho logged in on /dev/pty1

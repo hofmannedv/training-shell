@@ -3,14 +3,15 @@ README
 
 Getting Started
 
-* sed-einsteiger-de.asciidoc 	first steps (German)
+* sed-einsteiger-de.asciidoc:   first steps (German)
 
 Examples for sed
 
-* output-content.sed			print the content of the file
+* output-content.sed:           print the content of the file
+* output-content-line4.sed:     print the 4th line of the file, only
 
 Example data to play with:
 
-* logfile:						demo logfile
-* logfile-with-empty-lines		demo logfile with empty lines after each day
+* logfile:                      demo logfile
+* logfile-with-empty-lines:     demo logfile with empty lines after each day
 
