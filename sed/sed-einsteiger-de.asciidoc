@@ -215,7 +215,7 @@ $ nl logfile | sed '3,5d'
 $
 ----
 
-.Nur die erste und die letzte Zeile löschen
+.Nur die erste und die letzte Zeile löschen (`delete-content-first-and-last-line.sed`)
 ----
 $ nl logfile | sed '1d;$d'
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
