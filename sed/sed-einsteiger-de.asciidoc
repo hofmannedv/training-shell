@@ -228,7 +228,7 @@ $ nl logfile | sed '1d;$d'
 $
 ----
 
-.Alles von der ersten Zeile bis einschließlich der Zeile löschen, die das Suchmuster `2016-01-11` beinhaltet
+.Alles von der ersten Zeile bis einschließlich der Zeile löschen, die das Suchmuster `2016-01-11` beinhaltet (`delete-content-first-up-to-match.sed`)
 ----
 $ nl logfile | sed '1,/2016-01-11/d'
      3   2016-01-12 08:45:12 user james logged in on /dev/tty1

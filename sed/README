@@ -11,6 +11,7 @@ Examples for sed
 * delete-content-line3.sed:         delete the 3rd line of the file, only
 * delete-content-line3-5.sed:       delete from the 3rd to the 5th line of the file
 * delete-content-first-and-last-line.sed: delete the first, and the last line, only
+* delete-content-first-up-to-match.sed: delete from the first line up to the line with the match
 * output-content.sed:               print the content of the file
 * output-content-line4.sed:         print the 4th line of the file, only
 * output-content-line4-6.sed:       print from the 4th to the 6th line of the file
