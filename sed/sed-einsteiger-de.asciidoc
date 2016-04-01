@@ -241,7 +241,7 @@ $ nl logfile | sed '1,/2016-01-11/d'
 $
 ----
 
-.Alles bis zum Ende ab der Zeile löschen, die das Suchmuster `2016-01-11` enthält
+.Alles bis zum Ende ab der Zeile löschen, die das Suchmuster `2016-01-11` enthält (`delete-content-match-to-the-end.sed`)
 ----
 $ nl logfile | sed '/2016-01-11/,$d'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
