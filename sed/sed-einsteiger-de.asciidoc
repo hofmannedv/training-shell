@@ -344,7 +344,7 @@ $ sed -n '/fho/p' logfile
 $
 ----
 
-.Suche alle Zeilen, die entweder auf 44 oder 45 enden
+.Suche alle Zeilen, die entweder auf 44 oder 45 enden (`print-content-regex.sed`)
 ----
 $ sed -n '/4[45]$/p' logfile
 2016-01-12 14:45:12 login failed for user root from 10.10.17.44

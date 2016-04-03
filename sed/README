@@ -26,6 +26,7 @@ Examples for sed
 * output-content-without-line4.sed:         print all but the 4th line of the file content
 
 * print-content.sed:                        print all the lines that contain the specified pattern
+* print-content-regex.sed:                  print all the lines that contain the specified regex pattern
 
 Example data to play with:
 
