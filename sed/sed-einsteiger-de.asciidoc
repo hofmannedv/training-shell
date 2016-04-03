@@ -248,7 +248,7 @@ $ nl logfile | sed '/2016-01-11/,$d'
 $
 ----
 
-.Lösche die erste Zeile nur dann, wenn diese das Suchmuster `2016-01-10` enthält
+.Lösche die erste Zeile nur dann, wenn diese das Suchmuster `2016-01-10` enthält (`delete-content-first-only-with-match.sed`)
 ----
 $ nl logfile | sed '1{/2016-01-10/d;}'
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
