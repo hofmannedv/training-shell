@@ -275,9 +275,9 @@ $
 
 === Zeilen einfügen ===
 
-.Vier `+` nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet
+.Vier `+` nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet (`insert-after-pattern.sed`)
 ----
-$ nl logfile | sed '/2016-01-10/a+++'
+$ nl logfile | sed '/2016-01-10/a++++'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
 ++++
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
