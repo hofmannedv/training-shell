@@ -25,6 +25,8 @@ Examples for sed
 * output-content-line7-end.sed:             print from the 7th line to the end of the file
 * output-content-without-line4.sed:         print all but the 4th line of the file content
 
+* print-content.sed:                        print all the lines that contain the specified pattern
+
 Example data to play with:
 
 * logfile:                                  demo logfile

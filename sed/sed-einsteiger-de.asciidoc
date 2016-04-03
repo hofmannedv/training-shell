@@ -334,7 +334,7 @@ Lösung ihres Problems auf `grep`, `sed` oder `awk` zurückgreifen, ist
 häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
 lösen können.
 
-.Suche nach dem Muster `fho` in der Datei `logfile`, und Ausgabe aller betreffenden Zeilen
+.Alle Zeilen der Datei `logfile` ausgeben, die das Muster `fho` enthalten (`print-content.sed`)
 ----
 $ sed -n '/fho/p' logfile
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
