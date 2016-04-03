@@ -14,6 +14,7 @@ Examples for sed
 * delete-content-first-up-to-match.sed:     delete from the first line up to the line with the match
 * delete-content-match-to-the-end.sed:      delete from the line with the match up to the end of file
 * delete-content-first-only-with-match.sed: delete the 1st line only if there is a match with a pattern
+* delete-content-with-match.sed:            delete from the 1st to the 5th line only if there is a match with a pattern
 
 * output-content.sed:                       print the content of the file
 * output-content-line4.sed:                 print the 4th line of the file, only

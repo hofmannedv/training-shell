@@ -262,7 +262,7 @@ $ nl logfile | sed '1{/2016-01-10/d;}'
 $
 ----
 
-.Lösche die entsprechenden Zeilen aus den Zeilen 1 bis 5 nur, wenn diese entweder das Suchmuster `2016-10-11` oder `2016-10-12` beinhalten
+.Lösche die entsprechenden Zeilen aus den Zeilen 1 bis 5 nur, wenn diese entweder das Suchmuster `2016-10-11` oder `2016-10-12` beinhalten (`delete-content-with-match.sed`)
 ----
 $ nl logfile | sed '1,5{/2016-01-1[12]/d;}' 
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
