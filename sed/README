@@ -27,6 +27,7 @@ Examples for sed
 
 * print-content.sed:                        print all the lines that contain the specified pattern
 * print-content-regex.sed:                  print all the lines that contain the specified regex pattern
+* print-content-case-ins.sed:               print all the lines that contain the specified pattern (case insensitive)
 
 Example data to play with:
 

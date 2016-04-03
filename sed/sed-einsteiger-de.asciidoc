@@ -357,7 +357,7 @@ GNU sed hat einen zusätzlichen Schalter namens `I`. Dieser steht für
 'case insensitive', d.h. unabhängig von Groß- und Kleinschreibung. Damit
 vereinfacht sich die Schreibweise wie folgt:
 
-.Suche nach dem Vorkommen des Musters `banana` unabhängig von Groß- und Kleinschreibung
+.Suche nach dem Vorkommen des Musters `banana` unabhängig von Groß- und Kleinschreibung (`print-content-case-ins.sed`)
 ----
 $ echo "Apple Banana" | sed -n '/banana/Ip' 
 Apple Banana
