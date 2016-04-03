@@ -367,7 +367,7 @@ $
 Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
 ist, hilft Ihnen der Schalter `=`.
 
-.Ausgabe der Zeilennummern der Zeilen, in denen das Muster enthalten ist
+.Ausgabe der Zeilennummern der Zeilen, in denen das Muster enthalten ist (`print-match-line-numbers.sed`)
 ----
 $ sed -n '/fho/ =' logfile
 1
