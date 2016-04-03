@@ -308,7 +308,7 @@ $ nl logfile | sed -e '/2016-01-10/a++++ 2016-01-11 ++++' -e '/2016-01-11/a++++ 
 $
 ----
 
-.Markieren aller erfolgreichen Logins des Benutzers `fho`
+.Markieren aller erfolgreichen Logins des Benutzers `fho` (`insert-before-pattern.sed`)
 ----
 $ nl logfile | sed -e '/fho logged in/i++ fho ++'
 ++ fho ++
