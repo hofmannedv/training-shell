@@ -31,6 +31,7 @@ Examples for sed
 * print-match-line-numbers.sed:             print the line numbers that contain the specified pattern
 
 * replace-in-line.sed:                      replace all occurences of a pattern in a single line
+* replace-in-line-to-the-end.sed:           replace all occurences of a pattern to the end of file
 
 Example data to play with:
 
