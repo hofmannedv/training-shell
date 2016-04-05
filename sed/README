@@ -3,7 +3,8 @@ README
 
 Getting Started
 
-* sed-einsteiger-de.asciidoc:               first steps (German)
+* sed-einsteiger-de.asciidoc:               first steps (German) (asciidoc)
+* sed-einsteiger-de.html:                   first steps (German) (HTML)
 
 Examples for sed
 

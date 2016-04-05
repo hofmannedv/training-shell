@@ -1,0 +1,1396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Der Streameditor <code>sed</code>. Erste Schritte.</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
+<span id="author">Frank Hofmann</span><br />
+<span id="revnumber">version 1.0,</span>
+<span id="revdate">27. März 2016</span>
+</div>
+<div id="content">
+<h1 id="_vorwort">Vorwort</h1>
+<div class="paragraph"><p><code>sed</code> steht für Streameditor&#8201;&#8212;&#8201;ein Programm, welches einen Datenstrom
+mit Hilfe von Filtern verändert. Das beinhaltet bspw. das Löschen,
+Suchen und Ersetzen von Zeichenketten auf der Basis von Regulären
+Ausdrücken. <code>sed</code> sieht erstmal recht einfach aus, ist aber sehr mächtig
+und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile und in
+Shellskripten.</p></div>
+<div class="sect1">
+<h2 id="_struktur_eines_filters">1. Struktur eines Filters</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Prinzipiell hat ein <code>sed</code>-Filter vier Teile:
+<code>[Adresse]Aktion/Muster/Ersetzung/Flag</code>. Jeder Teil wird durch einen <code>/</code>
+vom nächsten Teil separiert.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>[Adresse]Aktion</code>: beschreibt die Zeilen und die Aktion, auf die das
+Muster angewendet werden soll, bspw. <code>i</code> für <code>insert</code> (Zeile einfügen)
+und <code>s</code> für <code>substitute</code> (suchen und ersetzen)
+</p>
+</li>
+<li>
+<p>
+<code>Muster</code>: Beschreibung des Filters als Regulärer Ausdruck
+</p>
+</li>
+<li>
+<p>
+<code>Ersetzung</code>: String, welcher den über das Muster gefundenen Suchtreffer ersetzt
+</p>
+</li>
+<li>
+<p>
+<code>Flag</code>: steuert die Aktion. Es legt fest, was passiert, wenn das Muster zutrifft.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_sed_code_als_filter_aufrufen">2. <code>sed</code> als Filter aufrufen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code>sed</code> akzeptiert verschiedene Wege, über die es Filter entgegennimmt und
+auf den Datenstrom anwendet.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+über <code>stdin</code> oder als direkten Parameter beim Aufruf von <code>sed</code>
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">Filtern mittels <code>sed</code> nach einer Pipe</div>
+<div class="content">
+<pre><code>$ cat datei | sed 's/alfred/friedrich/'</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Filtern mittels <code>sed</code> ohne Pipe und mit direktem Aufruf der Datei</div>
+<div class="content">
+<pre><code>$ sed 's/alfred/friedrich/' datei</code></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+in dem das <code>sed</code>-Skript in einer separaten Datei liegt. Die
+Referenzierung erfolgt über den Schalter <code>-f</code> gefolgt von dem Dateinamen
+für die Skriptdatei. GNU sed versteht auch den langen Schalter <code>--file</code>.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">Filtern mittels <code>sed</code> und dem Skript <code>sed.skript</code></div>
+<div class="content">
+<pre><code>$ sed -f sed.skript datei</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Bei allen Listings finden Sie in Klammern den Dateinamen des
+<code>sed</code>-Beispiels.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mehrere_filter_miteinander_kombinieren">3. Mehrere Filter miteinander kombinieren</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Manchmal ist es einfacher, mehrere kleine Filter zu formulieren, als
+sich einen einzigen, komplexen Regulären Ausdruck auszudenken. <code>sed</code>
+kennt mehrere Varianten zur Verkettung der Filter. Hierbei werden die
+einzelnen Anweisungen (Filter) in der Reihenfolge von <code>sed</code> verarbeitet,
+wie sie im Aufruf genannt sind.</p></div>
+<div class="paragraph"><p>In den nachfolgenden Beispielen wird im ersten Schritt <code>alfred</code> durch
+<code>friedrich</code> ersetzt, und danach alle Vorkommen von <code>Holger</code> (mit großem
+und kleinem <code>h</code>) durch <code>michael</code>. Die Ausgabe erfolgt auf <code>stdout</code>.</p></div>
+<div class="sect2">
+<h3 id="_einzelne_filter_voneinander_über_ein_semikolon_trennen">3.1. Einzelne Filter voneinander über ein Semikolon trennen</h3>
+<div class="paragraph"><p>Im Aufruf geben Sie zwischen den Filtern ein <code>;</code> an.</p></div>
+<div class="listingblock">
+<div class="title">Mehrere Filter mittels <code>;</code> aneinanderreihen</div>
+<div class="content">
+<pre><code>$ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_jeden_filter_mit_code_e_code_einleiten">3.2. Jeden Filter mit <code>-e</code> einleiten</h3>
+<div class="paragraph"><p>Über den Schalter <code>-e</code> teilen Sie <code>sed</code> mit, dass ein weiterer Filter
+folgt. GNU sed versteht auch den langen Schalter <code>--expression</code>.</p></div>
+<div class="listingblock">
+<div class="title">Mehrere Filter mittels <code>-e</code> aneinanderreihen</div>
+<div class="content">
+<pre><code>$ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_die_fähigkeiten_der_bash_ausnutzen_mehrere_zeilen">3.3. Die Fähigkeiten der bash ausnutzen (mehrere Zeilen)</h3>
+<div class="paragraph"><p>Sie können die einzelnen Filter auch über mehrere Zeilen verteilen:</p></div>
+<div class="listingblock">
+<div class="title">Jeden Filter in einer einzelnen Zeile</div>
+<div class="content">
+<pre><code>$ echo "apple banana" | sed -e 's/a/A/g' \
+&gt; -e 's/e/E/g'
+ApplE bAnAnA
+$</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_die_ausgabe_steuern">4. Die Ausgabe steuern</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Im Standardfall gibt <code>sed</code> alle Zeilen der Eingabe aus. Um das zu
+unterdrücken, nutzen Sie den Schalter <code>-n</code>. Von Nutzen ist <code>-n</code>, um nur
+die Zeilen der Eingabe ausgeben, in denen ihr Filter tatsächlich
+Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit einem <code>p</code>
+am Ende ab:</p></div>
+<div class="listingblock">
+<div class="title">Lediglich die Ersetzungen ausgeben</div>
+<div class="content">
+<pre><code>$ sed -n 's/alfred/friedrich/p' datei</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beispiele">5. Beispiele</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ausgeben_einer_datei">5.1. Ausgeben einer Datei</h3>
+<div class="paragraph"><p>Die nachfolgenden Aufrufe haben ihre Entsprechung in den
+UNIX/Linux-Kommandos <code>cat</code>, <code>tac</code>, <code>head</code> und <code>tail</code>. Das Kommando <code>nl</code>
+kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
+des <code>sed</code>-Kommandos besser zu zeigen.</p></div>
+<div class="listingblock">
+<div class="title">Den gesamten Inhalt einfach ausgeben (<code>output-content.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n 'p'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Nur die vierte Zeile ausgeben (<code>output-content-line4.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '4p'
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Alles außer der vierten Zeile ausgeben (<code>output-content-without-line4.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '4!p'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Nur die Zeilen vier bis sechs ausgeben (<code>output-content-line4-6.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '4,6p'
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ab Zeile 7 bis zum Dateiende ausgeben (<code>output-content-line7-end.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '7,$p'
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_zeilen_löschen">5.2. Zeilen löschen</h3>
+<div class="listingblock">
+<div class="title">Alle Zeilen löschen (<code>delete-content.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n 'd'
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Lediglich die dritte Zeile löschen (<code>delete-content-line3-sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '3d'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Die Zeilen 3 bis 5 löschen (<code>delete-content-line3-5.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '3,5d'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Nur die erste und die letzte Zeile löschen (<code>delete-content-first-and-last-line.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '1d;$d'
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Alles von der ersten Zeile bis einschließlich der Zeile löschen, die das Suchmuster <code>2016-01-11</code> beinhaltet (<code>delete-content-first-up-to-match.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '1,/2016-01-11/d'
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Alles bis zum Ende ab der Zeile löschen, die das Suchmuster <code>2016-01-11</code> enthält (<code>delete-content-match-to-the-end.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '/2016-01-11/,$d'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Lösche die erste Zeile nur dann, wenn diese das Suchmuster <code>2016-01-10</code> enthält (<code>delete-content-first-only-with-match.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '1{/2016-01-10/d;}'
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Lösche die entsprechenden Zeilen aus den Zeilen 1 bis 5 nur, wenn diese entweder das Suchmuster <code>2016-10-11</code> oder <code>2016-10-12</code> beinhalten (<code>delete-content-with-match.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '1,5{/2016-01-1[12]/d;}'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_zeilen_einfügen">5.3. Zeilen einfügen</h3>
+<div class="listingblock">
+<div class="title">Vier <code>+</code> nach (jedem) Eintrag einfügen, der <code>2016-01-10</code> beinhaltet (<code>insert-after-pattern.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed '/2016-01-10/a++++'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+++++
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Optische Trennung zwischen Datumswechseln (Einfügen nach dem Suchtreffer)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -e '/2016-01-10/a++++ 2016-01-11 ++++' -e '/2016-01-11/a++++ 2016-01-12 ++++'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+++++ 2016-01-11 ++++
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+++++ 2016-01-12 ++++
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Markieren aller erfolgreichen Logins des Benutzers <code>fho</code> (<code>insert-before-pattern.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -e '/fho logged in/i++ fho ++'
+++ fho ++
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+++ fho ++
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+++ fho ++
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6   2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_finde_alle_zeilen_der_eingabe_welches_ein_bestimmtes_muster_beinhalten">5.4. Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten</h3>
+<div class="paragraph"><p>Die nachfolgenden Aufrufe sind ähnlich zu <code>grep</code>, wobei hier die
+Verwandschaft der beiden Werkzeuge deutlich wird. Ob Sie im Alltag zur
+Lösung ihres Problems auf <code>grep</code>, <code>sed</code> oder <code>awk</code> zurückgreifen, ist
+häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
+lösen können.</p></div>
+<div class="listingblock">
+<div class="title">Alle Zeilen der Datei <code>logfile</code> ausgeben, die das Muster <code>fho</code> enthalten (<code>print-content.sed</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '/fho/p' logfile
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+2016-01-12 08:46:45 user fho logged in on /dev/pty1
+2016-01-12 12:13:10 user fho logged out from /dev/pty1
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Suche alle Zeilen, die entweder auf 44 oder 45 enden (<code>print-content-regex.sed</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '/4[45]$/p' logfile
+2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>GNU sed hat einen zusätzlichen Schalter namens <code>I</code>. Dieser steht für
+<em>case insensitive</em>, d.h. unabhängig von Groß- und Kleinschreibung. Damit
+vereinfacht sich die Schreibweise wie folgt:</p></div>
+<div class="listingblock">
+<div class="title">Suche nach dem Vorkommen des Musters <code>banana</code> unabhängig von Groß- und Kleinschreibung (<code>print-content-case-ins.sed</code>)</div>
+<div class="content">
+<pre><code>$ echo "Apple Banana" | sed -n '/banana/Ip'
+Apple Banana
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
+ist, hilft Ihnen der Schalter <code>=</code>.</p></div>
+<div class="listingblock">
+<div class="title">Ausgabe der Zeilennummern der Zeilen, in denen das Muster enthalten ist (<code>print-match-line-numbers.sed</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '/fho/ =' logfile
+1
+2
+4
+5
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_suchen_und_ersetzen_nach_einem_muster_in_ausgewählten_zeilen">5.5. Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen</h3>
+<div class="listingblock">
+<div class="title">Ersetze alle Vorkommen von <code>root</code> durch <code>alex</code> in Zeile 9 (<code>replace-in-line.sed</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '9s/root/alex/p' logfile
+2016-01-12 14:57:10 login failed for user alex from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ersetze alle Vorkommen von <code>root</code> durch <code>alex</code> ab Zeile 6 bis zum Ende (<code>replace-in-line-to-the-end.sed</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '6,$s/root/alex/p' logfile
+2016-01-12 14:45:12 login failed for user alex from 10.10.17.44
+2016-01-12 14:46:10 login failed for user alex from 10.10.17.45
+2016-01-12 14:57:10 login failed for user alex from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ersetze alle Vorkommen von <code>root</code> durch <code>alex</code> in den Zeilen 4 bis 7 (<code>replace-in-line4-7.sed</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '4,7s/root/user/p' logfile
+2016-01-12 14:45:12 login failed for user alex from 10.10.17.44
+2016-01-12 14:46:10 login failed for user alex from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ersetze alle Vorkommen von <code>root</code> durch <code>alex</code> außerhalb der Zeilen 4 bis 7 (<code>replace-outside-line4-7.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '4,7!s/root/user/p'
+     9   2016-01-12 14:57:10 login failed for user user from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ersetze alle Vorkommen der IP-Adresse <code>10.10.17.45</code> durch den Hostnamen <code>supercomputer</code> in allen Zeilen des Logfiles, in denen die Zeichenkette <code>2016-01-12</code> enthalten ist</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '/2016-01-12/s/10.10.17.45/supercomputer/p'
+     7   2016-01-12 14:46:10 login failed for user root from supercomputer
+     9   2016-01-12 14:57:10 login failed for user root from supercomputer
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_suchen_und_ersetzen_nach_vorkommen">5.6. Suchen und Ersetzen nach Vorkommen</h3>
+<div class="listingblock">
+<div class="title">Ersetze alle Vorkommen von <code>apple</code> durch <code>banana</code></div>
+<div class="content">
+<pre><code>$ echo "apple orange melon apple" | sed 's/apple/banana/g'
+banana orange melon banana
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ersetze nur das zweite Vorkommen von <code>apple</code> durch <code>banana</code></div>
+<div class="content">
+<pre><code>$ echo "apple orange melon apple" | sed 's/apple/banana/2'
+apple orange melon banana
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ersetze ab dem zweiten Vorkommen jedes Mal <code>apple</code> durch <code>banana</code></div>
+<div class="content">
+<pre><code>$ echo "apple orange melon apple apple" | sed 's/apple/banana/2g'
+apple orange melon banana banana
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Ersetze eine komplette Zeile</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -e '/login failed/clogin failed'
+     1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3   2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4   2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5   2016-01-12 12:13:10 user fho logged out from /dev/pty1
+login failed
+login failed
+     8   2016-01-12 14:55:05 user james logged out from /dev/tty1
+login failed
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_spaltenweise_agieren">5.7. Spaltenweise agieren</h3>
+<div class="listingblock">
+<div class="title">Entferne die erste Spalte (Trennzeichen: <code>:</code>) in den Zeilen 1 bis 10 der Datei <code>/etc/passwd</code> (ersetze alles bis zum ersten <code>:</code> durch nichts)</div>
+<div class="content">
+<pre><code>$ sed -n '1,10s/[^:]\+://p' /etc/passwd
+x:0:0:root:/root:/bin/bash
+x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+x:2:2:bin:/bin:/usr/sbin/nologin
+x:3:3:sys:/dev:/usr/sbin/nologin
+x:4:65534:sync:/bin:/bin/sync
+x:5:60:games:/usr/games:/usr/sbin/nologin
+x:6:12:man:/var/cache/man:/usr/sbin/nologin
+x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+x:8:8:mail:/var/mail:/usr/sbin/nologin
+x:9:9:news:/var/spool/news:/usr/sbin/nologin
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Nur die erste Spalte ausgeben, Trennzeichen ist <code>:</code> (entspricht <code>cut -d: -f1 /etc/passwd</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '1,10s/:.*$//p' /etc/passwd
+root
+daemon
+bin
+sys
+sync
+games
+man
+lp
+mail
+news
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Eine weitere Spalte am Anfang hinzufügen (Inhalt: <code>A</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '1,10s/.*/A:&amp;/p' /etc/passwd
+A:root:x:0:0:root:/root:/bin/bash
+A:daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+A:bin:x:2:2:bin:/bin:/usr/sbin/nologin
+A:sys:x:3:3:sys:/dev:/usr/sbin/nologin
+A:sync:x:4:65534:sync:/bin:/bin/sync
+A:games:x:5:60:games:/usr/games:/usr/sbin/nologin
+A:man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+A:lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+A:mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Eine weitere Spalte am Ende hinzufügen (Inhalt: <code>B</code>)</div>
+<div class="content">
+<pre><code>$ sed -n '1,10s/.*/&amp;:B/p' /etc/passwd
+root:x:0:0:root:/root:/bin/bash:B
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin:B
+bin:x:2:2:bin:/bin:/usr/sbin/nologin:B
+sys:x:3:3:sys:/dev:/usr/sbin/nologin:B
+sync:x:4:65534:sync:/bin:/bin/sync:B
+games:x:5:60:games:/usr/games:/usr/sbin/nologin:B
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin:B
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin:B
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin:B
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_suchtreffer_referenzieren">5.8. Suchtreffer referenzieren</h3>
+<div class="listingblock">
+<div class="title">Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels <code>&amp;</code>)</div>
+<div class="content">
+<pre><code>$ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&amp;)/'
+(apple) orange melon apple Apple</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Markiere jeden Suchtreffer mit runden Klammern (Referenz mittels <code>&amp;</code>)</div>
+<div class="content">
+<pre><code>$ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&amp;)/g'
+(apple) orange melon (apple) (Apple)
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Den ersten und zweiten Suchtreffer in umgekehrter Reihenfolge ausgeben (<em>back references</em>)</div>
+<div class="content">
+<pre><code>$ echo "10247 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
+Berlin, 10247
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.9. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
+<div class="listingblock">
+<div class="title">Muster <code>^d</code> für leere Zeilen, <code>d</code> zum Löschen</div>
+<div class="content">
+<pre><code>$ sed '/^$/d' logfile-with-empty-lines
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+2016-01-12 08:45:12 user james logged in on /dev/tty1
+2016-01-12 08:46:45 user fho logged in on /dev/pty1
+2016-01-12 12:13:10 user fho logged out from /dev/pty1
+2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+2016-01-12 14:55:05 user james logged out from /dev/tty1
+2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_den_ersten_absatz_ausgeben">5.10. Den ersten Absatz ausgeben</h3>
+<div class="listingblock">
+<div class="title">Alle Zeilen inklusive der ersten Leerzeile ausgeben</div>
+<div class="content">
+<pre><code>$ sed -n '1,/^$/p' logfile-with-empty-lines
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+
+$</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_weiterführende_dokumente">6. Weiterführende Dokumente</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Sed - An Introduction and Tutorial by Bruce Barnett, <a href="http://www.grymoire.com/Unix/Sed.html">http://www.grymoire.com/Unix/Sed.html</a>
+</p>
+</li>
+<li>
+<p>
+Dale Dougherty: <em>sed &amp; awk</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9781565922259.do">http://shop.oreilly.com/product/9781565922259.do</a>
+</p>
+</li>
+<li>
+<p>
+Jeffrey E. F. Friedl: <em>Reguläre Ausdrücke</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9780596528126.do">http://shop.oreilly.com/product/9780596528126.do</a>
+</p>
+</li>
+<li>
+<p>
+Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), <a href="http://sed.sourceforge.net/sed1line.txt">http://sed.sourceforge.net/sed1line.txt</a>
+</p>
+</li>
+<li>
+<p>
+Jürgen Wolf: <em>Shell-Programmierung. Das umfassende Handbuch</em>, Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+</p>
+</li>
+<li>
+<p>
+Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, <a href="https://github.com/hofmannedv/training-shell">https://github.com/hofmannedv/training-shell</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0<br />
+Letzte Änderung
+ 2016-04-05 17:49:57 CEST
+</div>
+</div>
+</body>
+</html>
