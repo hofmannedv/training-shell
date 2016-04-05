@@ -32,6 +32,7 @@ Examples for sed
 
 * replace-in-line.sed:                      replace all occurences of a pattern in a single line
 * replace-in-line-to-the-end.sed:           replace all occurences of a pattern to the end of file
+* replace-in-line4-7.sed:                   replace all occurences of a pattern in line 4 to 7
 
 Example data to play with:
 

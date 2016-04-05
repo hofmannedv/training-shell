@@ -395,7 +395,7 @@ $ sed -n '6,$s/root/alex/p' logfile
 $
 ----
 
-.Ersetze alle Vorkommen von `root` durch `alex` in den Zeilen 4 bis 7
+.Ersetze alle Vorkommen von `root` durch `alex` in den Zeilen 4 bis 7 (`replace-in-line4-7.sed`)
 ----
 $ sed -n '4,7s/root/user/p' logfile
 2016-01-12 14:45:12 login failed for user alex from 10.10.17.44
