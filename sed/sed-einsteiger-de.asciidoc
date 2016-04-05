@@ -403,7 +403,7 @@ $ sed -n '4,7s/root/user/p' logfile
 $
 ----
 
-.Ersetze alle Vorkommen von `root` durch `alex` außerhalb der Zeilen 4 bis 7
+.Ersetze alle Vorkommen von `root` durch `alex` außerhalb der Zeilen 4 bis 7 (`replace-outside-line4-7.sed`)
 ----
 $ nl logfile | sed -n '4,7!s/root/user/p'
      9   2016-01-12 14:57:10 login failed for user user from 10.10.17.45
