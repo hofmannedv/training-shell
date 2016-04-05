@@ -379,7 +379,7 @@ $
 
 === Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen ===
 
-.Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9
+.Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9 (`replace-in-line.sed`)
 ----
 $ sed -n '9s/root/alex/p' logfile
 2016-01-12 14:57:10 login failed for user alex from 10.10.17.45

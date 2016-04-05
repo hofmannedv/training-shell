@@ -30,6 +30,8 @@ Examples for sed
 * print-content-case-ins.sed:               print all the lines that contain the specified pattern (case insensitive)
 * print-match-line-numbers.sed:             print the line numbers that contain the specified pattern
 
+* replace-in-line.sed:                      replace all occurences of a pattern in a single line
+
 Example data to play with:
 
 * logfile:                                  demo logfile
