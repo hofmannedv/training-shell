@@ -87,7 +87,8 @@ Im Aufruf geben Sie zwischen den Filtern ein `;` an.
 $ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei
 ----
 
-Hinweis: Sie erkennen in [Hh] einen `regulären Ausdruck`.
+TIP: `[Hh]` beinhaltet einen regulären Ausdruck für den einzelnen
+Buchstaben `h` in Groß- oder Kleinschreibung.
 
 === Jeden Filter mit `-e` einleiten ===
 
