@@ -352,11 +352,21 @@ $ nl logfile | sed -e '/2016-01-10/a++++ 2016-01-11 ++++' -e '/2016-01-11/a++++ 
 $
 -----
 
-Hinweis: funktioniert nur mit GNU sed. Kompatibiltät:
-nl logfile | sed -e '/2016-01-10/a\
+Obiges Beispiel funktioniert nur mit GNU sed. Um es kompatibel für BSD
+sed zu halten, bedarf es eines expliziten Umbruchs:
+
+----
+$ nl logfile | sed -e '/2016-01-10/a\
 ++++ 2016-01-11 ++++' -e '/2016-01-11/a\
 ++++ 2016-01-12 ++++'
-schreibt man nicht mehr von Hand, weil man die Übersicht verliert. Allenfalls erzeugt man ein patternfile mit den beiden Suchmustern (siehe insert-after-with-more-patterns.sed). Die mit '-e' getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch Leerzeilen getrennt.
+$
+----
+
+Hierbei besteht die Gefahr, dass die Übersicht im Aufruf verloren geht.
+Die Empfehlung ist, zunächst eine Musterdatei mit den beiden Suchmustern
+(siehe `insert-after-with-more-patterns.sed`) zu erzeugen. Die mit `-e`
+getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch
+Leerzeilen voneinander getrennt.
 
 Das Einfügen von Inhalt vor einer betreffenden Zeile erfolgt mit dem
 Aktionsparameter `i` für `insert`. `GNU sed` versteht dafür die
