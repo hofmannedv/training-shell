@@ -1307,9 +1307,36 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_spaltenweise_agieren">5.7. Spaltenweise agieren</h3>
+<h3 id="_zeichen_zu_jeder_zeile_hinzufügen">5.7. Zeichen zu jeder Zeile hinzufügen</h3>
+<div class="paragraph"><p>Die Metazeichen <code>^</code> und <code>$</code> sind auf den Anfang und das Ende der Zeile
+anwendbar. Damit fügen Sie flink Text zu einer Zeile hinzu.</p></div>
 <div class="sect3">
-<h4 id="_spalte_entfernen">5.7.1. Spalte entfernen</h4>
+<h4 id="_am_anfang_jeder_zeile">5.7.1. Am Anfang jeder Zeile</h4>
+<div class="listingblock">
+<div class="title">Den Buchstaben <code>A</code> am Zeilenanfang ergänzen</div>
+<div class="content">
+<pre><code>$ echo abc | sed -n 's/^/A/p'
+Aabc
+$</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_am_ende_jeder_zeile">5.7.2. Am Ende jeder Zeile</h4>
+<div class="listingblock">
+<div class="title">Den Buchstaben <code>B</code> am Zeilenende ergänzen</div>
+<div class="content">
+<pre><code>$ echo abc | sed -n 's/$/B/p'
+abcB
+$</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_spaltenweise_agieren">5.8. Spaltenweise agieren</h3>
+<div class="paragraph"><p>Die nachfolgend vorgestellten Aktionen sind Sonderfälle für das vorige
+Kapitel. Im Alltag kommen diese häufig vor.</p></div>
+<div class="sect3">
+<h4 id="_spalte_entfernen">5.8.1. Spalte entfernen</h4>
 <div class="listingblock">
 <div class="title">Entferne die erste Spalte (Trennzeichen: <code>:</code>) in den Zeilen 1 bis 10 der Datei <code>/etc/passwd</code> (ersetze alles bis zum ersten <code>:</code> durch nichts)</div>
 <div class="content">
@@ -1364,7 +1391,7 @@ solchen System die Ausgabe dieses Beispiels leer.</td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_eine_spalte_am_anfang_hinzufügen">5.7.2. Eine Spalte am Anfang hinzufügen</h4>
+<h4 id="_eine_spalte_am_anfang_hinzufügen">5.8.2. Eine Spalte am Anfang hinzufügen</h4>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Anfang hinzufügen (Inhalt: <code>A</code>)</div>
 <div class="content">
@@ -1395,7 +1422,7 @@ ausgeben), geht auch dieses hier:</p></div>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_eine_spalte_am_ende_hinzufügen">5.7.3. Eine Spalte am Ende hinzufügen</h4>
+<h4 id="_eine_spalte_am_ende_hinzufügen">5.8.3. Eine Spalte am Ende hinzufügen</h4>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Ende hinzufügen (Inhalt: <code>B</code>)</div>
 <div class="content">
@@ -1420,7 +1447,7 @@ $</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_suchtreffer_referenzieren">5.8. Suchtreffer referenzieren</h3>
+<h3 id="_suchtreffer_referenzieren">5.9. Suchtreffer referenzieren</h3>
 <div class="listingblock">
 <div class="title">Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels <code>&amp;</code>)</div>
 <div class="content">
@@ -1466,7 +1493,7 @@ Fehlermeldung.</td>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.9. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
+<h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.10. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
 <div class="listingblock">
 <div class="title">Muster <code>^d</code> für leere Zeilen, <code>d</code> zum Löschen</div>
 <div class="content">
@@ -1489,7 +1516,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_den_ersten_absatz_ausgeben">5.10. Den ersten Absatz ausgeben</h3>
+<h3 id="_den_ersten_absatz_ausgeben">5.11. Den ersten Absatz ausgeben</h3>
 <div class="listingblock">
 <div class="title">Alle Zeilen inklusive der ersten Leerzeile ausgeben (<code>print-first-paragraph.sed</code>)</div>
 <div class="content">
@@ -1551,7 +1578,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 15:48:18 CEST
+ 2016-04-26 16:08:51 CEST
 </div>
 </div>
 </body>

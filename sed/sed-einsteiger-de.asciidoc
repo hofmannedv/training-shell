@@ -533,7 +533,33 @@ login failed
 $
 ----
 
+=== Zeichen zu jeder Zeile hinzufügen ===
+
+Die Metazeichen `^` und `$` sind auf den Anfang und das Ende der Zeile
+anwendbar. Damit fügen Sie flink Text zu einer Zeile hinzu.
+
+==== Am Anfang jeder Zeile ====
+
+.Den Buchstaben `A` am Zeilenanfang ergänzen
+----
+$ echo abc | sed -n 's/^/A/p'
+Aabc
+$
+----
+
+==== Am Ende jeder Zeile ====
+
+.Den Buchstaben `B` am Zeilenende ergänzen
+----
+$ echo abc | sed -n 's/$/B/p'
+abcB
+$
+----
+
 === Spaltenweise agieren ===
+
+Die nachfolgend vorgestellten Aktionen sind Sonderfälle für das vorige
+Kapitel. Im Alltag kommen diese häufig vor.
 
 ==== Spalte entfernen ====
 
