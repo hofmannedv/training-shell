@@ -1158,11 +1158,12 @@ $</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_finde_alle_zeilen_der_eingabe_welches_ein_bestimmtes_muster_beinhalten">5.4. Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten</h3>
-<div class="paragraph"><p>Die nachfolgenden Aufrufe sind ähnlich zu <code>grep</code>, <code>vi</code>, <code>less</code>, wobei hier die
-Verwandschaft der beiden Werkzeuge deutlich wird; beachten Sie aber die leichten syntaktischen Unterschiede.
-Ob sie im Alltag zur Lösung Ihres Problems auf <code>grep</code>, <code>sed</code> oder <code>awk</code> zurückgreifen, ist
-häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
-lösen können.</p></div>
+<div class="paragraph"><p>Die nachfolgenden Aufrufe sind ähnlich zu <code>grep</code>, <code>vi</code>, <code>less</code>, wobei
+hier die Verwandschaft der beiden Werkzeuge deutlich wird. Beachten Sie
+bei der Benutzung aber die leichten syntaktischen Unterschiede. Ob sie
+im Alltag zur Lösung Ihres Problems auf <code>grep</code>, <code>sed</code> oder <code>awk</code>
+zurückgreifen, ist häufig eine Frage der Gewohnheit und mit welchem
+Aufwand Sie das Problem lösen können.</p></div>
 <div class="listingblock">
 <div class="title">Alle Zeilen der Datei <code>logfile</code> ausgeben, die das Muster <code>fho</code> enthalten (<code>print-content.sed</code>)</div>
 <div class="content">
@@ -1192,7 +1193,14 @@ vereinfacht sich die Schreibweise wie folgt:</p></div>
 Apple Banana
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Kompatibilitäts-Hinweis: den Befehl /I gibt es nicht bei allen sed Varianten.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">den Befehl <code>/I</code> gibt es nicht bei allen <code>sed</code>-Varianten.</td>
+</tr></table>
+</div>
 <div class="paragraph"><p>Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
 ist, hilft Ihnen der Schalter <code>=</code>.</p></div>
 <div class="listingblock">
@@ -1207,7 +1215,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_suchen_und_ersetzen_nach_einem_muster_in_ausgewählten_zeilen_und_unterdrücken_von_zeilen_die_dem_muster_nicht_entsprechen">5.5. Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken von Zeilen die dem Muster nicht entsprechen</h3>
+<h3 id="_suchen_und_ersetzen_nach_einem_muster_in_ausgewählten_zeilen_und_unterdrücken_der_zeilen_die_dem_muster_nicht_entsprechen">5.5. Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken der Zeilen, die dem Muster nicht entsprechen</h3>
 <div class="listingblock">
 <div class="title">Ersetze alle Vorkommen von <code>root</code> durch <code>alex</code> in Zeile 9 (<code>replace-in-line.sed</code>)</div>
 <div class="content">
@@ -1247,7 +1255,17 @@ $</code></pre>
      9   2016-01-12 14:57:10 login failed for user root from supercomputer
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: beachten Sie die Notation <em>\</em>. Ein Punkt ist ein Metacharacter im Patternmatching und matcht auf jedes Zeichen; dank vorangestelltem escape-Character <em>\</em> matcht nur ein echter <em>.</em>.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Beachten Sie die besondere Schreibweise von <code>\.</code>. Ein Punkt ist ein
+Metacharacter im RegEx-Patternmatching und trifft auf jedes beliebige
+Zeichen zu. Dank dem vorangestellten Escape-Character <code>\</code> matcht
+lediglich ein echter <code>.</code>.</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_suchen_und_ersetzen_nach_vorkommen">5.6. Suchen und Ersetzen nach Vorkommen</h3>
@@ -1306,6 +1324,16 @@ x:8:8:mail:/var/mail:/usr/sbin/nologin
 x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $</code></pre>
 </div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Obiges Beispiel gelingt problemlos auf einem Linux-System. Auf
+einem OS X oder BSD kann es schiefgehen, wenn die Datei mit
+Kommentarzeichen <code>#</code> beginnt.</td>
+</tr></table>
+</div>
 <div class="listingblock">
 <div class="title">Nur die erste Spalte ausgeben, Trennzeichen ist <code>:</code> (entspricht <code>cut -d: -f1 /etc/passwd</code>)</div>
 <div class="content">
@@ -1322,7 +1350,16 @@ mail
 news
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: auf Apple Mac OSX sind die ersten 10 Zeilen der /etc/passwd mit Kommentarzeichen versehen; deshalb ist auf einem solchen System die Ausgabe dieses Beispiels leer.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Auf einem Mac OS X sind die ersten 10 Zeilen der Datei
+<code>/etc/passwd</code> mit Kommentarzeichen versehen. Deshalb ist auf einem
+solchen System die Ausgabe dieses Beispiels leer.</td>
+</tr></table>
+</div>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Anfang hinzufügen (Inhalt: <code>A</code>)</div>
 <div class="content">
@@ -1463,7 +1500,7 @@ $</code></pre>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 15:07:48 CEST
+ 2016-04-26 15:21:25 CEST
 </div>
 </div>
 </body>
