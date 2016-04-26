@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.0
+:revnumber: 1.1
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 27. März 2016
+:date: 26. April 2016
 :numbered:
 
 = Vorwort =
@@ -23,8 +23,12 @@ Shellskripten.
 == Struktur eines Filters ==
 
 Prinzipiell hat ein `sed`-Filter bis zu vier Teile:
-`[Adresse]Aktion/Muster/Ersetzung/Flag`. Jeder Teil wird durch einen `/`
-vom nächsten Teil separiert.
+
+----
+[Adresse]Aktion/Muster/Ersetzung/Flag
+----
+
+Jeder Teil wird durch einen `/` vom nächsten Teil separiert.
 
 * `[Adresse]Aktion`: beschreibt die Zeilen und die Aktion, auf die das
 Muster angewendet werden soll, bspw. `i` für `insert` (Zeile einfügen)
@@ -60,7 +64,7 @@ $ sed -f sed.skript datei
 ----
 
 TIP: Bei allen Listings finden Sie in Klammern den Dateinamen des
-`sed`-Beispiels.
+`sed`-Beispiels. Damit können Sie das Skript sofort ausprobieren.
 
 == Mehrere Filter miteinander kombinieren ==
 
