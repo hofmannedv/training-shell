@@ -567,6 +567,17 @@ abcB
 $
 ----
 
+Dass das auch mit mehreren Zeilen funktioniert, zeigt nachfolgender
+Codeausschnitt:
+
+.Den Buchstaben `B` am Zeilenende ergänzen (mehrzeilig)
+----
+$ (echo abc; echo ) | sed -e 's/$/B/'
+abcB
+B
+$
+-----
+
 === Spaltenweise agieren ===
 
 Die nachfolgend vorgestellten Aktionen sind Sonderfälle für das vorige

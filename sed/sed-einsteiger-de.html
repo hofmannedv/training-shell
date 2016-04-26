@@ -1339,6 +1339,16 @@ stets auf das Zeilenende jeder einzelnen Zeile.</p></div>
 abcB
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Dass das auch mit mehreren Zeilen funktioniert, zeigt nachfolgender
+Codeausschnitt:</p></div>
+<div class="listingblock">
+<div class="title">Den Buchstaben <code>B</code> am Zeilenende ergänzen (mehrzeilig)</div>
+<div class="content">
+<pre><code>$ (echo abc; echo ) | sed -e 's/$/B/'
+abcB
+B
+$</code></pre>
+</div></div>
 </div>
 </div>
 <div class="sect2">
@@ -1588,7 +1598,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 16:14:23 CEST
+ 2016-04-26 16:18:17 CEST
 </div>
 </div>
 </body>
