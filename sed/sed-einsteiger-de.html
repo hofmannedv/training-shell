@@ -1441,9 +1441,29 @@ $</code></pre>
 Berlin, 10247
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: GNU sed kennt die \&lt;ZAHL&gt;-Referenz; BSD sed leider nicht (die Ausgabe is leer, ohne Fehlermeldung).</p></div>
-<div class="paragraph"><p>Zum Grübeln: was erwarten Sie für eine Ausgabe bei?
-  $ echo "10247 23 Berlin" | sed -n <em>s/\([0-9]+\) \([A-Za-z]\+\)/\2, \1/p</em></p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">GNU sed kennt die Referenzierung über <code>\ZAHL</code>, BSD sed leider
+nicht. Bei letzterem bleibt die Ausgabe leer und Sie erhalten keine
+Fehlermeldung.</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Zum Grübeln: was erwarten Sie für eine Ausgabe bei dem folgenden
+<code>sed</code>-Aufruf:</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ echo "10247 23 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'</code></pre>
+</div></div>
 </div>
 <div class="sect2">
 <h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.9. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
@@ -1462,7 +1482,11 @@ $</code></pre>
 2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: vergleiche grep -v ^$  logfile-with-empty-lines</p></div>
+<div class="paragraph"><p>Das entsprechende UNIX-Kommando ist:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ grep -v ^$  logfile-with-empty-lines</code></pre>
+</div></div>
 </div>
 <div class="sect2">
 <h3 id="_den_ersten_absatz_ausgeben">5.10. Den ersten Absatz ausgeben</h3>
@@ -1520,7 +1544,7 @@ $</code></pre>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 15:31:14 CEST
+ 2016-04-26 15:36:34 CEST
 </div>
 </div>
 </body>

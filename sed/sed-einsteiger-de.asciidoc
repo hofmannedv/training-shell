@@ -683,8 +683,11 @@ $ sed '/^$/d' logfile-with-empty-lines
 $
 ----
 
-Hinweis: vergleiche grep -v ^$  logfile-with-empty-lines
+Das entsprechende UNIX-Kommando ist:
 
+----
+$ grep -v ^$  logfile-with-empty-lines
+----
 
 === Den ersten Absatz ausgeben ===
 
