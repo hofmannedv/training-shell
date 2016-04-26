@@ -691,7 +691,7 @@ $ grep -v ^$  logfile-with-empty-lines
 
 === Den ersten Absatz ausgeben ===
 
-.Alle Zeilen inklusive der ersten Leerzeile ausgeben
+.Alle Zeilen inklusive der ersten Leerzeile ausgeben (`print-first-paragraph.sed`)
 ----
 $ sed -n '1,/^$/p' logfile-with-empty-lines
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
