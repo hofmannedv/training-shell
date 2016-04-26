@@ -551,6 +551,10 @@ x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $
 ----
 
+TIP: Obiges Beispiel gelingt problemlos auf einem Linux-System. Auf
+einem OS X oder BSD kann es schiefgehen, wenn die Datei mit
+Kommentarzeichen `#` beginnt.
+
 .Nur die erste Spalte ausgeben, Trennzeichen ist `:` (entspricht `cut -d: -f1 /etc/passwd`)
 ----
 $ sed -n '1,10s/:.*$//p' /etc/passwd
