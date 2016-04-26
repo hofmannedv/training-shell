@@ -33,7 +33,7 @@ Examples for sed
 * print-match-line-numbers.sed:             print the line numbers that contain the specified pattern
 
 * replace-in-line.sed:                      replace all occurences of a pattern in a single line
-* replace-in-line-to-the-end.sed:           replace all occurences of a pattern to the end of file
+* replace-in-line-to-the-end.sed:           replace all occurences of a pattern from line 6 to the end of file
 * replace-in-line4-7.sed:                   replace all occurences of a pattern in line 4 to 7
 * replace-outside-line4-7.sed:              replace all occurences of a pattern in all but line 4 to 7
 
