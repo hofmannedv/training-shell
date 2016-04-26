@@ -535,6 +535,8 @@ $
 
 === Spaltenweise agieren ===
 
+==== Spalte entfernen ====
+
 .Entferne die erste Spalte (Trennzeichen: `:`) in den Zeilen 1 bis 10 der Datei `/etc/passwd` (ersetze alles bis zum ersten `:` durch nichts)
 ----
 $ sed -n '1,10s/[^:]\+://p' /etc/passwd
@@ -571,7 +573,11 @@ news
 $
 ----
 
-Hinweis: auf Apple Mac OSX sind die ersten 10 Zeilen der /etc/passwd mit Kommentarzeichen versehen; deshalb ist auf einem solchen System die Ausgabe dieses Beispiels leer.
+TIP: Auf einem Mac OS X sind die ersten 10 Zeilen der Datei
+`/etc/passwd` mit Kommentarzeichen versehen. Deshalb ist auf einem
+solchen System die Ausgabe dieses Beispiels leer.
+
+==== Eine Spalte am Anfang hinzufügen ====
 
 .Eine weitere Spalte am Anfang hinzufügen (Inhalt: `A`)
 ----
@@ -589,10 +595,21 @@ A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $
 ----
 
-Hinweis: Das Beispiel sollte die Funktionsweise von '&' näher bringen. Kuerzer waere
-  $ sed -n '1,10s/^/A:/p' /etc/passwd
-oder, weil ohnehin jede Zeile matcht (-n nur die matchenden, /p ausgeben), am besten
-  $ sed -e 's/1,10s/^/A:/' /etc/passwd
+Obiges Beispiel zielt auf die Verwendung von `&`, um Zeichenketten
+aneinanderzufügen. Kürzere Varianten wären:
+
+----
+$ sed -n '1,10s/^/A:/p' /etc/passwd
+----
+
+Da ohnehin jede Zeile matcht (`-n` nur die matchenden Zeilen mit `/p`
+ausgeben), geht auch dieses hier:
+
+----
+$ sed -e 's/1,10s/^/A:/' /etc/passwd
+----
+
+==== Eine Spalte am Ende hinzufügen ====
 
 .Eine weitere Spalte am Ende hinzufügen (Inhalt: `B`)
 ----
@@ -610,8 +627,11 @@ news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
 $
 ----
 
-Hinweis: die einfachere Syntax wäre
-  $ sed -e '/1,10s/$/:B/p' /etc/passwd
+In Anlehnung an das vorherige Beispiel ist diese Schreibweise kürzer:
+
+----
+$ sed -e '/1,10s/$/:B/p' /etc/passwd
+----
 
 === Suchtreffer referenzieren ===
 
