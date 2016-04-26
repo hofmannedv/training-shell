@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# replace all occurences of a pattern to the end of file
+#  replace all occurences of a pattern from line 6 up to the end of file
 #o
 # (C) 2016 Frank Hofmann, Berlin, Germany
 # Released under GNU Public License (GPL)
