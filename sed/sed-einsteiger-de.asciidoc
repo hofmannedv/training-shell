@@ -139,14 +139,16 @@ am Ende ab:
 $ sed -n 's/alfred/friedrich/p' datei
 ----
 
-Hinweis: funktioniert auch bei der Aneinanderreihung, selbst wenn einer der anderen Filter nicht zutrifft.
+Diese Vorgehensweise funktioniert auch bei der Aneinanderreihung von
+mehreren `sed`-Skripts, selbst wenn einer der anderen Filter nicht
+zutrifft.
+
+.Veränderungen bei mehreren Filtern ausgeben
 ----
-$
 $ echo holger | sed -n 's/alfred/friedrich/p; s/[Hh]olger/michael/p' 
 michael
 $
 ----
-
 
 == Beispiele ==
 
