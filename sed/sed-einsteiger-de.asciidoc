@@ -397,11 +397,12 @@ $
 
 === Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
 
-Die nachfolgenden Aufrufe sind ähnlich zu `grep`, `vi`, `less`, wobei hier die
-Verwandschaft der beiden Werkzeuge deutlich wird; beachten Sie aber die leichten syntaktischen Unterschiede.
-Ob sie im Alltag zur Lösung Ihres Problems auf `grep`, `sed` oder `awk` zurückgreifen, ist
-häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
-lösen können.
+Die nachfolgenden Aufrufe sind ähnlich zu `grep`, `vi`, `less`, wobei
+hier die Verwandschaft der beiden Werkzeuge deutlich wird. Beachten Sie
+bei der Benutzung aber die leichten syntaktischen Unterschiede. Ob sie
+im Alltag zur Lösung Ihres Problems auf `grep`, `sed` oder `awk`
+zurückgreifen, ist häufig eine Frage der Gewohnheit und mit welchem
+Aufwand Sie das Problem lösen können.
 
 .Alle Zeilen der Datei `logfile` ausgeben, die das Muster `fho` enthalten (`print-content.sed`)
 ----
@@ -433,8 +434,7 @@ Apple Banana
 $
 ----
 
-Kompatibilitäts-Hinweis: den Befehl /I gibt es nicht bei allen sed Varianten.
-
+TIP: den Befehl `/I` gibt es nicht bei allen `sed`-Varianten.
 
 Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
 ist, hilft Ihnen der Schalter `=`.
@@ -449,7 +449,7 @@ $ sed -n '/fho/ =' logfile
 $
 ----
 
-=== Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken von Zeilen die dem Muster nicht entsprechen ===
+=== Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken der Zeilen, die dem Muster nicht entsprechen ===
 
 .Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9 (`replace-in-line.sed`)
 ----
@@ -490,7 +490,10 @@ $ nl logfile | sed -n '/2016-01-12/s/10\.10\.17\.45/supercomputer/p'
 $
 ----
 
-Hinweis: beachten Sie die Notation '\'. Ein Punkt ist ein Metacharacter im Patternmatching und matcht auf jedes Zeichen; dank vorangestelltem escape-Character '\' matcht nur ein echter '.'.
+TIP: Beachten Sie die besondere Schreibweise von `\.`. Ein Punkt ist ein
+Metacharacter im RegEx-Patternmatching und trifft auf jedes beliebige
+Zeichen zu. Dank dem vorangestellten Escape-Character `\` matcht
+lediglich ein echter `.`.
 
 === Suchen und Ersetzen nach Vorkommen ===
 
