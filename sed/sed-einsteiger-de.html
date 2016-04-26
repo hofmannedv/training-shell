@@ -1329,6 +1329,16 @@ $</code></pre>
 abcB
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Das ganze schreiben Sie mit nachfolgendem Aufruf kürzer. Dabei erfolgen
+nur Ersetzungen, anstatt zu prüfen, ob es einen Match gibt. <code>$</code> matcht
+stets auf das Zeilenende jeder einzelnen Zeile.</p></div>
+<div class="listingblock">
+<div class="title">Den Buchstaben <code>B</code> am Zeilenende ergänzen</div>
+<div class="content">
+<pre><code>$ echo abc | sed -e 's/$/B/'
+abcB
+$</code></pre>
+</div></div>
 </div>
 </div>
 <div class="sect2">
@@ -1578,7 +1588,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 16:08:51 CEST
+ 2016-04-26 16:14:23 CEST
 </div>
 </div>
 </body>

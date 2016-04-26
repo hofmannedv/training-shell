@@ -556,6 +556,17 @@ abcB
 $
 ----
 
+Das ganze schreiben Sie mit nachfolgendem Aufruf kürzer. Dabei erfolgen
+nur Ersetzungen, anstatt zu prüfen, ob es einen Match gibt. `$` matcht
+stets auf das Zeilenende jeder einzelnen Zeile.
+
+.Den Buchstaben `B` am Zeilenende ergänzen
+----
+$ echo abc | sed -e 's/$/B/'
+abcB
+$
+----
+
 === Spaltenweise agieren ===
 
 Die nachfolgend vorgestellten Aktionen sind Sonderfälle für das vorige
