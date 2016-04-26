@@ -699,6 +699,11 @@ $ sed -n '1,/^$/p' logfile-with-empty-lines
 $
 ----
 
+== Danksagung ==
+
+Vielen Dank an Thomas Osterried für Kritik und Verbesserungsvorschläge
+zum vorliegenden Tutorial.
+
 == Weiterführende Dokumente ==
 
 * [[[Barnett]]] Sed - An Introduction and Tutorial by Bruce Barnett, http://www.grymoire.com/Unix/Sed.html
@@ -707,3 +712,5 @@ $
 * [[[Pement]]] Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), http://sed.sourceforge.net/sed1line.txt
 * [[[Wolf]]] Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
 * [[[Hofmann]]] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
+
+
