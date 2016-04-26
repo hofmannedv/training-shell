@@ -22,14 +22,14 @@ Shellskripten.
 
 == Struktur eines Filters ==
 
-Prinzipiell hat ein `sed`-Filter vier Teile:
+Prinzipiell hat ein `sed`-Filter bis zu vier Teile:
 `[Adresse]Aktion/Muster/Ersetzung/Flag`. Jeder Teil wird durch einen `/`
 vom nächsten Teil separiert.
 
 * `[Adresse]Aktion`: beschreibt die Zeilen und die Aktion, auf die das
 Muster angewendet werden soll, bspw. `i` für `insert` (Zeile einfügen)
 und `s` für `substitute` (suchen und ersetzen)
-* `Muster`: Beschreibung des Filters als Regulärer Ausdruck
+* `Muster`: Beschreibung des Filters als Regulärer Ausdruck (siehe REGEX(7))
 * `Ersetzung`: String, welcher den über das Muster gefundenen Suchtreffer ersetzt
 * `Flag`: steuert die Aktion. Es legt fest, was passiert, wenn das Muster zutrifft.
 
@@ -83,6 +83,8 @@ Im Aufruf geben Sie zwischen den Filtern ein `;` an.
 $ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei
 ----
 
+Hinweis: Sie erkennen in [Hh] einen `regulären Ausdruck`.
+
 === Jeden Filter mit `-e` einleiten ===
 
 Über den Schalter `-e` teilen Sie `sed` mit, dass ein weiterer Filter
@@ -110,13 +112,22 @@ $
 Im Standardfall gibt `sed` alle Zeilen der Eingabe aus. Um das zu
 unterdrücken, nutzen Sie den Schalter `-n`. Von Nutzen ist `-n`, um nur
 die Zeilen der Eingabe ausgeben, in denen ihr Filter tatsächlich
-Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit einem `p`
+Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit dem Flag `p`
 am Ende ab:
 
 .Lediglich die Ersetzungen ausgeben
 ----
 $ sed -n 's/alfred/friedrich/p' datei
 ----
+
+Hinweis: funktioniert auch bei der Aneinanderreihung, selbst wenn einer der anderen Filter nicht zutrifft.
+----
+$
+$ echo holger | sed -n 's/alfred/friedrich/p; s/[Hh]olger/michael/p' 
+michael
+$
+----
+
 
 == Beispiele ==
 
@@ -273,11 +284,17 @@ $ nl logfile | sed '1,5{/2016-01-1[12]/d;}'
 $
 ----
 
+Hinweise für die folgenden Beispiele /a, /i, /c:
+  gnu sed erlaubt auch eine einfachere, Ein-Zeilensyntax. Während beispielsweise bsd sed auf '/a\<nl>pattern' besteht, akzeptiert gnu sed auch die Notation '/a++++', oder '/a\++++'.
+
+TODO: Empfehlung: Beispiel /c aus weiter unten gehört deshalb auch in diesen Abschnitt.
+
 === Zeilen einfügen ===
 
 .Vier `+` nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet (`insert-after-pattern.sed`)
 ----
-$ nl logfile | sed '/2016-01-10/a++++'
+$ nl logfile | sed '/2016-01-10/a\
+++++'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
 ++++
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
@@ -306,7 +323,14 @@ $ nl logfile | sed -e '/2016-01-10/a++++ 2016-01-11 ++++' -e '/2016-01-11/a++++ 
      8   2016-01-12 14:55:05 user james logged out from /dev/tty1
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $
-----
+-----
+
+Hinweis: funktioniert nur mit GNU sed. Kompatibiltät:
+nl logfile | sed -e '/2016-01-10/a\
+++++ 2016-01-11 ++++' -e '/2016-01-11/a\
+++++ 2016-01-12 ++++'
+schreibt man nicht mehr von Hand, weil man die Übersicht verliert. Allenfalls erzeugt man ein patternfile mit den beiden Suchmustern (siehe insert-after-with-more-patterns.sed). Die mit '-e' getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch Leerzeilen getrennt.
+
 
 .Markieren aller erfolgreichen Logins des Benutzers `fho` (`insert-before-pattern.sed`)
 ----
@@ -328,9 +352,9 @@ $
 
 === Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
 
-Die nachfolgenden Aufrufe sind ähnlich zu `grep`, wobei hier die
-Verwandschaft der beiden Werkzeuge deutlich wird. Ob Sie im Alltag zur
-Lösung ihres Problems auf `grep`, `sed` oder `awk` zurückgreifen, ist
+Die nachfolgenden Aufrufe sind ähnlich zu `grep`, `vi`, `less`, wobei hier die
+Verwandschaft der beiden Werkzeuge deutlich wird; beachten Sie aber die leichten syntaktischen Unterschiede.
+Ob sie im Alltag zur Lösung Ihres Problems auf `grep`, `sed` oder `awk` zurückgreifen, ist
 häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
 lösen können.
 
@@ -364,6 +388,9 @@ Apple Banana
 $
 ----
 
+Kompatibilitäts-Hinweis: den Befehl /I gibt es nicht bei allen sed Varianten.
+
+
 Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
 ist, hilft Ihnen der Schalter `=`.
 
@@ -377,7 +404,7 @@ $ sed -n '/fho/ =' logfile
 $
 ----
 
-=== Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen ===
+=== Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken von Zeilen die dem Muster nicht entsprechen ===
 
 .Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9 (`replace-in-line.sed`)
 ----
@@ -412,11 +439,13 @@ $
 
 .Ersetze alle Vorkommen der IP-Adresse `10.10.17.45` durch den Hostnamen `supercomputer` in allen Zeilen des Logfiles, in denen die Zeichenkette `2016-01-12` enthalten ist
 ----
-$ nl logfile | sed -n '/2016-01-12/s/10.10.17.45/supercomputer/p'
+$ nl logfile | sed -n '/2016-01-12/s/10\.10\.17\.45/supercomputer/p'
      7   2016-01-12 14:46:10 login failed for user root from supercomputer
      9   2016-01-12 14:57:10 login failed for user root from supercomputer
 $
 ----
+
+Hinweis: beachten Sie die Notation '\'. Ein Punkt ist ein Metacharacter im Patternmatching und matcht auf jedes Zeichen; dank vorangestelltem escape-Character '\' matcht nur ein echter '.'.
 
 === Suchen und Ersetzen nach Vorkommen ===
 
@@ -490,6 +519,8 @@ news
 $
 ----
 
+Hinweis: auf Apple Mac OSX sind die ersten 10 Zeilen der /etc/passwd mit Kommentarzeichen versehen; deshalb ist auf einem solchen System die Ausgabe dieses Beispiels leer.
+
 .Eine weitere Spalte am Anfang hinzufügen (Inhalt: `A`)
 ----
 $ sed -n '1,10s/.*/A:&/p' /etc/passwd
@@ -506,6 +537,11 @@ A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $
 ----
 
+Hinweis: Das Beispiel sollte die Funktionsweise von '&' näher bringen. Kuerzer waere
+  $ sed -n '1,10s/^/A:/p' /etc/passwd
+oder, weil ohnehin jede Zeile matcht (-n nur die matchenden, /p ausgeben), am besten
+  $ sed -e 's/1,10s/^/A:/' /etc/passwd
+
 .Eine weitere Spalte am Ende hinzufügen (Inhalt: `B`)
 ----
 $ sed -n '1,10s/.*/&:B/p' /etc/passwd
@@ -521,6 +557,9 @@ mail:x:8:8:mail:/var/mail:/usr/sbin/nologin:B
 news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
 $
 ----
+
+Hinweis: die einfachere Syntax wäre
+  $ sed -e '/1,10s/$/:B/p' /etc/passwd
 
 === Suchtreffer referenzieren ===
 
@@ -544,6 +583,12 @@ Berlin, 10247
 $
 ----
 
+Hinweis: GNU sed kennt die \<ZAHL>-Referenz; BSD sed leider nicht (die Ausgabe is leer, ohne Fehlermeldung).
+
+Zum Grübeln: was erwarten Sie für eine Ausgabe bei?
+  $ echo "10247 23 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
+
+
 === Alle leeren Zeilen aus der Eingabe herausfiltern ===
 
 .Muster `^d` für leere Zeilen, `d` zum Löschen
@@ -560,6 +605,9 @@ $ sed '/^$/d' logfile-with-empty-lines
 2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $
 ----
+
+Hinweis: vergleiche grep -v ^$  logfile-with-empty-lines
+
 
 === Den ersten Absatz ausgeben ===
 
