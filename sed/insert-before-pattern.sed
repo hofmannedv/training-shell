@@ -6,4 +6,5 @@
 # email frank.hofmann@efho.de
 # -----------------------------------------------------------
 
-/fho logged in/i++ fho ++
+/fho logged in/i\
+++ fho ++
