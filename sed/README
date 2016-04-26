@@ -18,6 +18,7 @@ Examples for sed
 * delete-content-with-match.sed:            delete from the 1st to the 5th line only if there is a match with a pattern
 
 * insert-after-pattern.sed:                 insert a line with 4x+ after each line that has the pattern
+* insert-after-with-more-pattern.sed:       insert a line with 4x+ after each line that has the pattern (two cases)
 * insert-before-pattern.sed:                insert a line with 4x+ before each line that has the pattern
 
 * output-content.sed:                       print the content of the file
