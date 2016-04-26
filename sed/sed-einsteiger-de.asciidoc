@@ -159,6 +159,9 @@ UNIX/Linux-Kommandos `cat`, `tac`, `head` und `tail`. Das Kommando `nl`
 kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
 des `sed`-Kommandos besser zu zeigen.
 
+Das Ausgeben einer betreffenden Zeile erfolgt mit dem Aktionsparameter
+`p` für `print`.
+
 .Den gesamten Inhalt einfach ausgeben (`output-content.sed`)
 ----
 $ nl logfile | sed -n 'p'
@@ -214,6 +217,9 @@ $
 ----
 
 === Zeilen löschen ===
+
+Das Löschen einer betreffenden Zeile erfolgt mit dem Aktionsparameter
+`d` für `delete`.
 
 .Alle Zeilen löschen (`delete-content.sed`)
 ----
@@ -305,12 +311,12 @@ $ nl logfile | sed '1,5{/2016-01-1[12]/d;}'
 $
 ----
 
-Hinweise für die folgenden Beispiele /a, /i, /c:
-  gnu sed erlaubt auch eine einfachere, Ein-Zeilensyntax. Während beispielsweise bsd sed auf '/a\<nl>pattern' besteht, akzeptiert gnu sed auch die Notation '/a++++', oder '/a\++++'.
-
-TODO: Empfehlung: Beispiel /c aus weiter unten gehört deshalb auch in diesen Abschnitt.
-
 === Zeilen einfügen ===
+
+Das Anfügen von Inhalt nach einer betreffenden Zeile erfolgt mit dem
+Aktionsparameter `a` für `append`. `GNU sed` versteht dafür die
+einzeilige Notation `/a++++` und `/a\++++`. `BSD sed` ist pedantischer
+und erwartet nach dem Aktionsparameter einen Zeilenumbruch.
 
 .Vier `+` nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet (`insert-after-pattern.sed`)
 ----
@@ -352,6 +358,10 @@ nl logfile | sed -e '/2016-01-10/a\
 ++++ 2016-01-12 ++++'
 schreibt man nicht mehr von Hand, weil man die Übersicht verliert. Allenfalls erzeugt man ein patternfile mit den beiden Suchmustern (siehe insert-after-with-more-patterns.sed). Die mit '-e' getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch Leerzeilen getrennt.
 
+Das Einfügen von Inhalt vor einer betreffenden Zeile erfolgt mit dem
+Aktionsparameter `i` für `insert`. `GNU sed` versteht dafür die
+einzeilige Notation `/i++++` und `/i\++++`. `BSD sed` ist pedantischer
+und erwartet nach dem Aktionsparameter einen Zeilenumbruch.
 
 .Markieren aller erfolgreichen Logins des Benutzers `fho` (`insert-before-pattern.sed`)
 ----
