@@ -727,7 +727,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install();
+asciidoc.install(4);
 /*]]>*/
 </script>
 </head>
@@ -735,8 +735,12 @@ asciidoc.install();
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.0,</span>
-<span id="revdate">27. März 2016</span>
+<span id="revnumber">version 1.1,</span>
+<span id="revdate">26. April 2016</span>
+<div id="toc">
+  <div id="toctitle">Inhaltsverzeichnis</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
 </div>
 <div id="content">
 <h1 id="_vorwort">Vorwort</h1>
@@ -746,12 +750,24 @@ Suchen und Ersetzen von Zeichenketten auf der Basis von Regulären
 Ausdrücken. <code>sed</code> sieht erstmal recht einfach aus, ist aber sehr mächtig
 und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile und in
 Shellskripten.</p></div>
+<h1 id="_voraussetzungen_zum_verständnis">Voraussetzungen zum Verständnis</h1>
+<div class="paragraph"><p>Um dieses Tutorial zu verstehen, hilft Ihnen das Basiswissen im Umgang
+mit der Kommandozeile. Die Kommandos/Werkzeuge <code>grep</code>, <code>vi(m)</code> und
+<code>less</code> sollten Ihnen nicht fremd sein. Alle diese Werkzeuge sind in etwa
+gleich, unterscheiden sich aber mit Nuancen zueinander.</p></div>
+<div class="paragraph"><p><code>sed</code> benutzt Reguläre Ausdrücke zur Beschreibung von Mustern für
+Zeichenketten. Dieses Tutorial setzt grundlegende Kenntnisse von RegEx
+voraus. Für ein tieferes Wissen dazu hilft Ihnen das Buch <em>Reguläre
+Ausdrücke</em> von Jeffrey Friedl <a href="#Friedl">[Friedl]</a>.</p></div>
 <div class="sect1">
 <h2 id="_struktur_eines_filters">1. Struktur eines Filters</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Prinzipiell hat ein <code>sed</code>-Filter vier Teile:
-<code>[Adresse]Aktion/Muster/Ersetzung/Flag</code>. Jeder Teil wird durch einen <code>/</code>
-vom nächsten Teil separiert.</p></div>
+<div class="paragraph"><p>Prinzipiell hat ein <code>sed</code>-Filter bis zu vier Teile:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[Adresse]Aktion/Muster/Ersetzung/Flag</code></pre>
+</div></div>
+<div class="paragraph"><p>Jeder Teil wird durch einen <code>/</code> vom nächsten Teil separiert.</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -762,7 +778,8 @@ und <code>s</code> für <code>substitute</code> (suchen und ersetzen)
 </li>
 <li>
 <p>
-<code>Muster</code>: Beschreibung des Filters als Regulärer Ausdruck
+<code>Muster</code>: Beschreibung des Filters als Regulärer Ausdruck (siehe dazu
+die Manpage von <code>REGEX(7)</code>)
 </p>
 </li>
 <li>
@@ -820,7 +837,7 @@ für die Skriptdatei. GNU sed versteht auch den langen Schalter <code>--file</co
 <div class="title">Tipp</div>
 </td>
 <td class="content">Bei allen Listings finden Sie in Klammern den Dateinamen des
-<code>sed</code>-Beispiels.</td>
+<code>sed</code>-Beispiels. Damit können Sie das Skript sofort ausprobieren.</td>
 </tr></table>
 </div>
 </div>
@@ -844,6 +861,15 @@ und kleinem <code>h</code>) durch <code>michael</code>. Die Ausgabe erfolgt auf 
 <div class="content">
 <pre><code>$ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei</code></pre>
 </div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content"><code>[Hh]</code> beinhaltet einen regulären Ausdruck für den einzelnen
+Buchstaben <code>h</code> in Groß- oder Kleinschreibung.</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_jeden_filter_mit_code_e_code_einleiten">3.2. Jeden Filter mit <code>-e</code> einleiten</h3>
@@ -875,12 +901,20 @@ $</code></pre>
 <div class="paragraph"><p>Im Standardfall gibt <code>sed</code> alle Zeilen der Eingabe aus. Um das zu
 unterdrücken, nutzen Sie den Schalter <code>-n</code>. Von Nutzen ist <code>-n</code>, um nur
 die Zeilen der Eingabe ausgeben, in denen ihr Filter tatsächlich
-Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit einem <code>p</code>
+Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit dem Flag <code>p</code>
 am Ende ab:</p></div>
 <div class="listingblock">
 <div class="title">Lediglich die Ersetzungen ausgeben</div>
 <div class="content">
 <pre><code>$ sed -n 's/alfred/friedrich/p' datei</code></pre>
+</div></div>
+<div class="paragraph"><p>Hinweis: funktioniert auch bei der Aneinanderreihung, selbst wenn einer der anderen Filter nicht zutrifft.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$
+$ echo holger | sed -n 's/alfred/friedrich/p; s/[Hh]olger/michael/p'
+michael
+$</code></pre>
 </div></div>
 </div>
 </div>
@@ -1040,13 +1074,17 @@ $</code></pre>
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweise für die folgenden Beispiele /a, /i, /c:
+  gnu sed erlaubt auch eine einfachere, Ein-Zeilensyntax. Während beispielsweise bsd sed auf <em>/a\&lt;nl&gt;pattern</em> besteht, akzeptiert gnu sed auch die Notation <em>/a+', oder '/a\+</em>.</p></div>
+<div class="paragraph"><p>TODO: Empfehlung: Beispiel /c aus weiter unten gehört deshalb auch in diesen Abschnitt.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_zeilen_einfügen">5.3. Zeilen einfügen</h3>
 <div class="listingblock">
 <div class="title">Vier <code>+</code> nach (jedem) Eintrag einfügen, der <code>2016-01-10</code> beinhaltet (<code>insert-after-pattern.sed</code>)</div>
 <div class="content">
-<pre><code>$ nl logfile | sed '/2016-01-10/a++++'
+<pre><code>$ nl logfile | sed '/2016-01-10/a\
+++++'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
 ++++
      2   2016-01-11 08:30:10 user fho logged in on /dev/tty2
@@ -1076,6 +1114,11 @@ $</code></pre>
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweis: funktioniert nur mit GNU sed. Kompatibiltät:
+nl logfile | sed -e <em>/2016-01-10/a\
++ 2016-01-11 <code></em> -e <em>/2016-01-11/a\
++ 2016-01-12 </code></em>
+schreibt man nicht mehr von Hand, weil man die Übersicht verliert. Allenfalls erzeugt man ein patternfile mit den beiden Suchmustern (siehe insert-after-with-more-patterns.sed). Die mit <em>-e</em> getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch Leerzeilen getrennt.</p></div>
 <div class="listingblock">
 <div class="title">Markieren aller erfolgreichen Logins des Benutzers <code>fho</code> (<code>insert-before-pattern.sed</code>)</div>
 <div class="content">
@@ -1097,9 +1140,9 @@ $</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_finde_alle_zeilen_der_eingabe_welches_ein_bestimmtes_muster_beinhalten">5.4. Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten</h3>
-<div class="paragraph"><p>Die nachfolgenden Aufrufe sind ähnlich zu <code>grep</code>, wobei hier die
-Verwandschaft der beiden Werkzeuge deutlich wird. Ob Sie im Alltag zur
-Lösung ihres Problems auf <code>grep</code>, <code>sed</code> oder <code>awk</code> zurückgreifen, ist
+<div class="paragraph"><p>Die nachfolgenden Aufrufe sind ähnlich zu <code>grep</code>, <code>vi</code>, <code>less</code>, wobei hier die
+Verwandschaft der beiden Werkzeuge deutlich wird; beachten Sie aber die leichten syntaktischen Unterschiede.
+Ob sie im Alltag zur Lösung Ihres Problems auf <code>grep</code>, <code>sed</code> oder <code>awk</code> zurückgreifen, ist
 häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
 lösen können.</p></div>
 <div class="listingblock">
@@ -1131,6 +1174,7 @@ vereinfacht sich die Schreibweise wie folgt:</p></div>
 Apple Banana
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Kompatibilitäts-Hinweis: den Befehl /I gibt es nicht bei allen sed Varianten.</p></div>
 <div class="paragraph"><p>Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
 ist, hilft Ihnen der Schalter <code>=</code>.</p></div>
 <div class="listingblock">
@@ -1145,7 +1189,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_suchen_und_ersetzen_nach_einem_muster_in_ausgewählten_zeilen">5.5. Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen</h3>
+<h3 id="_suchen_und_ersetzen_nach_einem_muster_in_ausgewählten_zeilen_und_unterdrücken_von_zeilen_die_dem_muster_nicht_entsprechen">5.5. Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken von Zeilen die dem Muster nicht entsprechen</h3>
 <div class="listingblock">
 <div class="title">Ersetze alle Vorkommen von <code>root</code> durch <code>alex</code> in Zeile 9 (<code>replace-in-line.sed</code>)</div>
 <div class="content">
@@ -1180,11 +1224,12 @@ $</code></pre>
 <div class="listingblock">
 <div class="title">Ersetze alle Vorkommen der IP-Adresse <code>10.10.17.45</code> durch den Hostnamen <code>supercomputer</code> in allen Zeilen des Logfiles, in denen die Zeichenkette <code>2016-01-12</code> enthalten ist</div>
 <div class="content">
-<pre><code>$ nl logfile | sed -n '/2016-01-12/s/10.10.17.45/supercomputer/p'
+<pre><code>$ nl logfile | sed -n '/2016-01-12/s/10\.10\.17\.45/supercomputer/p'
      7   2016-01-12 14:46:10 login failed for user root from supercomputer
      9   2016-01-12 14:57:10 login failed for user root from supercomputer
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweis: beachten Sie die Notation <em>\</em>. Ein Punkt ist ein Metacharacter im Patternmatching und matcht auf jedes Zeichen; dank vorangestelltem escape-Character <em>\</em> matcht nur ein echter <em>.</em>.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_suchen_und_ersetzen_nach_vorkommen">5.6. Suchen und Ersetzen nach Vorkommen</h3>
@@ -1259,6 +1304,7 @@ mail
 news
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweis: auf Apple Mac OSX sind die ersten 10 Zeilen der /etc/passwd mit Kommentarzeichen versehen; deshalb ist auf einem solchen System die Ausgabe dieses Beispiels leer.</p></div>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Anfang hinzufügen (Inhalt: <code>A</code>)</div>
 <div class="content">
@@ -1275,6 +1321,10 @@ A:mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
 A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweis: Das Beispiel sollte die Funktionsweise von <em>&amp;</em> näher bringen. Kuerzer waere
+  $ sed -n <em>1,10s/<sup>/A:/p</em> /etc/passwd
+oder, weil ohnehin jede Zeile matcht (-n nur die matchenden, /p ausgeben), am besten
+  $ sed -e <em>s/1,10s/</sup>/A:/</em> /etc/passwd</p></div>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Ende hinzufügen (Inhalt: <code>B</code>)</div>
 <div class="content">
@@ -1291,6 +1341,8 @@ mail:x:8:8:mail:/var/mail:/usr/sbin/nologin:B
 news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweis: die einfachere Syntax wäre
+  $ sed -e <em>/1,10s/$/:B/p</em> /etc/passwd</p></div>
 </div>
 <div class="sect2">
 <h3 id="_suchtreffer_referenzieren">5.8. Suchtreffer referenzieren</h3>
@@ -1314,6 +1366,9 @@ $</code></pre>
 Berlin, 10247
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweis: GNU sed kennt die \&lt;ZAHL&gt;-Referenz; BSD sed leider nicht (die Ausgabe is leer, ohne Fehlermeldung).</p></div>
+<div class="paragraph"><p>Zum Grübeln: was erwarten Sie für eine Ausgabe bei?
+  $ echo "10247 23 Berlin" | sed -n <em>s/\([0-9]+\) \([A-Za-z]\+\)/\2, \1/p</em></p></div>
 </div>
 <div class="sect2">
 <h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.9. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
@@ -1332,6 +1387,7 @@ $</code></pre>
 2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Hinweis: vergleiche grep -v ^$  logfile-with-empty-lines</p></div>
 </div>
 <div class="sect2">
 <h3 id="_den_ersten_absatz_ausgeben">5.10. Den ersten Absatz ausgeben</h3>
@@ -1352,32 +1408,32 @@ $</code></pre>
 <div class="ulist"><ul>
 <li>
 <p>
-Sed - An Introduction and Tutorial by Bruce Barnett, <a href="http://www.grymoire.com/Unix/Sed.html">http://www.grymoire.com/Unix/Sed.html</a>
+<a id="Barnett"></a>[Barnett] Sed - An Introduction and Tutorial by Bruce Barnett, <a href="http://www.grymoire.com/Unix/Sed.html">http://www.grymoire.com/Unix/Sed.html</a>
 </p>
 </li>
 <li>
 <p>
-Dale Dougherty: <em>sed &amp; awk</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9781565922259.do">http://shop.oreilly.com/product/9781565922259.do</a>
+<a id="Dougherty"></a>[Dougherty] Dale Dougherty: <em>sed &amp; awk</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9781565922259.do">http://shop.oreilly.com/product/9781565922259.do</a>
 </p>
 </li>
 <li>
 <p>
-Jeffrey E. F. Friedl: <em>Reguläre Ausdrücke</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9780596528126.do">http://shop.oreilly.com/product/9780596528126.do</a>
+<a id="Friedl"></a>[Friedl] Jeffrey E. F. Friedl: <em>Reguläre Ausdrücke</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9780596528126.do">http://shop.oreilly.com/product/9780596528126.do</a>
 </p>
 </li>
 <li>
 <p>
-Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), <a href="http://sed.sourceforge.net/sed1line.txt">http://sed.sourceforge.net/sed1line.txt</a>
+<a id="Pement"></a>[Pement] Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), <a href="http://sed.sourceforge.net/sed1line.txt">http://sed.sourceforge.net/sed1line.txt</a>
 </p>
 </li>
 <li>
 <p>
-Jürgen Wolf: <em>Shell-Programmierung. Das umfassende Handbuch</em>, Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+<a id="Wolf"></a>[Wolf] Jürgen Wolf: <em>Shell-Programmierung. Das umfassende Handbuch</em>, Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
 </p>
 </li>
 <li>
 <p>
-Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, <a href="https://github.com/hofmannedv/training-shell">https://github.com/hofmannedv/training-shell</a>
+<a id="Hofmann"></a>[Hofmann] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, <a href="https://github.com/hofmannedv/training-shell">https://github.com/hofmannedv/training-shell</a>
 </p>
 </li>
 </ul></div>
@@ -1387,9 +1443,9 @@ Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, <a href="https://githu
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0<br />
+Version 1.1<br />
 Letzte Änderung
- 2016-04-05 17:49:57 CEST
+ 2016-04-26 14:03:51 CEST
 </div>
 </div>
 </body>

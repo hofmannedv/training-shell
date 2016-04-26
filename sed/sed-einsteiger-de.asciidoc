@@ -20,6 +20,18 @@ Ausdrücken. `sed` sieht erstmal recht einfach aus, ist aber sehr mächtig
 und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile und in
 Shellskripten.
 
+= Voraussetzungen zum Verständnis =
+
+Um dieses Tutorial zu verstehen, hilft Ihnen das Basiswissen im Umgang
+mit der Kommandozeile. Die Kommandos/Werkzeuge `grep`, `vi(m)` und
+`less` sollten Ihnen nicht fremd sein. Alle diese Werkzeuge sind in etwa
+gleich, unterscheiden sich aber mit Nuancen zueinander.
+
+`sed` benutzt Reguläre Ausdrücke zur Beschreibung von Mustern für
+Zeichenketten. Dieses Tutorial setzt grundlegende Kenntnisse von RegEx
+voraus. Für ein tieferes Wissen dazu hilft Ihnen das Buch 'Reguläre
+Ausdrücke' von Jeffrey Friedl <<Friedl>>.
+
 == Struktur eines Filters ==
 
 Prinzipiell hat ein `sed`-Filter bis zu vier Teile:
@@ -33,7 +45,8 @@ Jeder Teil wird durch einen `/` vom nächsten Teil separiert.
 * `[Adresse]Aktion`: beschreibt die Zeilen und die Aktion, auf die das
 Muster angewendet werden soll, bspw. `i` für `insert` (Zeile einfügen)
 und `s` für `substitute` (suchen und ersetzen)
-* `Muster`: Beschreibung des Filters als Regulärer Ausdruck (siehe REGEX(7))
+* `Muster`: Beschreibung des Filters als Regulärer Ausdruck (siehe dazu
+die Manpage von `REGEX(7)`)
 * `Ersetzung`: String, welcher den über das Muster gefundenen Suchtreffer ersetzt
 * `Flag`: steuert die Aktion. Es legt fest, was passiert, wenn das Muster zutrifft.
 
@@ -626,9 +639,9 @@ $
 
 == Weiterführende Dokumente ==
 
-* Sed - An Introduction and Tutorial by Bruce Barnett, http://www.grymoire.com/Unix/Sed.html
-* Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
-* Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
-* Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), http://sed.sourceforge.net/sed1line.txt
-* Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
-* Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
+* [[[Barnett]]] Sed - An Introduction and Tutorial by Bruce Barnett, http://www.grymoire.com/Unix/Sed.html
+* [[[Dougherty]]] Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
+* [[[Friedl]]] Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
+* [[[Pement]]] Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), http://sed.sourceforge.net/sed1line.txt
+* [[[Wolf]]] Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+* [[[Hofmann]]] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
