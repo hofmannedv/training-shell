@@ -800,13 +800,8 @@ die Manpage von <code>REGEX(7)</code>)
 <div class="sectionbody">
 <div class="paragraph"><p><code>sed</code> akzeptiert verschiedene Wege, über die es Filter entgegennimmt und
 auf den Datenstrom anwendet.</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-über <code>stdin</code> oder als direkten Parameter beim Aufruf von <code>sed</code>
-</p>
-</li>
-</ul></div>
+<div class="sect2">
+<h3 id="_über_code_stdin_code_oder_als_direkten_parameter_beim_aufruf_von_code_sed_code">2.1. Über <code>stdin</code> oder als direkten Parameter beim Aufruf von <code>sed</code></h3>
 <div class="listingblock">
 <div class="title">Filtern mittels <code>sed</code> nach einer Pipe</div>
 <div class="content">
@@ -817,15 +812,11 @@ auf den Datenstrom anwendet.</p></div>
 <div class="content">
 <pre><code>$ sed 's/alfred/friedrich/' datei</code></pre>
 </div></div>
-<div class="ulist"><ul>
-<li>
-<p>
-in dem das <code>sed</code>-Skript in einer separaten Datei liegt. Die
-Referenzierung erfolgt über den Schalter <code>-f</code> gefolgt von dem Dateinamen
-für die Skriptdatei. GNU sed versteht auch den langen Schalter <code>--file</code>.
-</p>
-</li>
-</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_code_sed_code_skript_als_separate_datei">2.2. <code>sed</code>-Skript als separate Datei</h3>
+<div class="paragraph"><p>Die Referenzierung erfolgt über den Schalter <code>-f</code> gefolgt von dem Dateinamen
+für die Skriptdatei. GNU sed versteht auch den langen Schalter <code>--file</code>.</p></div>
 <div class="listingblock">
 <div class="title">Filtern mittels <code>sed</code> und dem Skript <code>sed.skript</code></div>
 <div class="content">
@@ -839,6 +830,7 @@ für die Skriptdatei. GNU sed versteht auch den langen Schalter <code>--file</co
 <td class="content">Bei allen Listings finden Sie in Klammern den Dateinamen des
 <code>sed</code>-Beispiels. Damit können Sie das Skript sofort ausprobieren.</td>
 </tr></table>
+</div>
 </div>
 </div>
 </div>
@@ -1445,7 +1437,7 @@ $</code></pre>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 14:03:51 CEST
+ 2016-04-26 14:23:27 CEST
 </div>
 </div>
 </body>

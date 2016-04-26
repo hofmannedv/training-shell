@@ -55,7 +55,7 @@ die Manpage von `REGEX(7)`)
 `sed` akzeptiert verschiedene Wege, über die es Filter entgegennimmt und
 auf den Datenstrom anwendet.
 
-* über `stdin` oder als direkten Parameter beim Aufruf von `sed`
+=== Über `stdin` oder als direkten Parameter beim Aufruf von `sed` ===
 
 .Filtern mittels `sed` nach einer Pipe
 ----
@@ -67,8 +67,9 @@ $ cat datei | sed 's/alfred/friedrich/'
 $ sed 's/alfred/friedrich/' datei
 ----
 
-* in dem das `sed`-Skript in einer separaten Datei liegt. Die
-Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
+=== `sed`-Skript als separate Datei ===
+
+Die Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
 für die Skriptdatei. GNU sed versteht auch den langen Schalter `--file`.
 
 .Filtern mittels `sed` und dem Skript `sed.skript`
