@@ -1308,6 +1308,8 @@ $</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_spaltenweise_agieren">5.7. Spaltenweise agieren</h3>
+<div class="sect3">
+<h4 id="_spalte_entfernen">5.7.1. Spalte entfernen</h4>
 <div class="listingblock">
 <div class="title">Entferne die erste Spalte (Trennzeichen: <code>:</code>) in den Zeilen 1 bis 10 der Datei <code>/etc/passwd</code> (ersetze alles bis zum ersten <code>:</code> durch nichts)</div>
 <div class="content">
@@ -1360,6 +1362,9 @@ $</code></pre>
 solchen System die Ausgabe dieses Beispiels leer.</td>
 </tr></table>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_eine_spalte_am_anfang_hinzufügen">5.7.2. Eine Spalte am Anfang hinzufügen</h4>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Anfang hinzufügen (Inhalt: <code>A</code>)</div>
 <div class="content">
@@ -1376,10 +1381,21 @@ A:mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
 A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: Das Beispiel sollte die Funktionsweise von <em>&amp;</em> näher bringen. Kuerzer waere
-  $ sed -n <em>1,10s/<sup>/A:/p</em> /etc/passwd
-oder, weil ohnehin jede Zeile matcht (-n nur die matchenden, /p ausgeben), am besten
-  $ sed -e <em>s/1,10s/</sup>/A:/</em> /etc/passwd</p></div>
+<div class="paragraph"><p>Obiges Beispiel zielt auf die Verwendung von <code>&amp;</code>, um Zeichenketten
+aneinanderzufügen. Kürzere Varianten wären:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ sed -n '1,10s/^/A:/p' /etc/passwd</code></pre>
+</div></div>
+<div class="paragraph"><p>Da ohnehin jede Zeile matcht (<code>-n</code> nur die matchenden Zeilen mit <code>/p</code>
+ausgeben), geht auch dieses hier:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ sed -e 's/1,10s/^/A:/' /etc/passwd</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_eine_spalte_am_ende_hinzufügen">5.7.3. Eine Spalte am Ende hinzufügen</h4>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Ende hinzufügen (Inhalt: <code>B</code>)</div>
 <div class="content">
@@ -1396,8 +1412,12 @@ mail:x:8:8:mail:/var/mail:/usr/sbin/nologin:B
 news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: die einfachere Syntax wäre
-  $ sed -e <em>/1,10s/$/:B/p</em> /etc/passwd</p></div>
+<div class="paragraph"><p>In Anlehnung an das vorherige Beispiel ist diese Schreibweise kürzer:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ sed -e '/1,10s/$/:B/p' /etc/passwd</code></pre>
+</div></div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_suchtreffer_referenzieren">5.8. Suchtreffer referenzieren</h3>
@@ -1500,7 +1520,7 @@ $</code></pre>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 15:21:25 CEST
+ 2016-04-26 15:31:14 CEST
 </div>
 </div>
 </body>
