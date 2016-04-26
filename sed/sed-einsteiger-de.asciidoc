@@ -655,11 +655,16 @@ Berlin, 10247
 $
 ----
 
-Hinweis: GNU sed kennt die \<ZAHL>-Referenz; BSD sed leider nicht (die Ausgabe is leer, ohne Fehlermeldung).
+TIP: GNU sed kennt die Referenzierung über `\ZAHL`, BSD sed leider
+nicht. Bei letzterem bleibt die Ausgabe leer und Sie erhalten keine
+Fehlermeldung.
 
-Zum Grübeln: was erwarten Sie für eine Ausgabe bei?
-  $ echo "10247 23 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
+TIP: Zum Grübeln: was erwarten Sie für eine Ausgabe bei dem folgenden
+`sed`-Aufruf:
 
+----
+$ echo "10247 23 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
+----
 
 === Alle leeren Zeilen aus der Eingabe herausfiltern ===
 
