@@ -313,6 +313,8 @@ $
 
 === Zeilen einfügen ===
 
+==== Vor dem Suchtreffer ====
+
 Das Anfügen von Inhalt nach einer betreffenden Zeile erfolgt mit dem
 Aktionsparameter `a` für `append`. `GNU sed` versteht dafür die
 einzeilige Notation `/a++++` und `/a\++++`. `BSD sed` ist pedantischer
@@ -367,6 +369,8 @@ Die Empfehlung ist, zunächst eine Musterdatei mit den beiden Suchmustern
 (siehe `insert-after-with-more-patterns.sed`) zu erzeugen. Die mit `-e`
 getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch
 Leerzeilen voneinander getrennt.
+
+==== Nach dem Suchtreffer ====
 
 Das Einfügen von Inhalt vor einer betreffenden Zeile erfolgt mit dem
 Aktionsparameter `i` für `insert`. `GNU sed` versteht dafür die

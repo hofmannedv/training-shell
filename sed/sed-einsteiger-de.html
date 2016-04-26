@@ -900,11 +900,13 @@ am Ende ab:</p></div>
 <div class="content">
 <pre><code>$ sed -n 's/alfred/friedrich/p' datei</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: funktioniert auch bei der Aneinanderreihung, selbst wenn einer der anderen Filter nicht zutrifft.</p></div>
+<div class="paragraph"><p>Diese Vorgehensweise funktioniert auch bei der Aneinanderreihung von
+mehreren <code>sed</code>-Skripts, selbst wenn einer der anderen Filter nicht
+zutrifft.</p></div>
 <div class="listingblock">
+<div class="title">Veränderungen bei mehreren Filtern ausgeben</div>
 <div class="content">
-<pre><code>$
-$ echo holger | sed -n 's/alfred/friedrich/p; s/[Hh]olger/michael/p'
+<pre><code>$ echo holger | sed -n 's/alfred/friedrich/p; s/[Hh]olger/michael/p'
 michael
 $</code></pre>
 </div></div>
@@ -919,6 +921,8 @@ $</code></pre>
 UNIX/Linux-Kommandos <code>cat</code>, <code>tac</code>, <code>head</code> und <code>tail</code>. Das Kommando <code>nl</code>
 kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
 des <code>sed</code>-Kommandos besser zu zeigen.</p></div>
+<div class="paragraph"><p>Das Ausgeben einer betreffenden Zeile erfolgt mit dem Aktionsparameter
+<code>p</code> für <code>print</code>.</p></div>
 <div class="listingblock">
 <div class="title">Den gesamten Inhalt einfach ausgeben (<code>output-content.sed</code>)</div>
 <div class="content">
@@ -976,6 +980,8 @@ $</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_zeilen_löschen">5.2. Zeilen löschen</h3>
+<div class="paragraph"><p>Das Löschen einer betreffenden Zeile erfolgt mit dem Aktionsparameter
+<code>d</code> für <code>delete</code>.</p></div>
 <div class="listingblock">
 <div class="title">Alle Zeilen löschen (<code>delete-content.sed</code>)</div>
 <div class="content">
@@ -1066,12 +1072,15 @@ $</code></pre>
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweise für die folgenden Beispiele /a, /i, /c:
-  gnu sed erlaubt auch eine einfachere, Ein-Zeilensyntax. Während beispielsweise bsd sed auf <em>/a\&lt;nl&gt;pattern</em> besteht, akzeptiert gnu sed auch die Notation <em>/a+', oder '/a\+</em>.</p></div>
-<div class="paragraph"><p>TODO: Empfehlung: Beispiel /c aus weiter unten gehört deshalb auch in diesen Abschnitt.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_zeilen_einfügen">5.3. Zeilen einfügen</h3>
+<div class="sect3">
+<h4 id="_vor_dem_suchtreffer">5.3.1. Vor dem Suchtreffer</h4>
+<div class="paragraph"><p>Das Anfügen von Inhalt nach einer betreffenden Zeile erfolgt mit dem
+Aktionsparameter <code>a</code> für <code>append</code>. <code>GNU sed</code> versteht dafür die
+einzeilige Notation <code>/a+` und `/a\+</code>. <code>BSD sed</code> ist pedantischer
+und erwartet nach dem Aktionsparameter einen Zeilenumbruch.</p></div>
 <div class="listingblock">
 <div class="title">Vier <code>+</code> nach (jedem) Eintrag einfügen, der <code>2016-01-10</code> beinhaltet (<code>insert-after-pattern.sed</code>)</div>
 <div class="content">
@@ -1106,11 +1115,27 @@ $</code></pre>
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Hinweis: funktioniert nur mit GNU sed. Kompatibiltät:
-nl logfile | sed -e <em>/2016-01-10/a\
-+ 2016-01-11 <code></em> -e <em>/2016-01-11/a\
-+ 2016-01-12 </code></em>
-schreibt man nicht mehr von Hand, weil man die Übersicht verliert. Allenfalls erzeugt man ein patternfile mit den beiden Suchmustern (siehe insert-after-with-more-patterns.sed). Die mit <em>-e</em> getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch Leerzeilen getrennt.</p></div>
+<div class="paragraph"><p>Obiges Beispiel funktioniert nur mit GNU sed. Um es kompatibel für BSD
+sed zu halten, bedarf es eines expliziten Umbruchs:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ nl logfile | sed -e '/2016-01-10/a\
+++++ 2016-01-11 ++++' -e '/2016-01-11/a\
+++++ 2016-01-12 ++++'
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Hierbei besteht die Gefahr, dass die Übersicht im Aufruf verloren geht.
+Die Empfehlung ist, zunächst eine Musterdatei mit den beiden Suchmustern
+(siehe <code>insert-after-with-more-patterns.sed</code>) zu erzeugen. Die mit <code>-e</code>
+getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch
+Leerzeilen voneinander getrennt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_nach_dem_suchtreffer">5.3.2. Nach dem Suchtreffer</h4>
+<div class="paragraph"><p>Das Einfügen von Inhalt vor einer betreffenden Zeile erfolgt mit dem
+Aktionsparameter <code>i</code> für <code>insert</code>. <code>GNU sed</code> versteht dafür die
+einzeilige Notation <code>/i+` und `/i\+</code>. <code>BSD sed</code> ist pedantischer
+und erwartet nach dem Aktionsparameter einen Zeilenumbruch.</p></div>
 <div class="listingblock">
 <div class="title">Markieren aller erfolgreichen Logins des Benutzers <code>fho</code> (<code>insert-before-pattern.sed</code>)</div>
 <div class="content">
@@ -1129,6 +1154,7 @@ schreibt man nicht mehr von Hand, weil man die Übersicht verliert. Allenfalls e
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_finde_alle_zeilen_der_eingabe_welches_ein_bestimmtes_muster_beinhalten">5.4. Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten</h3>
@@ -1437,7 +1463,7 @@ $</code></pre>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-26 14:23:27 CEST
+ 2016-04-26 15:07:48 CEST
 </div>
 </div>
 </body>
