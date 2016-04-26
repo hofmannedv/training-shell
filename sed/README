@@ -10,7 +10,7 @@ Examples for sed
 
 * delete-content.sed:                       delete all the lines of the file
 * delete-content-line3.sed:                 delete the 3rd line of the file, only
-* delete-content-line3-5.sed:               delete from the 3rd to the 5th line of the file
+* delete-content-line3-5.sed:               delete from the 3rd up to before the 6th line of the file
 * delete-content-first-and-last-line.sed:   delete the first, and the last line, only
 * delete-content-first-up-to-match.sed:     delete from the first line up to the line with the match
 * delete-content-match-to-the-end.sed:      delete from the line with the match up to the end of file
