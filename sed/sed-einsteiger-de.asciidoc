@@ -801,7 +801,11 @@ $ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'
 
 === Alle leeren Zeilen aus der Eingabe herausfiltern ===
 
-.Muster `^d` für leere Zeilen, `d` zum Löschen
+Hier werden zwei Dinge miteinander kombiniert -- ein Muster, und eine
+Aktion. Das Muster für eine leere Zeile ist `^$`, und das Löschen einer
+Zeile erfolgt über das Aktionsflag `d`.
+
+.Muster `^$` für leere Zeilen, `d` zum Löschen
 ----
 $ sed '/^$/d' logfile-with-empty-lines
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -816,7 +820,7 @@ $ sed '/^$/d' logfile-with-empty-lines
 $
 ----
 
-Das entsprechende UNIX-Kommando ist:
+Der entsprechende Aufruf des UNIX-Kommandos `grep` ist:
 
 ----
 $ grep -v ^$  logfile-with-empty-lines

@@ -1594,8 +1594,11 @@ $</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.11. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
+<div class="paragraph"><p>Hier werden zwei Dinge miteinander kombiniert&#8201;&#8212;&#8201;ein Muster, und eine
+Aktion. Das Muster für eine leere Zeile ist <code>^$</code>, und das Löschen einer
+Zeile erfolgt über das Aktionsflag <code>d</code>.</p></div>
 <div class="listingblock">
-<div class="title">Muster <code>^d</code> für leere Zeilen, <code>d</code> zum Löschen</div>
+<div class="title">Muster <code>^$</code> für leere Zeilen, <code>d</code> zum Löschen</div>
 <div class="content">
 <pre><code>$ sed '/^$/d' logfile-with-empty-lines
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -1609,7 +1612,7 @@ $</code></pre>
 2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Das entsprechende UNIX-Kommando ist:</p></div>
+<div class="paragraph"><p>Der entsprechende Aufruf des UNIX-Kommandos <code>grep</code> ist:</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>$ grep -v ^$  logfile-with-empty-lines</code></pre>
@@ -1678,7 +1681,7 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-27 15:37:47 CEST
+ 2016-04-27 16:01:10 CEST
 </div>
 </div>
 </body>
