@@ -1,0 +1,85 @@
+Die Programmiersprache `awk`. Erste Schritte.
+=============================================
+Frank Hofmann
+:subtitle:
+:doctype: book
+:copyright: Frank Hofmann
+:revnumber: 0.1
+:Author Initials: FH
+:edition: 1
+:lang: de
+:date: 27. April 2016
+:numbered:
+
+= Vorwort =
+
+`awk` ist eine Programmiersprache, die am besten strukturierte Textdaten
+verarbeiten kann. Das beinhaltet bspw. das Ausgeben, Löschen, Suchen und
+Ersetzen von Zeichenketten auf der Basis von Regulären Ausdrücken. `awk`
+ist sehr mächtig und flexibel im Alltagsgebrauch als Filter auf der
+Kommandozeile und in Shellskripten.
+
+Der Name `awk` leitet sich aus den drei Anfangsbuchstaben der
+Familiennamen der Entwickler Alfred V. Aho, Peter J. Weinberger und
+Brian W. Kernighan ab.
+
+= Voraussetzungen zum Verständnis =
+
+Um dieses Tutorial zu verstehen, hilft Ihnen das Basiswissen im Umgang
+mit der Kommandozeile. Die Kommandos/Werkzeuge `grep`, `vi(m)` und
+`less` sollten Ihnen nicht fremd sein. Alle diese Werkzeuge sind in etwa
+gleich, unterscheiden sich aber mit Nuancen zueinander.
+
+`awk` benutzt Reguläre Ausdrücke zur Beschreibung von Mustern für
+Zeichenketten. Dieses Tutorial setzt grundlegende Kenntnisse von RegEx
+voraus. Für ein tieferes Wissen dazu hilft Ihnen das Buch 'Reguläre
+Ausdrücke' von Jeffrey Friedl <<Friedl>>.
+
+== `awk`-Programme benutzen ==
+
+=== Über `stdin` oder als direkten Parameter beim Aufruf von `awk` ===
+
+.Filtern mittels `awk` nach einer Pipe
+----
+$ cat datei | awk 'anweisungen'
+----
+
+.Filtern mittels `awk` ohne Pipe und mit direktem Aufruf der Datei
+----
+$ awk 'anweisungen' datei
+----
+
+=== `awk`-Skript als separate Datei ===
+
+Die Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
+für die Skriptdatei. `awk` versteht auch den langen Schalter `--file`.
+
+.Filtern mittels `awk` und dem Skript `awk.skript`
+----
+$ awk -f awk.skript datei
+----
+
+TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
+`awk`-Beispiels. Damit können Sie das Skript sofort ausprobieren.
+
+== Beispiele ==
+
+=== Ausgeben einer Datei ===
+
+Die nachfolgenden Aufrufe haben ihre Entsprechung in den
+UNIX/Linux-Kommandos `cat`, `tac`, `head` und `tail`. Das Kommando `nl`
+kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
+des `awk`-Kommandos besser zu zeigen.
+
+== Danksagung ==
+
+Vielen Dank an Thomas Osterried für Kritik und Verbesserungsvorschläge
+zum vorliegenden Tutorial.
+
+== Weiterführende Dokumente ==
+
+* [[[Dougherty]]] Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
+* [[[Friedl]]] Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
+* [[[Wolf]]] Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+* [[[Hofmann]]] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
+
