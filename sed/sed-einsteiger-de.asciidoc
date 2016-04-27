@@ -498,9 +498,9 @@ $
 ----
 
 TIP: Beachten Sie die besondere Schreibweise von `\.`. Ein Punkt ist ein
-Metacharacter im RegEx-Patternmatching und trifft auf jedes beliebige
-Zeichen zu. Dank dem vorangestellten Escape-Character `\` matcht
-lediglich ein echter `.`.
+Metazeichen im RegEx-Patternmatching und trifft auf jedes beliebige
+Zeichen zu. Dank dem vorangestellten Escape-Zeichen `\` matcht lediglich
+ein echter Punkt (`.`).
 
 === Suchen und Ersetzen nach Vorkommen ===
 
