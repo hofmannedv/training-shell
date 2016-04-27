@@ -628,7 +628,7 @@ $ (echo abc; echo ) | sed -e 's/$/B/'
 abcB
 B
 $
------
+----
 
 === Spaltenweise agieren ===
 
