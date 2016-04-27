@@ -744,11 +744,18 @@ $ sed -e '/1,10s/$/:B/p' /etc/passwd
 
 === Suchtreffer referenzieren ===
 
+`sed` erlaubt Ihnen, die einzelnen Suchtreffer zu referenzieren. Dazu
+kennt es die beiden Metazeichen `&` und `\ZAHL` (siehe Hinweis). Das
+erste Beispiel fokussiert lediglich auf den ersten Suchtreffer:
+
 .Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels `&`)
 ----
 $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/'
 (apple) orange melon apple Apple
 ----
+
+Möchten Sie alle Suchtreffer berücksichtigen, ergänzen Sie den
+`sed`-Aufruf um das Aktionsflag `g` am Ende des Ausdrucks:
 
 .Markiere jeden Suchtreffer mit runden Klammern (Referenz mittels `&`)
 ----
@@ -757,6 +764,14 @@ $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/g'
 $
 ----
 
+Das Konzept der Regulären Ausdrücke beinhaltet sogenannte 'back
+references' ("Rückverweis"). Jedem einzelnen Suchtreffer wird eine
+Ziffer zugeordnet, über die Sie dann auf den jeweiligen Suchtreffer
+zugreifen können. Den ersten Suchtreffer referenzieren Sie bei `sed`
+mittels `\1`, den zweiten mittels `\2`, etc. Dieses Konzept nutzen Sie
+in nachfolgendem Beispiel, um Suchtreffer 1 und 2 in einer umgekehrten
+Reihenfolge auszugeben.
+
 .Den ersten und zweiten Suchtreffer in umgekehrter Reihenfolge ausgeben ('back references')
 ----
 $ echo "10247 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
@@ -764,7 +779,7 @@ Berlin, 10247
 $
 ----
 
-TIP: GNU sed kennt die Referenzierung über `\ZAHL`, BSD sed leider
+TIP: `GNU sed` kennt die Referenzierung über `\ZAHL`, `BSD sed` leider
 nicht. Bei letzterem bleibt die Ausgabe leer und Sie erhalten keine
 Fehlermeldung.
 

@@ -1534,12 +1534,17 @@ weitere Spalte am Ende der Zeile gleichkommt.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_suchtreffer_referenzieren">5.10. Suchtreffer referenzieren</h3>
+<div class="paragraph"><p><code>sed</code> erlaubt Ihnen, die einzelnen Suchtreffer zu referenzieren. Dazu
+kennt es die beiden Metazeichen <code>&amp;</code> und <code>\ZAHL</code> (siehe Hinweis). Das
+erste Beispiel fokussiert lediglich auf den ersten Suchtreffer:</p></div>
 <div class="listingblock">
 <div class="title">Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels <code>&amp;</code>)</div>
 <div class="content">
 <pre><code>$ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&amp;)/'
 (apple) orange melon apple Apple</code></pre>
 </div></div>
+<div class="paragraph"><p>Möchten Sie alle Suchtreffer berücksichtigen, ergänzen Sie den
+<code>sed</code>-Aufruf um das Aktionsflag <code>g</code> am Ende des Ausdrucks:</p></div>
 <div class="listingblock">
 <div class="title">Markiere jeden Suchtreffer mit runden Klammern (Referenz mittels <code>&amp;</code>)</div>
 <div class="content">
@@ -1547,6 +1552,13 @@ weitere Spalte am Ende der Zeile gleichkommt.</p></div>
 (apple) orange melon (apple) (Apple)
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Das Konzept der Regulären Ausdrücke beinhaltet sogenannte <em>back
+references</em> ("Rückverweis"). Jedem einzelnen Suchtreffer wird eine
+Ziffer zugeordnet, über die Sie dann auf den jeweiligen Suchtreffer
+zugreifen können. Den ersten Suchtreffer referenzieren Sie bei <code>sed</code>
+mittels <code>\1</code>, den zweiten mittels <code>\2</code>, etc. Dieses Konzept nutzen Sie
+in nachfolgendem Beispiel, um Suchtreffer 1 und 2 in einer umgekehrten
+Reihenfolge auszugeben.</p></div>
 <div class="listingblock">
 <div class="title">Den ersten und zweiten Suchtreffer in umgekehrter Reihenfolge ausgeben (<em>back references</em>)</div>
 <div class="content">
@@ -1559,7 +1571,7 @@ $</code></pre>
 <td class="icon">
 <div class="title">Tipp</div>
 </td>
-<td class="content">GNU sed kennt die Referenzierung über <code>\ZAHL</code>, BSD sed leider
+<td class="content"><code>GNU sed</code> kennt die Referenzierung über <code>\ZAHL</code>, <code>BSD sed</code> leider
 nicht. Bei letzterem bleibt die Ausgabe leer und Sie erhalten keine
 Fehlermeldung.</td>
 </tr></table>
@@ -1664,7 +1676,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-27 14:58:02 CEST
+ 2016-04-27 15:21:55 CEST
 </div>
 </div>
 </body>
