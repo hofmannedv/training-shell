@@ -1206,8 +1206,11 @@ $</code></pre>
 <td class="content">das Aktionsflag <code>I</code> gibt es nicht bei allen <code>sed</code>-Varianten.</td>
 </tr></table>
 </div>
-<div class="paragraph"><p>Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
-ist, hilft Ihnen der Schalter <code>=</code>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_zeilennummern_der_suchtreffer">5.5. Zeilennummern der Suchtreffer</h3>
+<div class="paragraph"><p>Um nur die Zeilennummern der Treffer zu erhalten, in denen das
+Suchmuster enthalten ist, hilft Ihnen der Schalter <code>=</code>.</p></div>
 <div class="listingblock">
 <div class="title">Ausgabe der Zeilennummern der Zeilen, in denen das Muster enthalten ist (<code>print-match-line-numbers.sed</code>)</div>
 <div class="content">
@@ -1220,7 +1223,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_suchen_und_ersetzen_nach_einem_muster_in_ausgewählten_zeilen_und_unterdrücken_der_zeilen_die_dem_muster_nicht_entsprechen">5.5. Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken der Zeilen, die dem Muster nicht entsprechen</h3>
+<h3 id="_suchen_und_ersetzen_nach_einem_muster_in_ausgewählten_zeilen_und_unterdrücken_der_zeilen_die_dem_muster_nicht_entsprechen">5.6. Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken der Zeilen, die dem Muster nicht entsprechen</h3>
 <div class="listingblock">
 <div class="title">Ersetze alle Vorkommen von <code>root</code> durch <code>alex</code> in Zeile 9 (<code>replace-in-line.sed</code>)</div>
 <div class="content">
@@ -1273,7 +1276,7 @@ lediglich ein echter <code>.</code>.</td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_suchen_und_ersetzen_nach_vorkommen">5.6. Suchen und Ersetzen nach Vorkommen</h3>
+<h3 id="_suchen_und_ersetzen_nach_vorkommen">5.7. Suchen und Ersetzen nach Vorkommen</h3>
 <div class="listingblock">
 <div class="title">Ersetze alle Vorkommen von <code>apple</code> durch <code>banana</code></div>
 <div class="content">
@@ -1312,11 +1315,11 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_zeichen_zu_jeder_zeile_hinzufügen">5.7. Zeichen zu jeder Zeile hinzufügen</h3>
+<h3 id="_zeichen_zu_jeder_zeile_hinzufügen">5.8. Zeichen zu jeder Zeile hinzufügen</h3>
 <div class="paragraph"><p>Die Metazeichen <code>^</code> und <code>$</code> sind auf den Anfang und das Ende der Zeile
 anwendbar. Damit fügen Sie flink Text zu einer Zeile hinzu.</p></div>
 <div class="sect3">
-<h4 id="_am_anfang_jeder_zeile">5.7.1. Am Anfang jeder Zeile</h4>
+<h4 id="_am_anfang_jeder_zeile">5.8.1. Am Anfang jeder Zeile</h4>
 <div class="listingblock">
 <div class="title">Den Buchstaben <code>A</code> am Zeilenanfang ergänzen</div>
 <div class="content">
@@ -1326,7 +1329,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_am_ende_jeder_zeile">5.7.2. Am Ende jeder Zeile</h4>
+<h4 id="_am_ende_jeder_zeile">5.8.2. Am Ende jeder Zeile</h4>
 <div class="listingblock">
 <div class="title">Den Buchstaben <code>B</code> am Zeilenende ergänzen</div>
 <div class="content">
@@ -1357,11 +1360,11 @@ $</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_spaltenweise_agieren">5.8. Spaltenweise agieren</h3>
+<h3 id="_spaltenweise_agieren">5.9. Spaltenweise agieren</h3>
 <div class="paragraph"><p>Die nachfolgend vorgestellten Aktionen sind Sonderfälle für das vorige
 Kapitel. Im Alltag kommen diese häufig vor.</p></div>
 <div class="sect3">
-<h4 id="_spalte_entfernen">5.8.1. Spalte entfernen</h4>
+<h4 id="_spalte_entfernen">5.9.1. Spalte entfernen</h4>
 <div class="listingblock">
 <div class="title">Entferne die erste Spalte (Trennzeichen: <code>:</code>) in den Zeilen 1 bis 10 der Datei <code>/etc/passwd</code> (ersetze alles bis zum ersten <code>:</code> durch nichts)</div>
 <div class="content">
@@ -1416,7 +1419,7 @@ solchen System die Ausgabe dieses Beispiels leer.</td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_eine_spalte_am_anfang_hinzufügen">5.8.2. Eine Spalte am Anfang hinzufügen</h4>
+<h4 id="_eine_spalte_am_anfang_hinzufügen">5.9.2. Eine Spalte am Anfang hinzufügen</h4>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Anfang hinzufügen (Inhalt: <code>A</code>)</div>
 <div class="content">
@@ -1447,7 +1450,7 @@ ausgeben), geht auch dieses hier:</p></div>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_eine_spalte_am_ende_hinzufügen">5.8.3. Eine Spalte am Ende hinzufügen</h4>
+<h4 id="_eine_spalte_am_ende_hinzufügen">5.9.3. Eine Spalte am Ende hinzufügen</h4>
 <div class="listingblock">
 <div class="title">Eine weitere Spalte am Ende hinzufügen (Inhalt: <code>B</code>)</div>
 <div class="content">
@@ -1472,7 +1475,7 @@ $</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_suchtreffer_referenzieren">5.9. Suchtreffer referenzieren</h3>
+<h3 id="_suchtreffer_referenzieren">5.10. Suchtreffer referenzieren</h3>
 <div class="listingblock">
 <div class="title">Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels <code>&amp;</code>)</div>
 <div class="content">
@@ -1518,7 +1521,7 @@ Fehlermeldung.</td>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.10. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
+<h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.11. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
 <div class="listingblock">
 <div class="title">Muster <code>^d</code> für leere Zeilen, <code>d</code> zum Löschen</div>
 <div class="content">
@@ -1541,7 +1544,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_den_ersten_absatz_ausgeben">5.11. Den ersten Absatz ausgeben</h3>
+<h3 id="_den_ersten_absatz_ausgeben">5.12. Den ersten Absatz ausgeben</h3>
 <div class="listingblock">
 <div class="title">Alle Zeilen inklusive der ersten Leerzeile ausgeben (<code>print-first-paragraph.sed</code>)</div>
 <div class="content">
@@ -1603,7 +1606,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-27 14:17:53 CEST
+ 2016-04-27 14:19:52 CEST
 </div>
 </div>
 </body>

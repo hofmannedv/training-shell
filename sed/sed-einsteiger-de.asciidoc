@@ -441,8 +441,10 @@ $
 
 TIP: das Aktionsflag `I` gibt es nicht bei allen `sed`-Varianten.
 
-Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
-ist, hilft Ihnen der Schalter `=`.
+=== Zeilennummern der Suchtreffer ===
+
+Um nur die Zeilennummern der Treffer zu erhalten, in denen das
+Suchmuster enthalten ist, hilft Ihnen der Schalter `=`.
 
 .Ausgabe der Zeilennummern der Zeilen, in denen das Muster enthalten ist (`print-match-line-numbers.sed`)
 ----
