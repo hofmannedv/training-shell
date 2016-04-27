@@ -357,7 +357,7 @@ $ nl logfile | sed -e '/2016-01-10/a++++ 2016-01-11 ++++' -e '/2016-01-11/a++++ 
      8   2016-01-12 14:55:05 user james logged out from /dev/tty1
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $
------
+----
 
 Obiges Beispiel funktioniert nur mit `GNU sed`. Um es kompatibel für
 `BSD sed` zu halten, bedarf es eines expliziten Umbruchs:
