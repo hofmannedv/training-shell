@@ -562,6 +562,14 @@ apple orange melon banana banana
 $
 ----
 
+==== Eine komplette Zeile ersetzen ====
+
+Das Aktionsflag `c` für `change` ändert bzw. ersetzt eine Zeile
+vollständig durch den darauffolgenden Text, sofern diese das gewünschte
+Suchmuster enthält. Im nachfolgenden Beispiel werden alle Zeilen, die
+das Muster `login failed` enthalten, auf den Inhalt `login failed`
+gekürzt.
+
 .Ersetze eine komplette Zeile
 ----
 $ nl logfile | sed -e '/login failed/clogin failed'
