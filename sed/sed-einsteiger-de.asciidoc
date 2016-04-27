@@ -702,8 +702,14 @@ aneinanderzufügen. Kürzere Varianten wären:
 $ sed -n '1,10s/^/A:/p' /etc/passwd
 ----
 
-Da ohnehin jede Zeile matcht (`-n` nur die matchenden Zeilen mit `/p`
-ausgeben), geht auch dieses hier:
+Die Idee dahinter ist, den Zeilenanfang `^` durch die beiden Zeichen
+`A:` zu ersetzen. Da der Doppelpunkt in der Datei als Spaltentrenner
+gilt, ist dieser Schritt defacto das Ergänzen der Datei um eine weitere
+Spalte am Anfang jeder Zeile.
+
+Da im Muster ohnehin jede Zeile matcht (`-n` gibt nur die matchenden
+Zeilen mit `p` aus), geht auch diese Variante und ist nochmals kürzer
+als oben:
 
 ----
 $ sed -e 's/1,10s/^/A:/' /etc/passwd
