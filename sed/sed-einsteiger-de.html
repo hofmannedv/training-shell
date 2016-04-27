@@ -1566,16 +1566,18 @@ Reihenfolge auszugeben.</p></div>
 Berlin, 10247
 $</code></pre>
 </div></div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<div class="title">Tipp</div>
-</td>
-<td class="content"><code>GNU sed</code> kennt die Referenzierung über <code>\ZAHL</code>, <code>BSD sed</code> leider
-nicht. Bei letzterem bleibt die Ausgabe leer und Sie erhalten keine
-Fehlermeldung.</td>
-</tr></table>
-</div>
+<div class="paragraph"><p>Um das ganze sowohl für <code>GNU sed</code>, als auch für <code>BSD sed</code> nutzbar zu
+machen, benötigen Sie den zusätzlichen Schalter <code>-E</code> im Aufruf von
+<code>sed</code>. Damit aktivieren Sie einen Modus für erweiterte Reguläre
+Ausdrücke (<em>extended regular expressions</em>). Als Ergebnis vereinfacht
+sich ebenfalls der gesamte Ausdruck.</p></div>
+<div class="listingblock">
+<div class="title">Den ersten und zweiten Suchtreffer in umgekehrter Reihenfolge ausgeben (kompatibel)</div>
+<div class="content">
+<pre><code>$ echo "10247 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'
+Berlin, 10247
+$</code></pre>
+</div></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -1587,7 +1589,7 @@ Fehlermeldung.</td>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre><code>$ echo "10247 23 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'</code></pre>
+<pre><code>$ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'</code></pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -1629,8 +1631,8 @@ $</code></pre>
 <div class="sect1">
 <h2 id="_danksagung">6. Danksagung</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Vielen Dank an Thomas Osterried für Kritik und Verbesserungsvorschläge
-zum vorliegenden Tutorial.</p></div>
+<div class="paragraph"><p>Vielen Dank an Thomas Osterried und Wolfram Schneider für Kritik und
+Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 </div>
 </div>
 <div class="sect1">
@@ -1676,7 +1678,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-27 15:21:55 CEST
+ 2016-04-27 15:37:47 CEST
 </div>
 </div>
 </body>
