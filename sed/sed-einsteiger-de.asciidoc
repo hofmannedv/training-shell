@@ -94,14 +94,16 @@ und kleinem `h`) durch `michael`. Die Ausgabe erfolgt auf `stdout`.
 
 === Einzelne Filter voneinander über ein Semikolon trennen ===
 
-Im Aufruf geben Sie zwischen den Filtern ein `;` an.
+Im Aufruf geben Sie zwischen den einzelnen Filtern jeweils ein `;` als
+Trennzeichen an. Bitte beachten Sie, dass das Trennzeichen innerhalb der
+einfachen Anführungszeichen (`'`) steht.
 
 .Mehrere Filter mittels `;` aneinanderreihen
 ----
 $ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei
 ----
 
-TIP: `[Hh]` beinhaltet einen regulären Ausdruck für den einzelnen
+TIP: `[Hh]` beinhaltet einen Regulären Ausdruck für den einzelnen
 Buchstaben `h` in Groß- oder Kleinschreibung.
 
 === Jeden Filter mit `-e` einleiten ===
