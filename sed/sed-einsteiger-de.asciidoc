@@ -504,6 +504,30 @@ ein echter Punkt (`.`).
 
 === Suchen und Ersetzen nach Vorkommen ===
 
+`sed` kennt verschiedene Varianten, um Suchmuster zu ersetzen. Die
+jeweilige Variante spezifizieren Sie über das Aktionsflag im letzten
+Segment des Suchen-und-Ersetzen-Ausdrucks.
+
+==== Nur das erste Vorkommen ersetzen ====
+
+Geben Sie kein Aktionsflag an, ersetzt `sed` nur den ersten Suchtreffer
+in der Zeile:
+
+.Ersetze alle Vorkommen von `apple` durch `banana`
+----
+$ echo "apple orange melon apple" | sed 's/apple/banana/'
+banana orange melon banana
+$
+----
+
+TIP: Dieser Aufruf ist identisch mit `sed 's/apple/banana/1'`, d.h. der
+expliziten Referenzierung des ersten Suchtreffers mittels `1`.
+
+==== Alle Vorkommen ersetzen ====
+
+Um alle Vorkommen des Suchmusters in der Zeile zu ersetzen, verwenden
+Sie das Aktionsflag `g` für `global`.
+
 .Ersetze alle Vorkommen von `apple` durch `banana`
 ----
 $ echo "apple orange melon apple" | sed 's/apple/banana/g'
@@ -511,12 +535,25 @@ banana orange melon banana
 $
 ----
 
+==== Einen ausgewählten Suchtreffer ersetzen ====
+
+`sed` zählt, wieviele Suchtreffer es gibt. Es erlaubt Ihnen, über die
+entsprechenden Ziffer den jeweiligen Suchtreffer zu referenzieren. Im
+nachfolgenden Beispiel wird nur der zweite Suchtreffer ersetzt und alle
+anderen bleiben unverändert:
+
 .Ersetze nur das zweite Vorkommen von `apple` durch `banana`
 ----
 $ echo "apple orange melon apple" | sed 's/apple/banana/2'
 apple orange melon banana
 $
 ----
+
+==== Einen ausgewählten Suchtreffer ab einer Position ersetzen ====
+
+`sed` erlaubt Ihnen, auch alle Suchtreffer ab einer Position zu
+ersetzen. Dazu versteht es bspw. die Schreibweise `2g` für eine globale
+Ersetzung ab dem zweiten Vorkommen des Suchmusters:
 
 .Ersetze ab dem zweiten Vorkommen jedes Mal `apple` durch `banana`
 ----

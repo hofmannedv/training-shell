@@ -1277,6 +1277,34 @@ ein echter Punkt (<code>.</code>).</td>
 </div>
 <div class="sect2">
 <h3 id="_suchen_und_ersetzen_nach_vorkommen">5.7. Suchen und Ersetzen nach Vorkommen</h3>
+<div class="paragraph"><p><code>sed</code> kennt verschiedene Varianten, um Suchmuster zu ersetzen. Die
+jeweilige Variante spezifizieren Sie über das Aktionsflag im letzten
+Segment des Suchen-und-Ersetzen-Ausdrucks.</p></div>
+<div class="sect3">
+<h4 id="_nur_das_erste_vorkommen_ersetzen">5.7.1. Nur das erste Vorkommen ersetzen</h4>
+<div class="paragraph"><p>Geben Sie kein Aktionsflag an, ersetzt <code>sed</code> nur den ersten Suchtreffer
+in der Zeile:</p></div>
+<div class="listingblock">
+<div class="title">Ersetze alle Vorkommen von <code>apple</code> durch <code>banana</code></div>
+<div class="content">
+<pre><code>$ echo "apple orange melon apple" | sed 's/apple/banana/'
+banana orange melon banana
+$</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Dieser Aufruf ist identisch mit <code>sed 's/apple/banana/1'</code>, d.h. der
+expliziten Referenzierung des ersten Suchtreffers mittels <code>1</code>.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_alle_vorkommen_ersetzen">5.7.2. Alle Vorkommen ersetzen</h4>
+<div class="paragraph"><p>Um alle Vorkommen des Suchmusters in der Zeile zu ersetzen, verwenden
+Sie das Aktionsflag <code>g</code> für <code>global</code>.</p></div>
 <div class="listingblock">
 <div class="title">Ersetze alle Vorkommen von <code>apple</code> durch <code>banana</code></div>
 <div class="content">
@@ -1284,6 +1312,13 @@ ein echter Punkt (<code>.</code>).</td>
 banana orange melon banana
 $</code></pre>
 </div></div>
+</div>
+<div class="sect3">
+<h4 id="_einen_ausgewählten_suchtreffer_ersetzen">5.7.3. Einen ausgewählten Suchtreffer ersetzen</h4>
+<div class="paragraph"><p><code>sed</code> zählt, wieviele Suchtreffer es gibt. Es erlaubt Ihnen, über die
+entsprechenden Ziffer den jeweiligen Suchtreffer zu referenzieren. Im
+nachfolgenden Beispiel wird nur der zweite Suchtreffer ersetzt und alle
+anderen bleiben unverändert:</p></div>
 <div class="listingblock">
 <div class="title">Ersetze nur das zweite Vorkommen von <code>apple</code> durch <code>banana</code></div>
 <div class="content">
@@ -1291,6 +1326,12 @@ $</code></pre>
 apple orange melon banana
 $</code></pre>
 </div></div>
+</div>
+<div class="sect3">
+<h4 id="_einen_ausgewählten_suchtreffer_ab_einer_position_ersetzen">5.7.4. Einen ausgewählten Suchtreffer ab einer Position ersetzen</h4>
+<div class="paragraph"><p><code>sed</code> erlaubt Ihnen, auch alle Suchtreffer ab einer Position zu
+ersetzen. Dazu versteht es bspw. die Schreibweise <code>2g</code> für eine globale
+Ersetzung ab dem zweiten Vorkommen des Suchmusters:</p></div>
 <div class="listingblock">
 <div class="title">Ersetze ab dem zweiten Vorkommen jedes Mal <code>apple</code> durch <code>banana</code></div>
 <div class="content">
@@ -1313,6 +1354,7 @@ login failed
 login failed
 $</code></pre>
 </div></div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_zeichen_zu_jeder_zeile_hinzufügen">5.8. Zeichen zu jeder Zeile hinzufügen</h3>
@@ -1606,7 +1648,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-27 14:24:58 CEST
+ 2016-04-27 14:37:52 CEST
 </div>
 </div>
 </body>
