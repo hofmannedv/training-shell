@@ -1632,14 +1632,31 @@ $</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_danksagung">6. Danksagung</h2>
+<h2 id="_einen_dateiinhalt_direkt_ändern">6. Einen Dateiinhalt direkt ändern</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Vielen Dank an Thomas Osterried und Wolfram Schneider für Kritik und
-Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
+<div class="paragraph"><p><code>sed</code> verfügt über den Schalter <code>-i</code>. Damit ändern Sie den Inhalt der
+angegebenen Datei <code>foobar</code> direkt:</p></div>
+<div class="listingblock">
+<div class="title">Buchstaben direkt ersetzen</div>
+<div class="content">
+<pre><code>$ cat foobar
+foo
+$ sed -e s/o/e/g -i foobar
+$ cat foobar
+fee
+$</code></pre>
+</div></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_weiterführende_dokumente">7. Weiterführende Dokumente</h2>
+<h2 id="_danksagung">7. Danksagung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert und Wolfram Schneider für
+Kritik und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_weiterführende_dokumente">8. Weiterführende Dokumente</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
 <li>
@@ -1681,7 +1698,7 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-27 16:22:31 CEST
+ 2016-04-27 18:40:37 CEST
 </div>
 </div>
 </body>
