@@ -70,14 +70,14 @@ $ sed 's/alfred/friedrich/' datei
 === `sed`-Skript als separate Datei ===
 
 Die Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
-für die Skriptdatei. GNU sed versteht auch den langen Schalter `--file`.
+für die Skriptdatei. `GNU sed` versteht auch den langen Schalter `--file`.
 
 .Filtern mittels `sed` und dem Skript `sed.skript`
 ----
 $ sed -f sed.skript datei
 ----
 
-TIP: Bei allen Listings finden Sie in Klammern den Dateinamen des
+TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
 `sed`-Beispiels. Damit können Sie das Skript sofort ausprobieren.
 
 == Mehrere Filter miteinander kombinieren ==
@@ -109,7 +109,7 @@ Buchstaben `h` in Groß- oder Kleinschreibung.
 === Jeden Filter mit `-e` einleiten ===
 
 Über den Schalter `-e` teilen Sie `sed` mit, dass ein weiterer Filter
-folgt. GNU sed versteht auch den langen Schalter `--expression`.
+folgt. `GNU sed` versteht auch den langen Schalter `--expression`.
 
 .Mehrere Filter mittels `-e` aneinanderreihen
 ----
@@ -118,7 +118,10 @@ $ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei
 
 === Die Fähigkeiten der bash ausnutzen (mehrere Zeilen) ===
 
-Sie können die einzelnen Filter auch über mehrere Zeilen verteilen:
+Je komplexer die Filter werden, umso unübersichtlicher werden diese
+auch. Sie können die einzelnen Filter auch über mehrere Zeilen
+verteilen, indem Sie im Aufruf ein `\` als expliziten Zeilenumbruch
+einfügen.
 
 .Jeden Filter in einer einzelnen Zeile
 ----
@@ -130,11 +133,11 @@ $
 
 == Die Ausgabe steuern ==
 
-Im Standardfall gibt `sed` alle Zeilen der Eingabe aus. Um das zu
-unterdrücken, nutzen Sie den Schalter `-n`. Von Nutzen ist `-n`, um nur
-die Zeilen der Eingabe ausgeben, in denen ihr Filter tatsächlich
-Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit dem Flag `p`
-am Ende ab:
+Im Standardfall gibt `sed` alle Zeilen des Eingabedatenstroms aus. Um
+das zu unterdrücken, nutzen Sie den Schalter `-n` (Langform `--quiet`
+und `--silent`). Von Nutzen ist `-n`, um nur die Zeilen der Eingabe
+ausgeben, in denen ihr Filter tatsächlich Veränderungen bewirkt hat.
+Dazu schließen Sie den Filter mit dem Flag `p` für `print` am Ende ab:
 
 .Lediglich die Ersetzungen ausgeben
 ----
