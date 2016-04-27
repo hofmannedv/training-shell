@@ -702,7 +702,7 @@ aneinanderzufügen. Kürzere Varianten wären:
 $ sed -n '1,10s/^/A:/p' /etc/passwd
 ----
 
-Die Idee dahinter ist, den Zeilenanfang `^` durch die beiden Zeichen
+Die Idee dahinter ist, den Zeilenanfang (`^`) durch die beiden Zeichen
 `A:` zu ersetzen. Da der Doppelpunkt in der Datei als Spaltentrenner
 gilt, ist dieser Schritt defacto das Ergänzen der Datei um eine weitere
 Spalte am Anfang jeder Zeile.
@@ -733,7 +733,10 @@ news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
 $
 ----
 
-In Anlehnung an das vorherige Beispiel ist diese Schreibweise kürzer:
+In Anlehnung an das vorherige Beispiel ist diese Schreibweise wiederum
+kürzer. Es setzt ebenso darauf auf, das Zeilenende (`$`) durch die
+beiden Zeichen `:B` zu ersetzen, was wiederum der Ergänzung um eine
+weitere Spalte am Ende der Zeile gleichkommt.
 
 ----
 $ sed -e '/1,10s/$/:B/p' /etc/passwd

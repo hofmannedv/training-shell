@@ -1492,7 +1492,7 @@ aneinanderzufügen. Kürzere Varianten wären:</p></div>
 <div class="content">
 <pre><code>$ sed -n '1,10s/^/A:/p' /etc/passwd</code></pre>
 </div></div>
-<div class="paragraph"><p>Die Idee dahinter ist, den Zeilenanfang <code>^</code> durch die beiden Zeichen
+<div class="paragraph"><p>Die Idee dahinter ist, den Zeilenanfang (<code>^</code>) durch die beiden Zeichen
 <code>A:</code> zu ersetzen. Da der Doppelpunkt in der Datei als Spaltentrenner
 gilt, ist dieser Schritt defacto das Ergänzen der Datei um eine weitere
 Spalte am Anfang jeder Zeile.</p></div>
@@ -1522,7 +1522,10 @@ mail:x:8:8:mail:/var/mail:/usr/sbin/nologin:B
 news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>In Anlehnung an das vorherige Beispiel ist diese Schreibweise kürzer:</p></div>
+<div class="paragraph"><p>In Anlehnung an das vorherige Beispiel ist diese Schreibweise wiederum
+kürzer. Es setzt ebenso darauf auf, das Zeilenende (<code>$</code>) durch die
+beiden Zeichen <code>:B</code> zu ersetzen, was wiederum der Ergänzung um eine
+weitere Spalte am Ende der Zeile gleichkommt.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><code>$ sed -e '/1,10s/$/:B/p' /etc/passwd</code></pre>
@@ -1661,7 +1664,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.1<br />
 Letzte Änderung
- 2016-04-27 14:53:48 CEST
+ 2016-04-27 14:58:02 CEST
 </div>
 </div>
 </body>
