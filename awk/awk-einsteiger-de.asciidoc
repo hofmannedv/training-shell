@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.1
+:revnumber: 0.2
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 27. April 2016
+:date: 28. April 2016
 :numbered:
 
 = Vorwort =
@@ -36,6 +36,21 @@ voraus. Für ein tieferes Wissen dazu hilft Ihnen das Buch 'Reguläre
 Ausdrücke' von Jeffrey Friedl <<Friedl>>.
 
 == `awk`-Programme benutzen ==
+
+`awk`-Programme führt der `awk`-Interpreter aus. Auf Linux-Systemen
+kommt meist die GNU-Variante namens `gawk` zum Einsatz. In der Regel ist
+das über einen symbolischen Link gelöst:
+
+.Symolischer Link zu `gawk` bei Debian GNU/Linux
+----
+$ which awk
+/usr/bin/awk
+$ ls -la $(which awk)
+lrwxrwxrwx 1 root root 21 Apr 10 01:03 /usr/bin/awk -> /etc/alternatives/awk
+$ ls -la /etc/alternatives/awk
+lrwxrwxrwx 1 root root 13 Apr 10 14:28 /etc/alternatives/awk -> /usr/bin/gawk
+$
+----
 
 === Über `stdin` oder als direkten Parameter beim Aufruf von `awk` ===
 

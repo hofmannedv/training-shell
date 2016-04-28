@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Die Programmiersprache <code>awk</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 0.1,</span>
-<span id="revdate">27. April 2016</span>
+<span id="revnumber">version 0.2,</span>
+<span id="revdate">28. April 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -764,6 +764,20 @@ Ausdrücke</em> von Jeffrey Friedl <a href="#Friedl">[Friedl]</a>.</p></div>
 <div class="sect1">
 <h2 id="_code_awk_code_programme_benutzen">1. <code>awk</code>-Programme benutzen</h2>
 <div class="sectionbody">
+<div class="paragraph"><p><code>awk</code>-Programme führt der <code>awk</code>-Interpreter aus. Auf Linux-Systemen
+kommt meist die GNU-Variante namens <code>gawk</code> zum Einsatz. In der Regel ist
+das über einen symbolischen Link gelöst:</p></div>
+<div class="listingblock">
+<div class="title">Symolischer Link zu <code>gawk</code> bei Debian GNU/Linux</div>
+<div class="content">
+<pre><code>$ which awk
+/usr/bin/awk
+$ ls -la $(which awk)
+lrwxrwxrwx 1 root root 21 Apr 10 01:03 /usr/bin/awk -&gt; /etc/alternatives/awk
+$ ls -la /etc/alternatives/awk
+lrwxrwxrwx 1 root root 13 Apr 10 14:28 /etc/alternatives/awk -&gt; /usr/bin/gawk
+$</code></pre>
+</div></div>
 <div class="sect2">
 <h3 id="_über_code_stdin_code_oder_als_direkten_parameter_beim_aufruf_von_code_awk_code">1.1. Über <code>stdin</code> oder als direkten Parameter beim Aufruf von <code>awk</code></h3>
 <div class="listingblock">
@@ -848,9 +862,9 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 0.1<br />
+Version 0.2<br />
 Letzte Änderung
- 2016-04-27 17:28:27 CEST
+ 2016-04-28 12:38:43 CEST
 </div>
 </div>
 </body>
