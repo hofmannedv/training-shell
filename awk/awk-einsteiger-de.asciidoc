@@ -15,9 +15,9 @@ Frank Hofmann
 
 `awk` ist eine Programmiersprache, die am besten strukturierte Textdaten
 verarbeiten kann. Das beinhaltet bspw. das Ausgeben, Löschen, Suchen und
-Ersetzen von Zeichenketten auf der Basis von Regulären Ausdrücken. `awk`
-ist sehr mächtig und flexibel im Alltagsgebrauch als Filter auf der
-Kommandozeile und in Shellskripten.
+Ersetzen von Zeichenketten auf der Basis von Regulären Ausdrücken und
+Feldern. `awk` ist sehr mächtig und flexibel im Alltagsgebrauch als
+Filter auf der Kommandozeile und in Shellskripten.
 
 Der Name `awk` leitet sich aus den drei Anfangsbuchstaben der
 Familiennamen der Entwickler Alfred V. Aho, Peter J. Weinberger und
@@ -42,7 +42,7 @@ kommt meist die GNU-Variante namens `gawk` zum Einsatz (siehe <<gawk>>
 und <<gawk-Debianpaket>>). In der Regel ist das über einen symbolischen
 Link gelöst:
 
-.Symolischer Link zu `gawk` bei Debian GNU/Linux
+.Symbolischer Link zu `gawk` bei Debian GNU/Linux
 ----
 $ which awk
 /usr/bin/awk
