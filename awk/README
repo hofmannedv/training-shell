@@ -11,3 +11,4 @@ Examples for awk
 * output-content.awk:                output the whole content of the file line by line
 * output-content-line4.awk:          output the 4th line, only
 * output-content-with-condition.awk: output these lines of the file that contain the given pattern
+* output-content-without-line4.awk:  output all but the 4th line
