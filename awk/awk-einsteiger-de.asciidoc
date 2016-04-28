@@ -95,7 +95,8 @@ das zuvor abtippen zu müssen.
 
 Ein vollständiges `awk`-Programm besteht aus mindestens einer Zeile.
 Diese Zeile besteht wiederum aus zwei Komponenten -- einem Muster und
-einer Aktionsfolge:
+einer Aktionsfolge. Mindestens eines von beiden geben Sie an -- entweder
+das Muster, oder die Aktionsfolge, oder beides.
 
 .Aufbau eines `awk`-Programms
 ----
@@ -104,7 +105,18 @@ Muster { Aktionsfolge }
 
 Die Aktionsfolge umfaßt einzelne Anweisungen und wird von `awk` in
 geschweiften Klammern erwartet. Damit kann `awk` dieses vom Muster
-unterscheiden.
+unterscheiden. Nachfolgendes Beispiel umfaßt als Anweisung lediglich
+`print` und gibt Zeile für Zeile den Inhalt der Datei `logfile` aus.
+
+.Ausgabe einer Datei (Aktionsfolge)
+----
+$ awk '{ print }' logfile
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+2016-01-12 08:45:12 user james logged in on /dev/tty1
+...
+$
+----
 
 == Beispiele ==
 

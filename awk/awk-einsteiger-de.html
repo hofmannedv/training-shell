@@ -835,7 +835,8 @@ das zuvor abtippen zu müssen.</td>
 <div class="sectionbody">
 <div class="paragraph"><p>Ein vollständiges <code>awk</code>-Programm besteht aus mindestens einer Zeile.
 Diese Zeile besteht wiederum aus zwei Komponenten&#8201;&#8212;&#8201;einem Muster und
-einer Aktionsfolge:</p></div>
+einer Aktionsfolge. Mindestens eines von beiden geben Sie an&#8201;&#8212;&#8201;entweder
+das Muster, oder die Aktionsfolge, oder beides.</p></div>
 <div class="listingblock">
 <div class="title">Aufbau eines <code>awk</code>-Programms</div>
 <div class="content">
@@ -843,7 +844,18 @@ einer Aktionsfolge:</p></div>
 </div></div>
 <div class="paragraph"><p>Die Aktionsfolge umfaßt einzelne Anweisungen und wird von <code>awk</code> in
 geschweiften Klammern erwartet. Damit kann <code>awk</code> dieses vom Muster
-unterscheiden.</p></div>
+unterscheiden. Nachfolgendes Beispiel umfaßt als Anweisung lediglich
+<code>print</code> und gibt Zeile für Zeile den Inhalt der Datei <code>logfile</code> aus.</p></div>
+<div class="listingblock">
+<div class="title">Ausgabe einer Datei (Aktionsfolge)</div>
+<div class="content">
+<pre><code>$ awk '{ print }' logfile
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+2016-01-12 08:45:12 user james logged in on /dev/tty1
+...
+$</code></pre>
+</div></div>
 </div>
 </div>
 <div class="sect1">
@@ -908,7 +920,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.2<br />
 Letzte Änderung
- 2016-04-28 14:25:55 CEST
+ 2016-04-28 14:34:02 CEST
 </div>
 </div>
 </body>
