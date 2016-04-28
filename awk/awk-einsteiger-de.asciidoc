@@ -103,12 +103,17 @@ das Muster, oder die Aktionsfolge, oder beides.
 Muster { Aktionsfolge }
 ----
 
-Die Aktionsfolge umfaßt einzelne Anweisungen und wird von `awk` in
-geschweiften Klammern erwartet. Damit kann `awk` dieses vom Muster
-unterscheiden. Nachfolgendes Beispiel umfaßt als Anweisung lediglich
-`print` und gibt Zeile für Zeile den Inhalt der Datei `logfile` aus.
+Die Aktionsfolge umfaßt einzelne Anweisungen, wobei das Minimum eine
+Anweisung ist. Jede Aktionsfolge wird von `awk` in geschweiften Klammern
+erwartet. Damit kann `awk` dieses vom Muster unterscheiden. Bitte
+beachten Sie bei der Formulierung die beiden Leerzeichen -- eines nach
+der öffnenden geschweiften Klammer und eines vor der schließenden
+geschweiften Klammer. 
 
-.Ausgabe einer Datei (Aktionsfolge)
+Nachfolgendes Beispiel umfaßt als Anweisung lediglich `print` und gibt
+Zeile für Zeile den Inhalt der Datei `logfile` aus.
+
+.Ausgabe einer Datei (nur Aktionsfolge)
 ----
 $ awk '{ print }' logfile
 2016-01-10 10:45:15 user fho logged in on /dev/tty1

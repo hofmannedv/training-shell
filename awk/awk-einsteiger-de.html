@@ -842,12 +842,16 @@ das Muster, oder die Aktionsfolge, oder beides.</p></div>
 <div class="content">
 <pre><code>Muster { Aktionsfolge }</code></pre>
 </div></div>
-<div class="paragraph"><p>Die Aktionsfolge umfaßt einzelne Anweisungen und wird von <code>awk</code> in
-geschweiften Klammern erwartet. Damit kann <code>awk</code> dieses vom Muster
-unterscheiden. Nachfolgendes Beispiel umfaßt als Anweisung lediglich
-<code>print</code> und gibt Zeile für Zeile den Inhalt der Datei <code>logfile</code> aus.</p></div>
+<div class="paragraph"><p>Die Aktionsfolge umfaßt einzelne Anweisungen, wobei das Minimum eine
+Anweisung ist. Jede Aktionsfolge wird von <code>awk</code> in geschweiften Klammern
+erwartet. Damit kann <code>awk</code> dieses vom Muster unterscheiden. Bitte
+beachten Sie bei der Formulierung die beiden Leerzeichen&#8201;&#8212;&#8201;eines nach
+der öffnenden geschweiften Klammer und eines vor der schließenden
+geschweiften Klammer.</p></div>
+<div class="paragraph"><p>Nachfolgendes Beispiel umfaßt als Anweisung lediglich <code>print</code> und gibt
+Zeile für Zeile den Inhalt der Datei <code>logfile</code> aus.</p></div>
 <div class="listingblock">
-<div class="title">Ausgabe einer Datei (Aktionsfolge)</div>
+<div class="title">Ausgabe einer Datei (nur Aktionsfolge)</div>
 <div class="content">
 <pre><code>$ awk '{ print }' logfile
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -920,7 +924,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.2<br />
 Letzte Änderung
- 2016-04-28 14:34:02 CEST
+ 2016-04-28 14:48:50 CEST
 </div>
 </div>
 </body>
