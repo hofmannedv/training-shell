@@ -796,13 +796,26 @@ bezeichnet hier das <code>awk</code>-Programm zur Datenverarbeitung.</p></div>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_code_awk_code_skript_als_separate_datei">1.2. <code>awk</code>-Skript als separate Datei</h3>
-<div class="paragraph"><p>Die Referenzierung erfolgt über den Schalter <code>-f</code> gefolgt von dem Dateinamen
-für die Skriptdatei. <code>awk</code> versteht auch den langen Schalter <code>--file</code>.</p></div>
+<h3 id="_code_awk_code_programm_als_separate_datei">1.2. <code>awk</code>-Programm als separate Datei</h3>
+<div class="paragraph"><p>Einfache Anweisungsfolgen geben Sie noch direkt im Aufruf an. Werden
+ihre <code>awk</code>-Programme komplexer, speichern Sie diese am besten in einer
+separaten Datei. Im Aufruf erfolgt die Referenzierung über den Schalter
+<code>-f</code> gefolgt von dem Namen für die Programmdatei.</p></div>
+<div class="paragraph"><p>Wie Sie die Programmdatei benennen, ist unerheblich. Um die
+Programmdatei von anderen Dokumenten besser zu unterscheiden, wäre die
+Verwendung des Namensendes <code>.awk</code> eine Möglichkeit.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Anstatt von <code>-f</code> versteht <code>awk</code> auch den langen Schalter <code>--file</code>.</td>
+</tr></table>
+</div>
 <div class="listingblock">
-<div class="title">Filtern mittels <code>awk</code> und dem Skript <code>awk.skript</code></div>
+<div class="title">Filtern mittels <code>awk</code> und dem Programm <code>skript.awk</code></div>
 <div class="content">
-<pre><code>$ awk -f awk.skript datei</code></pre>
+<pre><code>$ awk -f skript.awk datei</code></pre>
 </div></div>
 <div class="admonitionblock">
 <table><tr>
@@ -810,7 +823,8 @@ für die Skriptdatei. <code>awk</code> versteht auch den langen Schalter <code>-
 <div class="title">Tipp</div>
 </td>
 <td class="content">Bei den meisten Listings finden Sie in Klammern den Dateinamen des
-<code>awk</code>-Beispiels. Damit können Sie das Skript sofort ausprobieren.</td>
+<code>awk</code>-Beispiels. Damit können Sie das Programm sofort ausprobieren, ohne
+das zuvor abtippen zu müssen.</td>
 </tr></table>
 </div>
 </div>
@@ -878,7 +892,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.2<br />
 Letzte Änderung
- 2016-04-28 13:53:00 CEST
+ 2016-04-28 14:00:33 CEST
 </div>
 </div>
 </body>

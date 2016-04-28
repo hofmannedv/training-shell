@@ -69,18 +69,27 @@ $ cat datei | awk 'anweisungen'
 $ awk 'anweisungen' datei
 ----
 
-=== `awk`-Skript als separate Datei ===
+=== `awk`-Programm als separate Datei ===
 
-Die Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
-für die Skriptdatei. `awk` versteht auch den langen Schalter `--file`.
+Einfache Anweisungsfolgen geben Sie noch direkt im Aufruf an. Werden
+ihre `awk`-Programme komplexer, speichern Sie diese am besten in einer
+separaten Datei. Im Aufruf erfolgt die Referenzierung über den Schalter
+`-f` gefolgt von dem Namen für die Programmdatei. 
 
-.Filtern mittels `awk` und dem Skript `awk.skript`
+Wie Sie die Programmdatei benennen, ist unerheblich. Um die
+Programmdatei von anderen Dokumenten besser zu unterscheiden, wäre die
+Verwendung des Namensendes `.awk` eine Möglichkeit.
+
+TIP: Anstatt von `-f` versteht `awk` auch den langen Schalter `--file`.
+
+.Filtern mittels `awk` und dem Programm `skript.awk`
 ----
-$ awk -f awk.skript datei
+$ awk -f skript.awk datei
 ----
 
 TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
-`awk`-Beispiels. Damit können Sie das Skript sofort ausprobieren.
+`awk`-Beispiels. Damit können Sie das Programm sofort ausprobieren, ohne
+das zuvor abtippen zu müssen.
 
 == Beispiele ==
 
