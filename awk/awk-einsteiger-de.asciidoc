@@ -155,7 +155,7 @@ des `awk`-Kommandos besser zu zeigen.
 
 Das Ausgeben einer betreffenden Zeile erfolgt mit der Anweisung `print`.
 
-.Den gesamten Inhalt einfach ausgeben (output-content.awk)
+.Den gesamten Inhalt einfach ausgeben (`output-content.awk`)
 ----
 $ nl logfile | awk '{ print }'
      1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
