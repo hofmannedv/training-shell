@@ -845,7 +845,7 @@ angegebenen Datei `foobar` direkt:
 ----
 $ cat foobar
 foo
-$ sed -e s/o/e/g -i foobar
+$ sed -e 's/o/e/g' -i foobar
 $ cat foobar
 fee
 $
