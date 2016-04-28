@@ -38,8 +38,9 @@ Ausdrücke' von Jeffrey Friedl <<Friedl>>.
 == `awk`-Programme benutzen ==
 
 `awk`-Programme führt der `awk`-Interpreter aus. Auf Linux-Systemen
-kommt meist die GNU-Variante namens `gawk` zum Einsatz. In der Regel ist
-das über einen symbolischen Link gelöst:
+kommt meist die GNU-Variante namens `gawk` zum Einsatz (siehe <<gawk>>
+und <<gawk-Debianpaket>>). In der Regel ist das über einen symbolischen
+Link gelöst:
 
 .Symolischer Link zu `gawk` bei Debian GNU/Linux
 ----
@@ -95,6 +96,8 @@ zum vorliegenden Tutorial.
 
 * [[[Dougherty]]] Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
 * [[[Friedl]]] Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
-* [[[Wolf]]] Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+* [[[gawk]]] `gawk` auf der Webseite des GNU-Projekts, https://www.gnu.org/software/gawk/
+* [[[gawk-Debianpaket]]] Debianpaket zu `gawk`, https://packages.debian.org/jessie/gawk
 * [[[Hofmann]]] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
+* [[[Wolf]]] Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
 
