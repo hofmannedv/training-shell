@@ -113,7 +113,7 @@ geschweiften Klammer.
 Nachfolgendes Beispiel 1 umfaßt als Anweisung lediglich `print` und gibt
 Zeile für Zeile den Inhalt der Datei `logfile` aus.
 
-.Beispiel 1: Ausgabe einer Datei (nur Aktionsfolge)
+.Beispiel 1: Ausgabe einer Datei (nur Aktionsfolge) (`output-content.awk`)
 ----
 $ awk '{ print }' logfile
 2016-01-10 10:45:15 user fho logged in on /dev/tty1

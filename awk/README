@@ -1,6 +1,11 @@
 README
+------
 
-awk-einsteiger-de.asciidoc:    introduction into awk
-awk-einsteiger-de.html:        introduction into awk (html file)
+Getting Started
 
-examples for awk
+* awk-einsteiger-de.asciidoc:    introduction into awk
+* awk-einsteiger-de.html:        introduction into awk (HTML file)
+
+Examples for awk
+
+* output-content.awk             output the whole content of the file line by line
