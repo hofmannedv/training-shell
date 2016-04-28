@@ -851,6 +851,23 @@ fee
 $
 ----
 
+== Modifizierten Inhalt in eine Datei speichern ==
+
+`sed` verfügt über das Aktionsflag `w` gefolgt von einem Dateinamen, mit
+dessen Hilfe Sie das Ergebnis ihrer Recherche oder Modifikation direkt
+in eine Datei schreiben lassen können. Beachten Sie bei dem
+nachfolgenden Beispiel, dass `sed` eine bestehende Datei mit dem
+gleichen Namen `plz.dat` ohne Vorwarnung überschreibt, sofern diese
+schon existiert.
+
+.Ausgabe der Recherche in der Datei `plz.dat`
+----
+$ echo "10247 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/w plz.dat'
+$ cat plz.dat
+Berlin, 10247
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried, Axel Beckert und Wolfram Schneider für
