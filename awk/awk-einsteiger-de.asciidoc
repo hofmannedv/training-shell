@@ -110,16 +110,37 @@ beachten Sie bei der Formulierung die beiden Leerzeichen -- eines nach
 der öffnenden geschweiften Klammer und eines vor der schließenden
 geschweiften Klammer. 
 
-Nachfolgendes Beispiel umfaßt als Anweisung lediglich `print` und gibt
+Nachfolgendes Beispiel 1 umfaßt als Anweisung lediglich `print` und gibt
 Zeile für Zeile den Inhalt der Datei `logfile` aus.
 
-.Ausgabe einer Datei (nur Aktionsfolge)
+.Beispiel 1: Ausgabe einer Datei (nur Aktionsfolge)
 ----
 $ awk '{ print }' logfile
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
 2016-01-11 08:30:10 user fho logged in on /dev/tty2
 2016-01-12 08:45:12 user james logged in on /dev/tty1
 ...
+$
+----
+
+Das Beispiel 2 verbindet ein Muster mit einer Aktion. Aus der Datei
+`logfile` werden nur die Zeilen ausgegeben, in denen das Muster
+`2016-01-11` enthalten ist.
+
+.Beispiel 2: Ausgabe einer Datei (Muster und Aktionsfolge)
+----
+$ awk '/2016-01-11/ { print }' logfile
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$
+----
+
+Geben Sie keine Aktion an, ergänzt `awk` automatisch als Aktion das
+`print`-Statement (siehe Beispiel 3).
+
+.Beispiel 3: Ausgabe einer Datei (Muster)
+----
+$ awk '/2016-01-11/' logfile
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
 $
 ----
 
