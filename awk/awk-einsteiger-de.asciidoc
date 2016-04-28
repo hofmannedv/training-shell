@@ -55,6 +55,10 @@ $
 
 === Über `stdin` oder als direkten Parameter beim Aufruf von `awk` ===
 
+Der Interpreter ist sehr flexibel und kann Daten und Anweisungen sowohl
+über `stdin`, als auch aus einer Datei verarbeiten. Anweisungen
+bezeichnet hier das `awk`-Programm zur Datenverarbeitung.
+
 .Filtern mittels `awk` nach einer Pipe
 ----
 $ cat datei | awk 'anweisungen'
