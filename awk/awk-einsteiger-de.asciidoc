@@ -91,6 +91,21 @@ TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
 `awk`-Beispiels. Damit können Sie das Programm sofort ausprobieren, ohne
 das zuvor abtippen zu müssen.
 
+== Aufbau eines `awk`-Programms ==
+
+Ein vollständiges `awk`-Programm besteht aus mindestens einer Zeile.
+Diese Zeile besteht wiederum aus zwei Komponenten -- einem Muster und
+einer Aktionsfolge:
+
+.Aufbau eines `awk`-Programms
+----
+Muster { Aktionsfolge }
+----
+
+Die Aktionsfolge umfaßt einzelne Anweisungen und wird von `awk` in
+geschweiften Klammern erwartet. Damit kann `awk` dieses vom Muster
+unterscheiden.
+
 == Beispiele ==
 
 === Ausgeben einer Datei ===
