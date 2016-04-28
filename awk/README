@@ -3,9 +3,10 @@ README
 
 Getting Started
 
-* awk-einsteiger-de.asciidoc:    introduction into awk
-* awk-einsteiger-de.html:        introduction into awk (HTML file)
+* awk-einsteiger-de.asciidoc:        introduction into awk
+* awk-einsteiger-de.html:            introduction into awk (HTML file)
 
 Examples for awk
 
-* output-content.awk             output the whole content of the file line by line
+* output-content.awk:                output the whole content of the file line by line
+* output-content-with-condition.awk: output these lines of the file that contain the given pattern

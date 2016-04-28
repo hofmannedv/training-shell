@@ -127,7 +127,7 @@ Das Beispiel 2 verbindet ein Muster mit einer Aktion. Aus der Datei
 `logfile` werden nur die Zeilen ausgegeben, in denen das Muster
 `2016-01-11` enthalten ist.
 
-.Beispiel 2: Ausgabe einer Datei (Muster und Aktionsfolge)
+.Beispiel 2: Ausgabe einer Datei (Muster und Aktionsfolge) (`output-content-with-condition.awk`)
 ----
 $ awk '/2016-01-11/ { print }' logfile
 2016-01-11 08:30:10 user fho logged in on /dev/tty2
