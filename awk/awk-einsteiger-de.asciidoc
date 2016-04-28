@@ -196,6 +196,37 @@ $ nl logfile | awk 'NR != 4 { print }'
 $
 ----
 
+Für die Ausgabe ausgewählter Zeilen existieren mehrere Varianten.
+Variante 1 ist ein Mehrfachaufruf von `awk` und entspricht von der
+Denkweise her der Kombination der beiden UNIX-Kommandos `head` und
+`tail`:
+
+.Nur die Zeilen vier bis sechs ausgeben (Variante 1)
+----
+$ nl logfile | head -6 | tail -3
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+$ nl logfile | awk 'NR > 3 { print }' | awk 'NR < 4 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+----
+
+Variante 2 verwendet eine UND-Verknüpfung beider Bedingungen mittels
+`&&`:
+
+.Nur die Zeilen vier bis sechs ausgeben (Variante 2) (`output-content-line4-6.awk`)
+----
+$ nl logfile | awk 'NR > 3 && NR < 7 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried für Kritik und Verbesserungsvorschläge

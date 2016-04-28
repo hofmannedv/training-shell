@@ -930,6 +930,35 @@ $</code></pre>
      9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Für die Ausgabe ausgewählter Zeilen existieren mehrere Varianten.
+Variante 1 ist ein Mehrfachaufruf von <code>awk</code> und entspricht von der
+Denkweise her der Kombination der beiden UNIX-Kommandos <code>head</code> und
+<code>tail</code>:</p></div>
+<div class="listingblock">
+<div class="title">Nur die Zeilen vier bis sechs ausgeben (Variante 1)</div>
+<div class="content">
+<pre><code>$ nl logfile | head -6 | tail -3
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+$ nl logfile | awk 'NR &gt; 3 { print }' | awk 'NR &lt; 4 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Variante 2 verwendet eine UND-Verknüpfung beider Bedingungen mittels
+<code>&amp;&amp;</code>:</p></div>
+<div class="listingblock">
+<div class="title">Nur die Zeilen vier bis sechs ausgeben (Variante 2) (<code>output-content-line4-6.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR &gt; 3 &amp;&amp; NR &lt; 7 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$</code></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -983,7 +1012,7 @@ zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.2<br />
 Letzte Änderung
- 2016-04-28 15:52:34 CEST
+ 2016-04-28 16:41:25 CEST
 </div>
 </div>
 </body>
