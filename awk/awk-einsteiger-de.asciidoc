@@ -16,12 +16,13 @@ Frank Hofmann
 `awk` ist eine Programmiersprache, die am besten strukturierte Textdaten
 verarbeiten kann. Das beinhaltet bspw. das Ausgeben, Löschen, Suchen und
 Ersetzen von Zeichenketten auf der Basis von Regulären Ausdrücken und
-Feldern. `awk` ist sehr mächtig und flexibel im Alltagsgebrauch als
-Filter auf der Kommandozeile und in Shellskripten.
+Feldern. Die einzelnen Felder unterscheidet `awk` durch Trennzeichen.
+`awk` ist sehr mächtig und flexibel im Alltagsgebrauch als Filter auf
+der Kommandozeile und in Shellskripten.
 
-Der Name `awk` leitet sich aus den drei Anfangsbuchstaben der
-Familiennamen der Entwickler Alfred V. Aho, Peter J. Weinberger und
-Brian W. Kernighan ab.
+Der Name `awk` leitet sich aus den Anfangsbuchstaben der Familiennamen
+der drei ursprünglichen Entwickler Alfred V. Aho, Peter J. Weinberger
+und Brian W. Kernighan ab.
 
 = Voraussetzungen zum Verständnis =
 
@@ -172,6 +173,10 @@ $ awk '/2016-01-11/' logfile
 2016-01-11 08:30:10 user fho logged in on /dev/tty2
 $
 ----
+
+Wie bereits eingangs genannt, verarbeitet `awk` nicht nur einzelne
+Aktionen, sondern ganze Aktionsfolgen. Jede einzelne Aktion geben Sie
+auf einer einzelnen Zeile 
 
 == Beispiele ==
 
