@@ -41,10 +41,10 @@ Ausdrücke' von Jeffrey Friedl <<Friedl>>.
 
 `awk`-Programme führt der `awk`-Interpreter aus. Auf Linux-Systemen
 kommt meist die GNU-Variante namens `gawk` zum Einsatz (siehe <<gawk>>
-und <<gawk-Debianpaket>>). In der Regel ist das über einen symbolischen
-Link gelöst:
+und <<gawk-Debianpaket>>). In der Regel ist das im Betriebssystem über
+einen symbolischen Link gelöst:
 
-.Symbolischer Link zu `gawk` bei Debian GNU/Linux
+.Symbolischer Link von `awk` zu `gawk` bei Debian GNU/Linux
 ----
 $ which awk
 /usr/bin/awk
@@ -177,7 +177,13 @@ $
 
 Wie bereits eingangs genannt, verarbeitet `awk` nicht nur einzelne
 Aktionen, sondern ganze Aktionsfolgen. Jede einzelne Aktion geben Sie
-auf einer einzelnen Zeile 
+dazu am besten auf einer separaten Zeile an. Das nachfolgende Programm
+prüft, ob in der gelesenen Zeile ein bestimmtes Muster vorkommt. Es
+prüft auf das Vorkommen von Leerzeilen, Ziffern und Buchstaben.
+
+.Beispiel 4: mehrzeiliges Programm
+----
+----
 
 == Beispiele ==
 
