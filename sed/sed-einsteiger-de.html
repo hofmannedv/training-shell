@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.1,</span>
-<span id="revdate">26. April 2016</span>
+<span id="revnumber">version 1.2,</span>
+<span id="revdate">29. April 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1634,10 +1634,12 @@ $</code></pre>
 <div class="sect1">
 <h2 id="_einen_dateiinhalt_direkt_ändern">6. Einen Dateiinhalt direkt ändern</h2>
 <div class="sectionbody">
-<div class="paragraph"><p><code>sed</code> verfügt über den Schalter <code>-i</code>. Damit ändern Sie den Inhalt der
-angegebenen Datei <code>foobar</code> direkt:</p></div>
+<div class="sect2">
+<h3 id="_ohne_backupdatei">6.1. Ohne Backupdatei</h3>
+<div class="paragraph"><p><code>GNU sed</code> unter Linux verfügt über den Schalter <code>-i</code> für <em>inline edit</em>.
+Damit ändern Sie den Inhalt der angegebenen Datei <code>foobar</code> direkt:</p></div>
 <div class="listingblock">
-<div class="title">Buchstaben direkt ersetzen</div>
+<div class="title">Buchstaben direkt ersetzen (Linux)</div>
 <div class="content">
 <pre><code>$ cat foobar
 foo
@@ -1646,6 +1648,40 @@ $ cat foobar
 fee
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Mit <code>BSD sed</code> unter OS X gibt es den Schalter <code>-i</code> auch. Hier versteckt
+sich jedoch eine kleine Besonderheit im Aufruf. Mit dem Schalter muß auch
+zwingend eine Erweiterung für die Backupdatei gegeben werden. Bleibt
+diese leer, wird vor der Änderung keine Backupdatei erzeugt.</p></div>
+<div class="listingblock">
+<div class="title">Buchstaben direkt ersetzen (OS X)</div>
+<div class="content">
+<pre><code>$ cat foobar
+foo
+$ sed -e s/o/e/g -i '' foobar
+$ cat foobar
+fee
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_mit_backupdatei">6.2. Mit Backupdatei</h3>
+<div class="paragraph"><p>Gleiches erreichen Sie mit <code>GNU sed</code> auch. Möchten Sie eine Backupdatei
+erzeugen, beachten Sie bitte, dass unter Linux zwischen dem Schalter
+<code>-i</code> und der Erweiterung kein Leerzeichen stehen darf, <code>GNU sed</code> bei BSD
+hingegen eines erwartet:</p></div>
+<div class="listingblock">
+<div class="title">Buchstaben direkt ersetzen und ein Backup erzeugen</div>
+<div class="content">
+<pre><code>$ cat foobar
+foo
+$ sed -e s/o/e/g -i.bak foobar
+$ cat foobar
+fee
+$ cat foobar.bak
+foo
+$</code></pre>
+</div></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1670,8 +1706,9 @@ $</code></pre>
 <div class="sect1">
 <h2 id="_danksagung">8. Danksagung</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert und Wolfram Schneider für
-Kritik und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
+<div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert, Elmar Heeb und Wolfram
+Schneider für Kritik und Verbesserungsvorschläge zum vorliegenden
+Tutorial.</p></div>
 </div>
 </div>
 <div class="sect1">
@@ -1715,9 +1752,9 @@ Kritik und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1<br />
+Version 1.2<br />
 Letzte Änderung
- 2016-04-28 08:47:57 CEST
+ 2016-04-29 16:00:54 CEST
 </div>
 </div>
 </body>
