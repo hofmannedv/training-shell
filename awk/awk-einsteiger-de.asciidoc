@@ -124,10 +124,10 @@ $
 
 Ein vollständiges `awk`-Programm besteht aus mindestens einer Zeile.
 Diese Zeile besteht wiederum aus zwei Komponenten -- einem Muster und
-einer Aktionsfolge. Mindestens eines von beiden geben Sie an -- entweder
-das Muster, oder die Aktionsfolge, oder beides.
+einer Aktionsfolge. Sie geben entweder das Muster an, oder die
+Aktionsfolge, oder beides.
 
-.Aufbau eines `awk`-Programms
+.Prinzipieller Aufbau eines `awk`-Programms
 ----
 Muster { Aktionsfolge }
 ----
