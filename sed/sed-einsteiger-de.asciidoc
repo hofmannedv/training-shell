@@ -513,10 +513,10 @@ Segment des Suchen-und-Ersetzen-Ausdrucks.
 Geben Sie kein Aktionsflag an, ersetzt `sed` nur den ersten Suchtreffer
 in der Zeile:
 
-.Ersetze alle Vorkommen von `apple` durch `banana`
+.Ersetze das erste Vorkommen von `apple` durch `banana`
 ----
 $ echo "apple orange melon apple" | sed 's/apple/banana/'
-banana orange melon banana
+banana orange melon apple
 $
 ----
 
