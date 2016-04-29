@@ -1285,10 +1285,10 @@ Segment des Suchen-und-Ersetzen-Ausdrucks.</p></div>
 <div class="paragraph"><p>Geben Sie kein Aktionsflag an, ersetzt <code>sed</code> nur den ersten Suchtreffer
 in der Zeile:</p></div>
 <div class="listingblock">
-<div class="title">Ersetze alle Vorkommen von <code>apple</code> durch <code>banana</code></div>
+<div class="title">Ersetze das erste Vorkommen von <code>apple</code> durch <code>banana</code></div>
 <div class="content">
 <pre><code>$ echo "apple orange melon apple" | sed 's/apple/banana/'
-banana orange melon banana
+banana orange melon apple
 $</code></pre>
 </div></div>
 <div class="admonitionblock">
@@ -1754,7 +1754,7 @@ Tutorial.</p></div>
 <div id="footer-text">
 Version 1.2<br />
 Letzte Änderung
- 2016-04-29 16:00:54 CEST
+ 2016-04-29 17:05:11 CEST
 </div>
 </div>
 </body>
