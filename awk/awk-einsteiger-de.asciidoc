@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.2
+:revnumber: 0.3
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 28. April 2016
+:date: 29. April 2016
 :numbered:
 
 = Vorwort =
@@ -90,6 +90,35 @@ $ awk -f skript.awk datei
 TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
 `awk`-Beispiels. Damit können Sie das Programm sofort ausprobieren, ohne
 das zuvor abtippen zu müssen.
+
+=== `awk`-Programm als ausführbares Programm ===
+
+Da `awk` auch eine (weniger bekannte) Programmiersprache ist, können Sie
+ein entsprechendes ausführbares Programm als Skript abspeichern und
+ausführen. Der Aufbau des Skriptdatei folgt dabei den üblichen Regeln,
+wie sie bspw. auch bei Perl-, bash- und Python-Skripten gelten. Nach der
+obligatorischen, einleitenden Shebang-Zeile mit dem expliziten Pfad zum
+ausführenden Interpreter folgt das `awk`-Programm.
+
+.`awk`-Programm als Skriptdatei (`output-content-with-condition.sh`)
+----
+#!/usr/bin/awk -f
+
+/2016-01-11/ {
+    print
+}
+----
+
+Geben Sie der obigen Datei Ausführungsrechte via `chmod +x
+output-content-with-condition.sh`, können Sie das Skript wie folgt auf
+der Kommandozeile aufrufen:
+
+.`awk`-Programm als Skriptdatei aufrufen
+----
+$ ./output-content-with-condition.sh logfile 
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$
+----
 
 == Aufbau eines `awk`-Programms ==
 
@@ -229,8 +258,8 @@ $
 
 == Danksagung ==
 
-Vielen Dank an Thomas Osterried für Kritik und Verbesserungsvorschläge
-zum vorliegenden Tutorial.
+Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
+und Verbesserungsvorschläge zum vorliegenden Tutorial.
 
 == Weiterführende Dokumente ==
 
