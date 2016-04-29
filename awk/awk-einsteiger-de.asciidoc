@@ -181,8 +181,31 @@ dazu am besten auf einer separaten Zeile an. Das nachfolgende Programm
 prüft, ob in der gelesenen Zeile ein bestimmtes Muster vorkommt. Es
 prüft auf das Vorkommen von Leerzeilen, Ziffern und Buchstaben.
 
-.Beispiel 4: mehrzeiliges Programm
+.Beispiel 4: mehrzeiliges Programm (Aktionsfolgen) (`output-multi-action.awk`)
 ----
+/[0-9]+/ { print "That is an integer." }
+/[A-z]+/ { print "This is a string." }
+/^$/ { print "This is an empty line." }
+----
+
+Der Aufruf sieht dann wie folgt aus:
+
+----
+$ cat testfile 
+10247
+10249 Berlin
+Berlin
+
+10179
+$
+awk -f output-multi-action.awk testfile 
+That is an integer.
+That is an integer.
+This is a string.
+This is a string.
+This is an empty line.
+That is an integer.
+$
 ----
 
 == Beispiele ==
