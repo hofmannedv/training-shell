@@ -863,21 +863,49 @@ $</code></pre>
 <div class="sect1">
 <h2 id="_aufbau_eines_code_awk_code_programms">2. Aufbau eines <code>awk</code>-Programms</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Ein vollständiges <code>awk</code>-Programm besteht aus mindestens einer Zeile.
-Diese Zeile besteht wiederum aus zwei Komponenten&#8201;&#8212;&#8201;einem Muster und
-einer Aktionsfolge. Sie geben entweder das Muster an, oder die
-Aktionsfolge, oder beides.</p></div>
+<div class="paragraph"><p>Ein vollständiges <code>awk</code>-Programm besteht aus drei Blöcken&#8201;&#8212;&#8201;einem
+einführenden Block, einem Anweisungsblock und einem abschließenden
+Block. Die Ausführung durch den <code>awk</code>-Interpreter erfolgt in ebendieser
+Reihenfolge.</p></div>
 <div class="listingblock">
 <div class="title">Prinzipieller Aufbau eines <code>awk</code>-Programms</div>
 <div class="content">
-<pre><code>Muster { Aktionsfolge }</code></pre>
+<pre><code>BEGIN { einführender Block }
+Muster 1 { Aktionsfolge 1 }
+Muster 2 { Aktionsfolge 2 }
+...
+Muster n { Aktionsfolge n }
+END { abschließender Block }</code></pre>
 </div></div>
-<div class="paragraph"><p>Die Aktionsfolge umfaßt einzelne Anweisungen, wobei das Minimum eine
-Anweisung ist. Jede Aktionsfolge wird von <code>awk</code> in geschweiften Klammern
-erwartet. Damit kann <code>awk</code> dieses vom Muster unterscheiden. Bitte
-beachten Sie bei der Formulierung die beiden Leerzeichen&#8201;&#8212;&#8201;eines nach
-der öffnenden geschweiften Klammer und eines vor der schließenden
-geschweiften Klammer.</p></div>
+<div class="sect2">
+<h3 id="_einführender_block">2.1. Einführender Block</h3>
+<div class="paragraph"><p>Dieser Block ist optional. Falls vorhanden, leiten Sie ihn mit dem
+Schlüsselwort <code>BEGIN</code> ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+bevor die Datendatei verarbeitet wird.</p></div>
+<div class="listingblock">
+<div class="title">Minimalbeispiel mit <code>BEGIN</code>-Block</div>
+<div class="content">
+<pre><code>BEGIN { print " ---- Kopfzeile ---- " }
+{ print }</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_anweisungsblock">2.2. Anweisungsblock</h3>
+<div class="paragraph"><p>Dieser Block ist essentiell und besteht aus minimal einer einzelnen
+Zeile. Jede Zeile besteht wiederum aus zwei Komponenten&#8201;&#8212;&#8201;einem Muster
+und einer Aktionsfolge. Sie geben in der Zeile entweder das Muster an,
+oder die Aktionsfolge, oder beides (siehe Beispiele 1 bis 3).</p></div>
+<div class="paragraph"><p>Der <code>awk</code>-Interpreter verarbeitet die von Ihnen angegebene Datendatei
+zeilenweise und wendet auf jede gelesene Zeile der Datendatei alle
+Muster und Aktionsfolgen aus dem Anweisungsblock an. Maßgeblich ist
+dabei die Reihenfolge, in der Sie Anweisungen aufgeführt haben.</p></div>
+<div class="paragraph"><p>Eine Aktionsfolge umfaßt mindestens eine einzelne Anweisung und wird von
+<code>awk</code> in geschweiften Klammern erwartet. Damit kann <code>awk</code> dieses vom
+vorangestellten Muster unterscheiden. Bitte beachten Sie bei der
+Formulierung die beiden Leerzeichen&#8201;&#8212;&#8201;eines nach der öffnenden
+geschweiften Klammer und eines vor der schließenden geschweiften
+Klammer.</p></div>
 <div class="paragraph"><p>Nachfolgendes Beispiel 1 umfaßt als Anweisung lediglich <code>print</code> und gibt
 Zeile für Zeile den Inhalt der Datei <code>logfile</code> aus.</p></div>
 <div class="listingblock">
@@ -886,7 +914,6 @@ Zeile für Zeile den Inhalt der Datei <code>logfile</code> aus.</p></div>
 <pre><code>$ awk '{ print }' logfile
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
 2016-01-11 08:30:10 user fho logged in on /dev/tty2
-2016-01-12 08:45:12 user james logged in on /dev/tty1
 ...
 $</code></pre>
 </div></div>
@@ -940,6 +967,20 @@ This is an empty line.
 That is an integer.
 $</code></pre>
 </div></div>
+</div>
+<div class="sect2">
+<h3 id="_abschließender_block">2.3. Abschließender Block</h3>
+<div class="paragraph"><p>Dieser Block ist ebenfalls optional. Falls vorhanden, leiten Sie ihn mit
+dem Schlüsselwort <code>END</code> ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+nachdem die Datendatei verarbeitet wurde.</p></div>
+<div class="listingblock">
+<div class="title">Minimalbeispiel mit <code>END</code>-Block</div>
+<div class="content">
+<pre><code>{ print }
+END { print " ---- Fusszeile ---- " }</code></pre>
+</div></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1073,7 +1114,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3<br />
 Letzte Änderung
- 2016-04-29 18:44:16 CEST
+ 2016-04-30 16:31:09 CEST
 </div>
 </div>
 </body>
