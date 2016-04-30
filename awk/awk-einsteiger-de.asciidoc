@@ -277,6 +277,12 @@ $ nl logfile | awk '{ print }'
 $
 ----
 
+TIP: Benötigen Sie eine Lösung mit Zeilennummern `awk pur`, geht das
+ebenfalls. Diese Beispiele haben wir im Abschnitt 'Ausgabe mit
+Zeilennummern' <<ausgabe_mit_zeilennummern>> zusammengefaßt.
+
+=== Ausgeben bestimmter Zeilen einer Datei ===
+
 Über die vordefinierte Variable `$NR` und eine Bedingung geben Sie
 lediglich die vierte Zeile der Datei `logfile` aus:
 
@@ -333,6 +339,11 @@ $ nl logfile | awk 'NR > 3 && NR < 7 { print }'
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
 $
 ----
+
+[[ausgabe_mit_zeilennummern]]
+=== Ausgabe mit Zeilennummern ===
+
+ToDo
 
 == Danksagung ==
 
