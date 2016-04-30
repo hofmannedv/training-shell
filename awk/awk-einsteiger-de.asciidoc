@@ -124,22 +124,46 @@ $
 
 == Aufbau eines `awk`-Programms ==
 
-Ein vollständiges `awk`-Programm besteht aus mindestens einer Zeile.
-Diese Zeile besteht wiederum aus zwei Komponenten -- einem Muster und
-einer Aktionsfolge. Sie geben entweder das Muster an, oder die
-Aktionsfolge, oder beides.
+Ein vollständiges `awk`-Programm besteht aus drei Blöcken -- einem
+einführenden Block, einem Anweisungsblock und einem abschließenden
+Block. Die Ausführung durch den `awk`-Interpreter erfolgt in ebendieser
+Reihenfolge.
 
 .Prinzipieller Aufbau eines `awk`-Programms
 ----
-Muster { Aktionsfolge }
+BEGIN { einführender Block }
+Muster 1 { Aktionsfolge 1 }
+Muster 2 { Aktionsfolge 2 }
+...
+Muster n { Aktionsfolge n }
+END { abschließender Block }
 ----
 
-Die Aktionsfolge umfaßt einzelne Anweisungen, wobei das Minimum eine
-Anweisung ist. Jede Aktionsfolge wird von `awk` in geschweiften Klammern
-erwartet. Damit kann `awk` dieses vom Muster unterscheiden. Bitte
-beachten Sie bei der Formulierung die beiden Leerzeichen -- eines nach
-der öffnenden geschweiften Klammer und eines vor der schließenden
-geschweiften Klammer. 
+=== Einführender Block ===
+
+Dieser Block ist optional. Falls vorhanden, leiten Sie ihn mit dem
+Schlüsselwort `BEGIN` ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+bevor die Datendatei verarbeitet wird.
+
+=== Anweisungsblock ===
+
+Dieser Block ist essentiell und besteht aus minimal einer einzelnen
+Zeile. Jede Zeile besteht wiederum aus zwei Komponenten -- einem Muster
+und einer Aktionsfolge. Sie geben in der Zeile entweder das Muster an,
+oder die Aktionsfolge, oder beides (siehe Beispiele 1 bis 3).
+
+Der `awk`-Interpreter verarbeitet die von Ihnen angegebene Datendatei
+zeilenweise und wendet auf jede gelesene Zeile der Datendatei alle
+Muster und Aktionsfolgen aus dem Anweisungsblock an. Maßgeblich ist
+dabei die Reihenfolge, in der Sie Anweisungen aufgeführt haben.
+
+Eine Aktionsfolge umfaßt mindestens eine einzelne Anweisung und wird von
+`awk` in geschweiften Klammern erwartet. Damit kann `awk` dieses vom
+vorangestellten Muster unterscheiden. Bitte beachten Sie bei der
+Formulierung die beiden Leerzeichen -- eines nach der öffnenden
+geschweiften Klammer und eines vor der schließenden geschweiften
+Klammer.
 
 Nachfolgendes Beispiel 1 umfaßt als Anweisung lediglich `print` und gibt
 Zeile für Zeile den Inhalt der Datei `logfile` aus.
@@ -149,7 +173,6 @@ Zeile für Zeile den Inhalt der Datei `logfile` aus.
 $ awk '{ print }' logfile
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
 2016-01-11 08:30:10 user fho logged in on /dev/tty2
-2016-01-12 08:45:12 user james logged in on /dev/tty1
 ...
 $
 ----
@@ -207,6 +230,13 @@ This is an empty line.
 That is an integer.
 $
 ----
+
+=== Abschließender Block ===
+
+Dieser Block ist ebenfalls optional. Falls vorhanden, leiten Sie ihn mit
+dem Schlüsselwort `END` ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+nachdem die Datendatei verarbeitet wurde.
 
 == Beispiele ==
 
