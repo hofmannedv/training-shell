@@ -11,6 +11,7 @@ Examples for awk
 * output-content.awk:                     output the whole content of the file line by line
 * output-content-line4.awk:               output the 4th line, only
 * output-content-line4-6.awk:             output line 4-6, only
+* output-content-line7-end.awk:           output line 7 to end, only
 * output-content-with-condition.awk:      output these lines of the file that contain the given pattern
 * output-content-with-condition.sh:       output these lines of the file that contain the given pattern
 * output-content-with-line-numbers-1.awk: output the whole file content line by line with line numbers
