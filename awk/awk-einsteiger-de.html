@@ -884,7 +884,7 @@ Schlüsselwort <code>BEGIN</code> ein. Alle Anweisungen folgen innerhalb der
 nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
 bevor die Datendatei verarbeitet wird.</p></div>
 <div class="listingblock">
-<div class="title">Minimalbeispiel mit <code>BEGIN</code>-Block</div>
+<div class="title">Minimalbeispiel mit <code>BEGIN</code>-Block (Kopfzeile)</div>
 <div class="content">
 <pre><code>BEGIN { print " ---- Kopfzeile ---- " }
 { print }</code></pre>
@@ -975,7 +975,7 @@ dem Schlüsselwort <code>END</code> ein. Alle Anweisungen folgen innerhalb der
 nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
 nachdem die Datendatei verarbeitet wurde.</p></div>
 <div class="listingblock">
-<div class="title">Minimalbeispiel mit <code>END</code>-Block</div>
+<div class="title">Minimalbeispiel mit <code>END</code>-Block (Fusszeile)</div>
 <div class="content">
 <pre><code>{ print }
 END { print " ---- Fusszeile ---- " }</code></pre>
@@ -992,7 +992,8 @@ END { print " ---- Fusszeile ---- " }</code></pre>
 UNIX/Linux-Kommandos <code>cat</code>, <code>tac</code>, <code>head</code> und <code>tail</code>. Das Kommando <code>nl</code>
 kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
 des <code>awk</code>-Kommandos besser zu zeigen.</p></div>
-<div class="paragraph"><p>Das Ausgeben einer betreffenden Zeile erfolgt mit der Anweisung <code>print</code>.</p></div>
+<div class="paragraph"><p>Das Ausgeben der betreffenden Zeile einer Datendatei erfolgt mit der
+Anweisung <code>print</code>.</p></div>
 <div class="listingblock">
 <div class="title">Den gesamten Inhalt einfach ausgeben (<code>output-content.awk</code>)</div>
 <div class="content">
@@ -1008,6 +1009,19 @@ des <code>awk</code>-Kommandos besser zu zeigen.</p></div>
      9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Benötigen Sie eine Lösung mit Zeilennummern <code>awk pur</code>, geht das
+ebenfalls. Diese Beispiele haben wir im Abschnitt <em>Ausgabe mit
+Zeilennummern</em> <a href="#ausgabe_mit_zeilennummern">[ausgabe_mit_zeilennummern]</a> zusammengefaßt.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ausgeben_bestimmter_zeilen_einer_datei">3.2. Ausgeben bestimmter Zeilen einer Datei</h3>
 <div class="paragraph"><p>Über die vordefinierte Variable <code>$NR</code> und eine Bedingung geben Sie
 lediglich die vierte Zeile der Datei <code>logfile</code> aus:</p></div>
 <div class="listingblock">
@@ -1059,6 +1073,29 @@ $</code></pre>
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
      5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="ausgabe_mit_zeilennummern">3.3. Ausgabe mit Zeilennummern</h3>
+<div class="paragraph"><p>Die meisten hier genutzten Beispiele nutzen das UNIX/Linux-Kommando <code>nl</code>
+zur Illustration für Zeilennummern. <code>awk</code> kann das über die beiden
+internen Variablen <code>$NR</code> und <code>$0</code> auch vollständig selbst. Während <code>$NR</code>
+den Index des Eintrags bezeichnet (<em>number of record</em>), steht <code>$0</code> für
+die gesamte Zeile der Datendatei.</p></div>
+<div class="listingblock">
+<div class="title">Dateiinhalt mit Zeilennummern ausgeben (<code>output-content-with-line-numbers-1.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk '{print NR"  "$0}' logfile
+1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
 </div>
@@ -1114,7 +1151,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3<br />
 Letzte Änderung
- 2016-04-30 16:31:09 CEST
+ 2016-04-30 17:25:24 CEST
 </div>
 </div>
 </body>
