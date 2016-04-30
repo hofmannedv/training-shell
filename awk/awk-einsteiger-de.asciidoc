@@ -146,7 +146,7 @@ Schlüsselwort `BEGIN` ein. Alle Anweisungen folgen innerhalb der
 nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
 bevor die Datendatei verarbeitet wird.
 
-.Minimalbeispiel mit `BEGIN`-Block
+.Minimalbeispiel mit `BEGIN`-Block (Kopfzeile)
 ----
 BEGIN { print " ---- Kopfzeile ---- " }
 { print }
@@ -244,7 +244,7 @@ dem Schlüsselwort `END` ein. Alle Anweisungen folgen innerhalb der
 nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
 nachdem die Datendatei verarbeitet wurde.
 
-.Minimalbeispiel mit `END`-Block
+.Minimalbeispiel mit `END`-Block (Fusszeile)
 ----
 { print }
 END { print " ---- Fusszeile ---- " }
@@ -259,7 +259,8 @@ UNIX/Linux-Kommandos `cat`, `tac`, `head` und `tail`. Das Kommando `nl`
 kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
 des `awk`-Kommandos besser zu zeigen.
 
-Das Ausgeben einer betreffenden Zeile erfolgt mit der Anweisung `print`.
+Das Ausgeben der betreffenden Zeile einer Datendatei erfolgt mit der
+Anweisung `print`.
 
 .Den gesamten Inhalt einfach ausgeben (`output-content.awk`)
 ----
