@@ -146,6 +146,12 @@ Schlüsselwort `BEGIN` ein. Alle Anweisungen folgen innerhalb der
 nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
 bevor die Datendatei verarbeitet wird.
 
+.Minimalbeispiel mit `BEGIN`-Block
+----
+BEGIN { print " ---- Kopfzeile ---- " }
+{ print }
+----
+
 === Anweisungsblock ===
 
 Dieser Block ist essentiell und besteht aus minimal einer einzelnen
@@ -237,6 +243,12 @@ Dieser Block ist ebenfalls optional. Falls vorhanden, leiten Sie ihn mit
 dem Schlüsselwort `END` ein. Alle Anweisungen folgen innerhalb der
 nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
 nachdem die Datendatei verarbeitet wurde.
+
+.Minimalbeispiel mit `END`-Block
+----
+{ print }
+END { print " ---- Fusszeile ---- " }
+----
 
 == Beispiele ==
 
