@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.2,</span>
-<span id="revdate">29. April 2016</span>
+<span id="revnumber">version 1.3,</span>
+<span id="revdate">30. April 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -831,6 +831,35 @@ für die Skriptdatei. <code>GNU sed</code> versteht auch den langen Schalter <co
 <code>sed</code>-Beispiels. Damit können Sie das Skript sofort ausprobieren.</td>
 </tr></table>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_code_sed_code_filter_als_ausführbares_programm">2.3. <code>sed</code>-Filter als ausführbares Programm</h3>
+<div class="paragraph"><p>Ein <code>sed</code>-Skript speichern Sie als separates, ausführbares Programm ab.
+Indem Sie der Datei Ausführungsrechte geben, können Sie das Skript wie
+ein reguläres Programm aufrufen. Der Aufbau des Skriptdatei folgt dabei
+den üblichen Regeln, wie sie bspw. auch bei Perl-, bash- und
+Python-Skripten gelten. Nach der obligatorischen, einleitenden
+Shebang-Zeile mit dem expliziten Pfad zum ausführenden Interpreter folgt
+das <code>sed</code>-Programm.</p></div>
+<div class="listingblock">
+<div class="title"><code>sed</code>-Programm als Skriptdatei (<code>substitute.sh</code>)</div>
+<div class="content">
+<pre><code>#!/bin/sed -f
+
+s/user fho/benutzer/</code></pre>
+</div></div>
+<div class="paragraph"><p>Geben Sie der obigen Datei Ausführungsrechte via <code>chmod +x
+substitute.sh</code>, rufen Sie das Skript wie folgt auf der Kommandozeile
+auf:</p></div>
+<div class="listingblock">
+<div class="title"><code>sed</code>-Programm als Skript aufrufen</div>
+<div class="content">
+<pre><code>$ ./substitute.sh logfile
+2016-01-10 10:45:15 benutzer logged in on /dev/tty1
+2016-01-11 08:30:10 benutzer logged in on /dev/tty2
+...
+$</code></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -1752,9 +1781,9 @@ Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2<br />
+Version 1.3<br />
 Letzte Änderung
- 2016-04-29 17:05:11 CEST
+ 2016-04-30 14:54:29 CEST
 </div>
 </div>
 </body>

@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.2
+:revnumber: 1.3
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 29. April 2016
+:date: 30. April 2016
 :numbered:
 
 = Vorwort =
@@ -79,6 +79,36 @@ $ sed -f sed.skript datei
 
 TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
 `sed`-Beispiels. Damit können Sie das Skript sofort ausprobieren.
+
+=== `sed`-Filter als ausführbares Programm ===
+
+Ein `sed`-Skript speichern Sie als separates, ausführbares Programm ab.
+Indem Sie der Datei Ausführungsrechte geben, können Sie das Skript wie
+ein reguläres Programm aufrufen. Der Aufbau des Skriptdatei folgt dabei
+den üblichen Regeln, wie sie bspw. auch bei Perl-, bash- und
+Python-Skripten gelten. Nach der obligatorischen, einleitenden
+Shebang-Zeile mit dem expliziten Pfad zum ausführenden Interpreter folgt
+das `sed`-Programm.
+
+.`sed`-Programm als Skriptdatei (`substitute.sh`)
+----
+#!/bin/sed -f
+
+s/user fho/benutzer/
+----
+
+Geben Sie der obigen Datei Ausführungsrechte via `chmod +x
+substitute.sh`, rufen Sie das Skript wie folgt auf der Kommandozeile
+auf:
+
+.`sed`-Programm als Skript aufrufen
+----
+$ ./substitute.sh logfile 
+2016-01-10 10:45:15 benutzer logged in on /dev/tty1
+2016-01-11 08:30:10 benutzer logged in on /dev/tty2
+...
+$
+----
 
 == Mehrere Filter miteinander kombinieren ==
 

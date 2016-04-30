@@ -37,6 +37,7 @@ Examples for sed
 * replace-in-line-to-the-end.sed:           replace all occurences of a pattern from line 6 to the end of file
 * replace-in-line4-7.sed:                   replace all occurences of a pattern in line 4 to 7
 * replace-outside-line4-7.sed:              replace all occurences of a pattern in all but line 4 to 7
+* substitute.sh:                            sed skript as executable file
 
 Example data to play with:
 
