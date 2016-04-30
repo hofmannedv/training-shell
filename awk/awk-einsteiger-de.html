@@ -1098,6 +1098,26 @@ die gesamte Zeile der Datendatei.</p></div>
 9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Werden es mehr Zeilen und Sie wünschen eine rechtsbündige Anordnung der
+Zeilennummern, kommen Sie um die Formatierung der Ausgabe nicht herum.
+Dafür nutzen Sie das Kommando <code>printf</code> mit dem entsprechenden
+Formatstring. Im nachfolgenden Beispiel sorgt der Formatstring <code>%5s</code> für
+eine rechtsbündige Ausrichtung von bis zu fünf Ziffern.</p></div>
+<div class="listingblock">
+<div class="title">Dateiinhalt mit Zeilennummern ausgeben (<code>output-content-with-line-numbers-2.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk '{printf "%5s  ", NR; print $0}' logfile
+    1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+    2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+    3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+    4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+    5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+    6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+    7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+    8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+    9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -1151,7 +1171,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3<br />
 Letzte Änderung
- 2016-04-30 17:25:24 CEST
+ 2016-04-30 17:47:42 CEST
 </div>
 </div>
 </body>
