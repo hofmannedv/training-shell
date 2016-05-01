@@ -1227,6 +1227,26 @@ $</code></pre>
      9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Für die Suche unabhängig von der Groß- und Kleinschreibung bestehen
+mehrere Möglichkeiten. In Variante 1 setzen Sie im einführenden Block
+einen internen <code>awk</code>-Schalter namens <code>IGNORECASE</code> auf einen Wert
+ungleich Null. Alle nachfolgenden Vergleiche mit Mustern und Regulären
+Ausdrücken respektieren diesen Schalter:</p></div>
+<div class="listingblock">
+<div class="title">Suche nach dem Vorkommen des Musters <code>banana</code> unabhängig von Groß- und Kleinschreibung (<code>print-content-case-ins.awk</code>)</div>
+<div class="content">
+<pre><code>BEGIN { IGNORECASE=1 }
+/banana/ { print }</code></pre>
+</div></div>
+<div class="paragraph"><p>Rufen Sie das <code>awk</code>-Programm auf, erhalten Sie die folgende Ausgabe:</p></div>
+<div class="listingblock">
+<div class="title">Aufruf des <code>awk</code>-Programms</div>
+<div class="content">
+<pre><code>$ (echo "apple"; echo "banana"; echo "Banana") | awk -f print-content-case-ins.awk
+banana
+Banana
+$</code></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -1280,7 +1300,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3.1<br />
 Letzte Änderung
- 2016-05-01 20:50:37 CEST
+ 2016-05-01 21:23:18 CEST
 </div>
 </div>
 </body>

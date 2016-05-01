@@ -497,6 +497,28 @@ $ nl logfile | awk '/4[45]$/' { print }
 $
 ----
 
+Für die Suche unabhängig von der Groß- und Kleinschreibung bestehen
+mehrere Möglichkeiten. In Variante 1 setzen Sie im einführenden Block
+einen internen `awk`-Schalter namens `IGNORECASE` auf einen Wert
+ungleich Null. Alle nachfolgenden Vergleiche mit Mustern und Regulären
+Ausdrücken respektieren diesen Schalter:
+
+.Suche nach dem Vorkommen des Musters `banana` unabhängig von Groß- und Kleinschreibung (`print-content-case-ins.awk`)
+----
+BEGIN { IGNORECASE=1 }
+/banana/ { print }
+----
+
+Rufen Sie das `awk`-Programm auf, erhalten Sie die folgende Ausgabe:
+
+.Aufruf des `awk`-Programms 
+----
+$ (echo "apple"; echo "banana"; echo "Banana") | awk -f print-content-case-ins.awk 
+banana
+Banana
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
