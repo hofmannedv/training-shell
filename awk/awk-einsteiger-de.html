@@ -1200,6 +1200,25 @@ Effekt werden die erste und letzte Zeile in der Ausgabe ignoriert.</p></div>
 $</code></pre>
 </div></div>
 </div>
+<div class="sect2">
+<h3 id="_finde_alle_zeilen_der_eingabe_welches_ein_bestimmtes_muster_beinhalten">3.5. Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten</h3>
+<div class="paragraph"><p>Die nachfolgenden Aufrufe sind ähnlich zu <code>grep</code>, <code>vi</code> und <code>less</code>, wobei
+hier die Verwandschaft der drei Werkzeuge deutlich wird. Beachten Sie
+bei der Benutzung aber die leichten syntaktischen Unterschiede. Ob sie
+im Alltag zur Lösung Ihres Problems auf <code>grep</code>, <code>sed</code> oder <code>awk</code>
+zurückgreifen, ist häufig eine Frage der Gewohnheit und mit welchem
+Aufwand Sie das Problem lösen können.</p></div>
+<div class="listingblock">
+<div class="title">Alle Zeilen der Datei <code>logfile</code> ausgeben, die das Muster <code>fho</code> enthalten (<code>print-content.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk '/fho/' { print }
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+$</code></pre>
+</div></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1252,7 +1271,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3.1<br />
 Letzte Änderung
- 2016-05-01 17:52:20 CEST
+ 2016-05-01 20:44:48 CEST
 </div>
 </div>
 </body>

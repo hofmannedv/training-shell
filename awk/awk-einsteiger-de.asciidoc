@@ -469,6 +469,25 @@ $ nl logfile | awk 'NR > 2 {print v} {v = $0}'
 $
 ----
 
+=== Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
+
+Die nachfolgenden Aufrufe sind ähnlich zu `grep`, `vi` und `less`, wobei
+hier die Verwandschaft der drei Werkzeuge deutlich wird. Beachten Sie
+bei der Benutzung aber die leichten syntaktischen Unterschiede. Ob sie
+im Alltag zur Lösung Ihres Problems auf `grep`, `sed` oder `awk`
+zurückgreifen, ist häufig eine Frage der Gewohnheit und mit welchem
+Aufwand Sie das Problem lösen können.
+
+.Alle Zeilen der Datei `logfile` ausgeben, die das Muster `fho` enthalten (`print-content.awk`)
+----
+$ nl logfile | awk '/fho/' { print }
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
