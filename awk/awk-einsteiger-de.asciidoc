@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.3
+:revnumber: 0.3.1
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 29. April 2016
+:date: 1. Mai 2016
 :numbered:
 
 = Vorwort =
@@ -195,7 +195,8 @@ $
 ----
 
 Geben Sie keine Aktion an, ergänzt `awk` automatisch als Aktion das
-`print`-Statement (siehe Beispiel 3).
+`print`-Statement (siehe Beispiel 3). Somit läßt sich das Beispiel 2 um
+ein großes Stück verkürzen.
 
 .Beispiel 3: Ausgabe einer Datei (Muster)
 ----
@@ -317,6 +318,11 @@ Denkweise her der Kombination der beiden UNIX-Kommandos `head` und
 .Nur die Zeilen vier bis sechs ausgeben (Variante 1)
 ----
 $ nl logfile | head -6 | tail -3
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+$ nl logfile | tail --lines=+4 | head -3
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
      5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
