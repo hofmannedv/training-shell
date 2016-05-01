@@ -1218,6 +1218,15 @@ Aufwand Sie das Problem lösen können.</p></div>
      5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
 $</code></pre>
 </div></div>
+<div class="listingblock">
+<div class="title">Suche alle Zeilen, die entweder auf 44 oder 45 enden (<code>print-content-regex.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk '/4[45]$/' { print }
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -1271,7 +1280,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3.1<br />
 Letzte Änderung
- 2016-05-01 20:44:48 CEST
+ 2016-05-01 20:50:37 CEST
 </div>
 </div>
 </body>

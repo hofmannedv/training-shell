@@ -24,3 +24,4 @@ Examples for awk
 * delete-content-first-and-last-line.awk: delete first and last line from the file content
 
 * print-content.awk:                      print the lines that contain a given pattern
+* print-content-regex.awk:                print the lines that end on 44, or 45
