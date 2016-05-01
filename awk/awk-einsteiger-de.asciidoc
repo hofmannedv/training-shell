@@ -519,6 +519,18 @@ Banana
 $
 ----
 
+Das Vorgehen in Variante 2 gelingt dadurch, daß Sie oben genannten
+Schalter nicht verwenden und stattdessen einen komplexeren Regulären
+Ausdruck benutzen.
+
+.Suche nach dem Vorkommen des Musters `banana` mit großem oder kleinem Anfangsbuchstaben
+----
+$ (echo "apple"; echo "banana"; echo "Banana") | awk '/[Bb]anana/'
+banana
+Banana
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik

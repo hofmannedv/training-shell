@@ -1247,6 +1247,17 @@ banana
 Banana
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Das Vorgehen in Variante 2 gelingt dadurch, daß Sie oben genannten
+Schalter nicht verwenden und stattdessen einen komplexeren Regulären
+Ausdruck benutzen.</p></div>
+<div class="listingblock">
+<div class="title">Suche nach dem Vorkommen des Musters <code>banana</code> mit großem oder kleinem Anfangsbuchstaben</div>
+<div class="content">
+<pre><code>$ (echo "apple"; echo "banana"; echo "Banana") | awk '/[Bb]anana/'
+banana
+Banana
+$</code></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -1300,7 +1311,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3.1<br />
 Letzte Änderung
- 2016-05-01 21:23:18 CEST
+ 2016-05-01 21:44:33 CEST
 </div>
 </div>
 </body>
