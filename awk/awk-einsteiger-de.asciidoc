@@ -407,6 +407,18 @@ $ awk '{printf "%5s  ", NR; print $0}' logfile
 $
 ----
 
+=== Zeilen löschen ===
+
+Im Gegensatz zu `sed` verfügt `awk` nicht über ein explizites Kommando,
+um Zeilen zu löschen. Es bleibt nur, sich hier über den Mechanismus des
+Suchen und Ersetzens zu behelfen.
+
+.Alle Zeilen löschen
+----
+$ nl logfile | awk 'NR < 1'
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
