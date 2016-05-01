@@ -20,3 +20,4 @@ Examples for awk
 * output-multi-action.awk:                characterize the content -- line, character, or number
 
 * delete-content-line3.awk:               delete the 3rd line from the file content
+* delete-content-line3-5.awk:             delete line 3 to 5 from the file content
