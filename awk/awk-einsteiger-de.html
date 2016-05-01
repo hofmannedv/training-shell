@@ -1181,6 +1181,24 @@ ausgegeben, die sich in den Zeilen 1-2 bzw. größer als 5 befinden:</p></div>
      9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Das Löschen der ersten und letzten Zeile greift auf die Interna von
+<code>awk</code> zurück. In jedem Durchlauf wird zunächst die aktuelle Zeile in der
+Variable <code>v</code> gespeichert. Falls die Zeilennummer größer als 2 ist, wird
+der Inhalt der Variable <code>v</code> ausgegeben&#8201;&#8212;&#8201;somit die vorherige Zeile. Als
+Effekt werden die erste und letzte Zeile in der Ausgabe ignoriert.</p></div>
+<div class="listingblock">
+<div class="title">Die erste und die letzte Zeile löschen (<code>delete-content-first-and-last-line.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR &gt; 2 {print v} {v = $0}'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$</code></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -1234,7 +1252,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3.1<br />
 Letzte Änderung
- 2016-05-01 17:26:11 CEST
+ 2016-05-01 17:52:20 CEST
 </div>
 </div>
 </body>
