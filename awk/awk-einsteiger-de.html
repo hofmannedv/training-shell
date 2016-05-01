@@ -1081,8 +1081,9 @@ $</code></pre>
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Um nur den Inhalt der Datei ab einer bestimmten Zeile auszugeben, nutzen
-Sie wiederum eine Bedingung und die Variable <code>$NR</code>.</p></div>
+<div class="paragraph"><p>Um nur den Inhalt der Datei ab einer bestimmten Zeile bis zum Ende der
+Datei auszugeben, nutzen Sie wiederum eine Bedingung und die Variable
+<code>$NR</code>.</p></div>
 <div class="listingblock">
 <div class="title">Nur die Zeilen sieben bis zum Ende der Datei ausgeben (<code>output-content-line7-end.awk</code>)</div>
 <div class="content">
@@ -1119,7 +1120,10 @@ $</code></pre>
 Zeilennummern, kommen Sie um die Formatierung der Ausgabe nicht herum.
 Dafür nutzen Sie das Kommando <code>printf</code> mit dem entsprechenden
 Formatstring. Im nachfolgenden Beispiel sorgt der Formatstring <code>%5s</code> für
-eine rechtsbündige Ausrichtung von bis zu fünf Ziffern.</p></div>
+eine rechtsbündige Ausrichtung von bis zu fünf Ziffern. Die Ausgabe der
+Zeilennummer ist stets fünf Zeichen breit und wird&#8201;&#8212;&#8201;falls die Zahl
+weniger als fünf Stellen hat&#8201;&#8212;&#8201;mit der fehlenden Anzahl Leerzeichen von
+links aufgefüllt.</p></div>
 <div class="listingblock">
 <div class="title">Dateiinhalt mit Zeilennummern ausgeben (<code>output-content-with-line-numbers-2.awk</code>)</div>
 <div class="content">
@@ -1188,7 +1192,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3.1<br />
 Letzte Änderung
- 2016-05-01 14:52:03 CEST
+ 2016-05-01 14:57:15 CEST
 </div>
 </div>
 </body>

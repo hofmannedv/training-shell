@@ -346,8 +346,9 @@ $ nl logfile | awk 'NR > 3 && NR < 7 { print }'
 $
 ----
 
-Um nur den Inhalt der Datei ab einer bestimmten Zeile auszugeben, nutzen
-Sie wiederum eine Bedingung und die Variable `$NR`.
+Um nur den Inhalt der Datei ab einer bestimmten Zeile bis zum Ende der
+Datei auszugeben, nutzen Sie wiederum eine Bedingung und die Variable
+`$NR`.
 
 .Nur die Zeilen sieben bis zum Ende der Datei ausgeben (`output-content-line7-end.awk`)
 ----
@@ -386,7 +387,10 @@ Werden es mehr Zeilen und Sie wünschen eine rechtsbündige Anordnung der
 Zeilennummern, kommen Sie um die Formatierung der Ausgabe nicht herum.
 Dafür nutzen Sie das Kommando `printf` mit dem entsprechenden
 Formatstring. Im nachfolgenden Beispiel sorgt der Formatstring `%5s` für
-eine rechtsbündige Ausrichtung von bis zu fünf Ziffern.
+eine rechtsbündige Ausrichtung von bis zu fünf Ziffern. Die Ausgabe der
+Zeilennummer ist stets fünf Zeichen breit und wird -- falls die Zahl
+weniger als fünf Stellen hat -- mit der fehlenden Anzahl Leerzeichen von
+links aufgefüllt.
 
 .Dateiinhalt mit Zeilennummern ausgeben (`output-content-with-line-numbers-2.awk`)
 ----
