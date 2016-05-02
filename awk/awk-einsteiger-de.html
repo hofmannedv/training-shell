@@ -928,8 +928,20 @@ $</code></pre>
 $</code></pre>
 </div></div>
 <div class="paragraph"><p>Geben Sie keine Aktion an, ergänzt <code>awk</code> automatisch als Aktion das
-<code>print</code>-Statement (siehe Beispiel 3). Somit läßt sich das Beispiel 2 um
-ein großes Stück verkürzen.</p></div>
+<code>print</code>-Statement (siehe Beispiel 3). Somit läßt sich das Beispiel 2
+markant verkürzen.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Bitte beachten Sie, daß in allen nachfolgenden Listings stets die
+<code>print</code>-Anweisung als Aktionsfolge enthalten ist. Ziel in diesem
+Tutorial ist die Verständlichkeit der gezeigten Beispiele. Im Laufe der
+Zeit steigt ihre Sicherheit im Umgang mit <code>awk</code>, so daß Ihnen auch
+"Abkürzungen" geläufig sein werden.</td>
+</tr></table>
+</div>
 <div class="listingblock">
 <div class="title">Beispiel 3: Ausgabe einer Datei (Muster)</div>
 <div class="content">
@@ -1228,7 +1240,7 @@ $</code></pre>
 $</code></pre>
 </div></div>
 <div class="paragraph"><p>Für die Suche unabhängig von der Groß- und Kleinschreibung bestehen
-mehrere Möglichkeiten. In Variante 1 setzen Sie im einführenden Block
+mehrere Möglichkeiten. In <em>Variante 1</em> setzen Sie im einführenden Block
 einen internen <code>awk</code>-Schalter namens <code>IGNORECASE</code> auf einen Wert
 ungleich Null. Alle nachfolgenden Vergleiche mit Mustern und Regulären
 Ausdrücken respektieren diesen Schalter:</p></div>
@@ -1257,7 +1269,7 @@ banana
 Banana
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Das Vorgehen in Variante 2 gelingt dadurch, daß Sie oben genannten
+<div class="paragraph"><p>Das Vorgehen in <em>Variante 2</em> gelingt dadurch, daß Sie oben genannten
 Schalter nicht verwenden und stattdessen einen komplexeren Regulären
 Ausdruck benutzen.</p></div>
 <div class="listingblock">
@@ -1321,7 +1333,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.3.1<br />
 Letzte Änderung
- 2016-05-02 14:13:53 CEST
+ 2016-05-02 14:24:31 CEST
 </div>
 </div>
 </body>

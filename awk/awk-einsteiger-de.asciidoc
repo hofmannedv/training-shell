@@ -195,8 +195,14 @@ $
 ----
 
 Geben Sie keine Aktion an, ergänzt `awk` automatisch als Aktion das
-`print`-Statement (siehe Beispiel 3). Somit läßt sich das Beispiel 2 um
-ein großes Stück verkürzen.
+`print`-Statement (siehe Beispiel 3). Somit läßt sich das Beispiel 2
+markant verkürzen. 
+
+TIP: Bitte beachten Sie, daß in allen nachfolgenden Listings stets die
+`print`-Anweisung als Aktionsfolge enthalten ist. Ziel in diesem
+Tutorial ist die Verständlichkeit der gezeigten Beispiele. Im Laufe der
+Zeit steigt ihre Sicherheit im Umgang mit `awk`, so daß Ihnen auch
+"Abkürzungen" geläufig sein werden.
 
 .Beispiel 3: Ausgabe einer Datei (Muster)
 ----
