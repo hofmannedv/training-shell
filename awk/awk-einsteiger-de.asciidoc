@@ -548,7 +548,7 @@ Banana
 $
 ----
 
-== Anzahl Zeilen einer Datei ==
+=== Anzahl Zeilen einer Datei ===
 
 Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
 kennen Sie dazu das Werkzeug `wc`, welches über den Schalter `-l` die
@@ -594,13 +594,13 @@ END { printf "Anzahl Zeilen: %d\n", NR }
 ----
 
 [[spalten-und-felder]]
-== Spalten und Felder ==
+=== Spalten und Felder ===
 
 Wie eingangs genannt, liegt die Stärke von `awk` in der Verarbeitung von
 strukturierten Daten. `awk` kann mit Leichtigkeit spalten- bzw.
 feldweise agieren und Daten aus einer Zeile extrahieren.
 
-=== Trennzeichen zwischen Spalten und Feldern ===
+==== Trennzeichen zwischen Spalten und Feldern ====
 
 Als Trennzeichen verwendet `awk` die Zeichen, die in der Shellvariable
 `IFS` definiert sind. `IFS` steht als Abkürzung für 'internal field
@@ -685,7 +685,7 @@ $ awk -F '\t+' '{ print $3 }' rechnung
 $
 ----
 
-=== Auf Spalten und Felder zugreifen ===
+==== Auf Spalten und Felder zugreifen ====
 
 `awk` liest jede Zeile vollständig, zerlegt die Zeile anhand des
 eingestellten Trennzeichens in einzelne Spalten oder Felder und ordnet
@@ -752,6 +752,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.
 
 == Weiterführende Dokumente ==
 
+* [[[Barnett]]] Bruce Barnett: 'awk -- A tutorial and introduction', http://www.grymoire.com/Unix/Awk.html
 * [[[Dougherty]]] Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
 * [[[Friedl]]] Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
 * [[[gawk]]] `gawk` auf der Webseite des GNU-Projekts, https://www.gnu.org/software/gawk/
