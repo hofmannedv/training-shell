@@ -513,7 +513,18 @@ Rufen Sie das `awk`-Programm auf, erhalten Sie die folgende Ausgabe:
 
 .Aufruf des `awk`-Programms 
 ----
-$ (echo "apple"; echo "banana"; echo "Banana") | awk -f print-content-case-ins.awk 
+$ (echo "apple"; echo "banana"; echo "Banana") | awk -f print-content-case-ins.awk
+banana
+Banana
+$
+----
+
+Arbeiten Sie mit der Bash als Kommandozeileninterpreter, läßt sich der
+Aufruf für die Bash mit Hilfe des Schalters `-e` wie folgt verkürzen:
+
+.Aufruf des `awk`-Programms in der Bash
+----
+$ echo -e "apple\nbanana\nBanana" | awk -f print-content-case-ins.awk
 banana
 Banana
 $
