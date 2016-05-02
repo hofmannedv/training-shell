@@ -612,10 +612,15 @@ $
 Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
 Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
 `awk` die Zeichenkette jedoch als Regulären Ausdruck, so daß auch
-komplexere Zeichenfolgen möglich sind. Befinden sich in ihrer Datendatei
-zwischen den Spalten eine wechselnde Menge an Tabulatoren, definieren
-Sie als Spaltentrenner den Regulären Ausdruck `\t+`. Das Auslesen der
-dritten Spalte erreichen Sie dann wie folgt:
+komplexere Zeichenfolgen möglich sind. 
+
+Aus Gründen der Einfachheit und Schlichtheit befinden sich in ihrer
+Datendatei zwischen den Spalten eine wechselnde Menge an Tabulatoren.
+Als Spaltentrenner definieren Sie den Regulären Ausdruck `\t+`. Um
+sicherzugehen, daß die Shell, die das Kommando verarbeitet, ihren
+Regulären Ausdruck auch unverändert läßt, schließen Sie diesen
+zusätzlich in einfache Anführungszeichen ein. Das Auslesen der dritten
+Spalte erreichen Sie dann wie folgt:
 
 .Trennzeichen als Regulärer Ausdruck
 ----

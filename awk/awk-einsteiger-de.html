@@ -1343,10 +1343,14 @@ $</code></pre>
 <div class="paragraph"><p>Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
 Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
 <code>awk</code> die Zeichenkette jedoch als Regulären Ausdruck, so daß auch
-komplexere Zeichenfolgen möglich sind. Befinden sich in ihrer Datendatei
-zwischen den Spalten eine wechselnde Menge an Tabulatoren, definieren
-Sie als Spaltentrenner den Regulären Ausdruck <code>\t+</code>. Das Auslesen der
-dritten Spalte erreichen Sie dann wie folgt:</p></div>
+komplexere Zeichenfolgen möglich sind.</p></div>
+<div class="paragraph"><p>Aus Gründen der Einfachheit und Schlichtheit befinden sich in ihrer
+Datendatei zwischen den Spalten eine wechselnde Menge an Tabulatoren.
+Als Spaltentrenner definieren Sie den Regulären Ausdruck <code>\t+</code>. Um
+sicherzugehen, daß die Shell, die das Kommando verarbeitet, ihren
+Regulären Ausdruck auch unverändert läßt, schließen Sie diesen
+zusätzlich in einfache Anführungszeichen ein. Das Auslesen der dritten
+Spalte erreichen Sie dann wie folgt:</p></div>
 <div class="listingblock">
 <div class="title">Trennzeichen als Regulärer Ausdruck</div>
 <div class="content">
@@ -1414,7 +1418,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.4<br />
 Letzte Änderung
- 2016-05-02 15:35:11 CEST
+ 2016-05-02 15:40:07 CEST
 </div>
 </div>
 </body>
