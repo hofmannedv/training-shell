@@ -30,6 +30,7 @@ Examples for awk
 * columns.awk:                            count the number of columns per line
 * print-first-column.awk:                 print the first column of each line, only
 * sum.awk:                                calculate the total for two columns
+* wcl-1.awk:                              count the number of lines per file (version 1)
 
 Further files for demonstration purposes
 

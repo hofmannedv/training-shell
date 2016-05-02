@@ -548,6 +548,25 @@ Banana
 $
 ----
 
+== Anzahl Zeilen einer Datei ==
+
+Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
+kennen Sie dazu das Werkzeug `wc`, welches über den Schalter `-l` die
+Anzahl der Zeilen zählt. Mit `awk` können Sie dieses recht einfach
+nachbauen.
+
+In 'Variante 1' definieren Sie zunächst eine Variable namens `count`,
+die Sie mit dem Wert Null initialisieren. Im Aktionsteil zählen Sie
+diese pro gelesener Zeile um eins hoch. Am Ende geben Sie einfach den
+Wert der Variable aus.
+
+.Zeilen zählen (Version 1) (`wcl-1.awk`)
+----
+BEGIN { count=0 }
+{ count++ }
+END { printf "Anzahl Zeilen: %d\n", count }
+----
+
 [[spalten-und-felder]]
 == Spalten und Felder ==
 
@@ -609,6 +628,9 @@ sys
 ...
 $
 ----
+
+TIP: Obiger Aufruf entspricht dem UNIX/Linux-Kommando `cut -d: -f1
+/etc/passwd`.
 
 Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
 Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
