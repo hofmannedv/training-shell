@@ -27,8 +27,8 @@ Examples for awk
 * print-content-regex.awk:                print the lines that end on 44, or 45
 * print-content-case-ins.awk:             search for patterns case-insensitive
 
+* columns.awk:                            count the number of columns per line
 * print-first-column.awk:                 print the first column of each line, only
-
 * sum.awk:                                calculate the total for two columns
 
 Further files for demonstration purposes

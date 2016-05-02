@@ -1385,6 +1385,14 @@ erzeugt.</p></div>
 orange banana apple
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>In der Variable <code>$NF</code> merkt sich <code>awk</code> die Anzahl der Spalten pro Zeile.</p></div>
+<div class="listingblock">
+<div class="title">Anzahl Spalten ermitteln</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange" | awk '{ print NF }'
+3
+$</code></pre>
+</div></div>
 <div class="paragraph"><p>Daß <code>awk</code> auch rechnen kann, demonstrieren wir anhand obiger
 Rechnungsdatei. Die Gesamtsumme aller Artikel berechnet sich aus der
 Addition aller Zwischensummen pro Zeile. Jede Zwischensumme ergibt sich
@@ -1466,7 +1474,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.4<br />
 Letzte Änderung
- 2016-05-02 16:51:26 CEST
+ 2016-05-02 17:16:16 CEST
 </div>
 </div>
 </body>

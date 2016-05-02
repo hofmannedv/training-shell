@@ -658,6 +658,15 @@ orange banana apple
 $
 ----
 
+In der Variable `$NF` merkt sich `awk` die Anzahl der Spalten pro Zeile.
+
+.Anzahl Spalten ermitteln
+----
+$ echo "apple banana orange" | awk '{ print NF }'
+3
+$
+----
+
 Daß `awk` auch rechnen kann, demonstrieren wir anhand obiger
 Rechnungsdatei. Die Gesamtsumme aller Artikel berechnet sich aus der
 Addition aller Zwischensummen pro Zeile. Jede Zwischensumme ergibt sich
