@@ -28,3 +28,10 @@ Examples for awk
 * print-content-case-ins.awk:             search for patterns case-insensitive
 
 * print-first-column.awk:                 print the first column of each line, only
+
+* sum.awk:                                calculate the total for two columns
+
+Further files for demonstration purposes
+
+* logfile                                 a simple logfile as text file
+* rechnung                                a simple invoice as text file

@@ -637,6 +637,57 @@ $ awk -F '\t+' '{ print $3 }' rechnung
 $
 ----
 
+=== Auf Spalten und Felder zugreifen ===
+
+`awk` liest jede Zeile vollständig, zerlegt die Zeile anhand des
+eingestellten Trennzeichens in einzelne Spalten oder Felder und ordnet
+die Spalten bestimmten Variablen zu. Die Variablen sind nach einem
+einheitlichen Schema benannt -- der Nummer der jeweiligen Spalte. Den
+Inhalt der ersten Spalte finden Sie somit in Variable `$1`, die zweite
+Spalte in `$2` etc. 
+
+Das nachfolgende, einfache Beispiel gibt die drei Spalten der
+Eingabezeile in umgekehrter Reihenfolge wieder aus. Beachten Sie bitte,
+daß das Komma in der `print`-Anweisung in der Ausgabe ein Leerzeichen
+erzeugt.
+
+.Spalten lesen und referenzieren
+----
+$ echo "apple banana orange" | awk '{ print $3, $2, $1 }'
+orange banana apple
+$
+----
+
+Daß `awk` auch rechnen kann, demonstrieren wir anhand obiger
+Rechnungsdatei. Die Gesamtsumme aller Artikel berechnet sich aus der
+Addition aller Zwischensummen pro Zeile. Jede Zwischensumme ergibt sich
+aus dem Produkt der Spalten 1 und 3 -- Anzahl mal Einzelpreis. Um am
+Ende eine Ausgabe mit zwei Nachkommastellen zu erhalten, ergänzen Sie
+den Aufruf von `printf` um die Angabe `.2f`, was für "Fließkommazahl mit
+zwei Nachkommastellen" steht.
+
+.Die Gesamtsumme berechnen (`sum.awk`)
+----
+BEGIN { FS="\t+" }
+{ total += $1 * $3 }
+END { printf "Gesamt: %.2f\n", total }
+----
+
+Rufen Sie obiges `awk`-Programm danach auf, erhalten Sie dieses
+Ergebnis:
+
+.Ermittlung der Gesamtsumme
+----
+$ cat rechnung
+1	Floppy 3.5"			3.00	3.00
+5	DVD					1.50	7.50
+2	SDHC memory card	8.00	16.00
+$
+$ awk -f sum.awk rechnung 
+Gesamt: 26.50
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik

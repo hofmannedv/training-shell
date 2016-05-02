@@ -1366,6 +1366,54 @@ $ awk -F '\t+' '{ print $3 }' rechnung
 $</code></pre>
 </div></div>
 </div>
+<div class="sect2">
+<h3 id="_auf_spalten_und_felder_zugreifen">4.2. Auf Spalten und Felder zugreifen</h3>
+<div class="paragraph"><p><code>awk</code> liest jede Zeile vollständig, zerlegt die Zeile anhand des
+eingestellten Trennzeichens in einzelne Spalten oder Felder und ordnet
+die Spalten bestimmten Variablen zu. Die Variablen sind nach einem
+einheitlichen Schema benannt&#8201;&#8212;&#8201;der Nummer der jeweiligen Spalte. Den
+Inhalt der ersten Spalte finden Sie somit in Variable <code>$1</code>, die zweite
+Spalte in <code>$2</code> etc.</p></div>
+<div class="paragraph"><p>Das nachfolgende, einfache Beispiel gibt die drei Spalten der
+Eingabezeile in umgekehrter Reihenfolge wieder aus. Beachten Sie bitte,
+daß das Komma in der <code>print</code>-Anweisung in der Ausgabe ein Leerzeichen
+erzeugt.</p></div>
+<div class="listingblock">
+<div class="title">Spalten lesen und referenzieren</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange" | awk '{ print $3, $2, $1 }'
+orange banana apple
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Daß <code>awk</code> auch rechnen kann, demonstrieren wir anhand obiger
+Rechnungsdatei. Die Gesamtsumme aller Artikel berechnet sich aus der
+Addition aller Zwischensummen pro Zeile. Jede Zwischensumme ergibt sich
+aus dem Produkt der Spalten 1 und 3&#8201;&#8212;&#8201;Anzahl mal Einzelpreis. Um am
+Ende eine Ausgabe mit zwei Nachkommastellen zu erhalten, ergänzen Sie
+den Aufruf von <code>printf</code> um die Angabe <code>.2f</code>, was für "Fließkommazahl mit
+zwei Nachkommastellen" steht.</p></div>
+<div class="listingblock">
+<div class="title">Die Gesamtsumme berechnen (<code>sum.awk</code>)</div>
+<div class="content">
+<pre><code>BEGIN { FS="\t+" }
+{ total += $1 * $3 }
+END { printf "Gesamt: %.2f\n", total }</code></pre>
+</div></div>
+<div class="paragraph"><p>Rufen Sie obiges <code>awk</code>-Programm danach auf, erhalten Sie dieses
+Ergebnis:</p></div>
+<div class="listingblock">
+<div class="title">Ermittlung der Gesamtsumme</div>
+<div class="content">
+<pre><code>$ cat rechnung
+1       Floppy 3.5"                     3.00    3.00
+5       DVD                                     1.50    7.50
+2       SDHC memory card        8.00    16.00
+$
+$ awk -f sum.awk rechnung
+Gesamt: 26.50
+$</code></pre>
+</div></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1418,7 +1466,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.4<br />
 Letzte Änderung
- 2016-05-02 15:50:26 CEST
+ 2016-05-02 16:51:26 CEST
 </div>
 </div>
 </body>
