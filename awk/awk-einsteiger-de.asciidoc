@@ -562,20 +562,45 @@ separator' und beinhaltet üblicherweise Leerzeichen (`\s`),
 Tabulatorzeichen (`\t`) und den Zeilenumbuch (`\n`). 
 
 `awk` selbst merkt sich diese Trennzeichen in der internen Variable
-`FS`. `FS` beinhaltet lediglich das Leerzeichen und das
-Tabulatorzeichen.
+`$FS`. Beachten Sie, daß `$FS` lediglich das Leerzeichen und das
+Tabulatorzeichen beinhaltet. Nachfolgendes Beispiel zeigt den Zugriff
+auf die zweite Spalte, deren Inhalt sich `awk` in der internen Variable
+`$2` merkt.
+
+.Ausgabe der zweiten Spalte mit Leerzeichen als Trennzeichen
+----
+$ echo "apple banana orange" | awk '{ print $2 }'
+banana
+$
+----
 
 Möchten Sie in ihrem `awk`-Programm ein anderes Trennzeichen verwenden,
 haben Sie zwei Möglichkeiten. In 'Variante 1' definieren Sie die
-Variable `FS` im einführenden Block um. 
-
-Nachfolgendes Beispiel setzt zunächst das Trennzeichen auf den
-Doppelpunkt und gibt anschließend die erste Spalte jeder Zeile der Datei
-`/etc/passwd` aus:
+Variable `$FS` im einführenden Block um. Nachfolgendes Beispiel setzt
+zunächst das Trennzeichen auf den Doppelpunkt und gibt anschließend die
+erste Spalte jeder Zeile der Datei `/etc/passwd` aus:
 
 .`awk`-Programm mit Doppelpunkt als Trennzeichen (`print-first-column.awk`)
 ----
 $ awk 'BEGIN { FS=":" } { print $1 }' /etc/passwd
+root
+daemon
+bin
+sys
+...
+$
+----
+
+Möchten Sie bei jedem Aufruf ihres `awk`-Programms flexibler sein, geben
+Sie `awk` beim Aufruf das gewünschte Trennzeichen mit. 'Variante 2'
+zeigt Ihnen das Vorgehen. Sie verwenden dazu den Schalter `-F` gefolgt
+vom Trennzeichen, hier wiederum beispielhaft der Doppelpunkt. `awk` ist
+hierbei so tolerant, daß es unerheblich ist, ob zwischen dem Schalter
+`-F` und dem Trennzeichen ein Leerzeichen folgt, oder nicht.
+
+.`awk`-Programm mit variablem Trennzeichen pro Aufruf
+----
+$ awk -F : '{ print $1 }' /etc/passwd
 root
 daemon
 bin

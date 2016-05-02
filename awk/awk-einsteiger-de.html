@@ -1296,18 +1296,43 @@ feldweise agieren und Daten aus einer Zeile extrahieren.</p></div>
 separator</em> und beinhaltet üblicherweise Leerzeichen (<code>\s</code>),
 Tabulatorzeichen (<code>\t</code>) und den Zeilenumbuch (<code>\n</code>).</p></div>
 <div class="paragraph"><p><code>awk</code> selbst merkt sich diese Trennzeichen in der internen Variable
-<code>FS</code>. <code>FS</code> beinhaltet lediglich das Leerzeichen und das
-Tabulatorzeichen.</p></div>
+<code>$FS</code>. Beachten Sie, daß <code>$FS</code> lediglich das Leerzeichen und das
+Tabulatorzeichen beinhaltet. Nachfolgendes Beispiel zeigt den Zugriff
+auf die zweite Spalte, deren Inhalt sich <code>awk</code> in der internen Variable
+<code>$2</code> merkt.</p></div>
+<div class="listingblock">
+<div class="title">Ausgabe der zweiten Spalte mit Leerzeichen als Trennzeichen</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange" | awk '{ print $2 }'
+banana
+$</code></pre>
+</div></div>
 <div class="paragraph"><p>Möchten Sie in ihrem <code>awk</code>-Programm ein anderes Trennzeichen verwenden,
 haben Sie zwei Möglichkeiten. In <em>Variante 1</em> definieren Sie die
-Variable <code>FS</code> im einführenden Block um.</p></div>
-<div class="paragraph"><p>Nachfolgendes Beispiel setzt zunächst das Trennzeichen auf den
-Doppelpunkt und gibt anschließend die erste Spalte jeder Zeile der Datei
-<code>/etc/passwd</code> aus:</p></div>
+Variable <code>$FS</code> im einführenden Block um. Nachfolgendes Beispiel setzt
+zunächst das Trennzeichen auf den Doppelpunkt und gibt anschließend die
+erste Spalte jeder Zeile der Datei <code>/etc/passwd</code> aus:</p></div>
 <div class="listingblock">
 <div class="title"><code>awk</code>-Programm mit Doppelpunkt als Trennzeichen (<code>print-first-column.awk</code>)</div>
 <div class="content">
 <pre><code>$ awk 'BEGIN { FS=":" } { print $1 }' /etc/passwd
+root
+daemon
+bin
+sys
+...
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Möchten Sie bei jedem Aufruf ihres <code>awk</code>-Programms flexibler sein, geben
+Sie <code>awk</code> beim Aufruf das gewünschte Trennzeichen mit. <em>Variante 2</em>
+zeigt Ihnen das Vorgehen. Sie verwenden dazu den Schalter <code>-F</code> gefolgt
+vom Trennzeichen, hier wiederum beispielhaft der Doppelpunkt. <code>awk</code> ist
+hierbei so tolerant, daß es unerheblich ist, ob zwischen dem Schalter
+<code>-F</code> und dem Trennzeichen ein Leerzeichen folgt, oder nicht.</p></div>
+<div class="listingblock">
+<div class="title"><code>awk</code>-Programm mit variablem Trennzeichen pro Aufruf</div>
+<div class="content">
+<pre><code>$ awk -F : '{ print $1 }' /etc/passwd
 root
 daemon
 bin
@@ -1368,7 +1393,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.4<br />
 Letzte Änderung
- 2016-05-02 14:52:47 CEST
+ 2016-05-02 15:16:49 CEST
 </div>
 </div>
 </body>
