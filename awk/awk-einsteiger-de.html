@@ -1284,13 +1284,57 @@ $</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="spalten-und-felder">4. Spalten und Felder</h2>
+<h2 id="_anzahl_zeilen_einer_datei">4. Anzahl Zeilen einer Datei</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
+kennen Sie dazu das Werkzeug <code>wc</code>, welches über den Schalter <code>-l</code> die
+Anzahl der Zeilen zählt.</p></div>
+<div class="listingblock">
+<div class="title">Zeilen einer Datei zählen</div>
+<div class="content">
+<pre><code>$ wc -l rechnung
+3 rechnung
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Mit <code>awk</code> können Sie dieses Verhalten recht einfach nachbauen. In
+<em>Variante 1</em> definieren Sie zunächst im einführenden Block eine Variable
+namens <code>count</code>, die Sie mit dem Wert Null initialisieren. Im Aktionsteil
+zählen Sie diese pro gelesener Zeile um eins hoch. Am Ende geben Sie
+einfach den Wert der Variable aus.</p></div>
+<div class="listingblock">
+<div class="title">Zeilen zählen (Version 1) (<code>wcl-1.awk</code>)</div>
+<div class="content">
+<pre><code>BEGIN { count=0 }
+{ count++ }
+END { printf "Anzahl Zeilen: %d\n", count }</code></pre>
+</div></div>
+<div class="paragraph"><p>Rufen Sie das Programm auf, erhalten Sie die folgende Ausgabe:</p></div>
+<div class="listingblock">
+<div class="title">Zeilen zählen (Ausgabe)</div>
+<div class="content">
+<pre><code>$ awk -f wcl-1.awk rechnung
+Anzahl Zeilen: 3
+$</code></pre>
+</div></div>
+<div class="paragraph"><p><em>Variante 2</em> ist ähnlich, greift aber auf eine interne Variable namens
+<code>$NR</code> zurück. Damit verkürzt sich das Programm auf den abschließenden
+Block mit einer einzigen Anweisung. Die Ausgabe ist identisch zu
+<em>Variante 1</em>.</p></div>
+<div class="listingblock">
+<div class="title">Zeilen zählen (Version 2) (<code>wcl-2.awk</code>)</div>
+<div class="content">
+<pre><code>END { printf "Anzahl Zeilen: %d\n", NR }</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="spalten-und-felder">5. Spalten und Felder</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Wie eingangs genannt, liegt die Stärke von <code>awk</code> in der Verarbeitung von
 strukturierten Daten. <code>awk</code> kann mit Leichtigkeit spalten- bzw.
 feldweise agieren und Daten aus einer Zeile extrahieren.</p></div>
 <div class="sect2">
-<h3 id="_trennzeichen_zwischen_spalten_und_feldern">4.1. Trennzeichen zwischen Spalten und Feldern</h3>
+<h3 id="_trennzeichen_zwischen_spalten_und_feldern">5.1. Trennzeichen zwischen Spalten und Feldern</h3>
 <div class="paragraph"><p>Als Trennzeichen verwendet <code>awk</code> die Zeichen, die in der Shellvariable
 <code>IFS</code> definiert sind. <code>IFS</code> steht als Abkürzung für <em>internal field
 separator</em> und beinhaltet üblicherweise Leerzeichen (<code>\s</code>),
@@ -1340,6 +1384,15 @@ sys
 ...
 $</code></pre>
 </div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Obiger Aufruf entspricht dem UNIX/Linux-Kommando <code>cut -d: -f1
+/etc/passwd</code>.</td>
+</tr></table>
+</div>
 <div class="paragraph"><p>Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
 Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
 <code>awk</code> die Zeichenkette jedoch als Regulären Ausdruck, so daß auch
@@ -1367,7 +1420,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_auf_spalten_und_felder_zugreifen">4.2. Auf Spalten und Felder zugreifen</h3>
+<h3 id="_auf_spalten_und_felder_zugreifen">5.2. Auf Spalten und Felder zugreifen</h3>
 <div class="paragraph"><p><code>awk</code> liest jede Zeile vollständig, zerlegt die Zeile anhand des
 eingestellten Trennzeichens in einzelne Spalten oder Felder und ordnet
 die Spalten bestimmten Variablen zu. Die Variablen sind nach einem
@@ -1425,14 +1478,14 @@ $</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_danksagung">5. Danksagung</h2>
+<h2 id="_danksagung">6. Danksagung</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
 und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_weiterführende_dokumente">6. Weiterführende Dokumente</h2>
+<h2 id="_weiterführende_dokumente">7. Weiterführende Dokumente</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
 <li>
@@ -1474,7 +1527,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.4<br />
 Letzte Änderung
- 2016-05-02 17:16:16 CEST
+ 2016-05-02 17:39:19 CEST
 </div>
 </div>
 </body>

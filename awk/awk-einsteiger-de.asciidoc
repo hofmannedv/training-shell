@@ -552,19 +552,45 @@ $
 
 Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
 kennen Sie dazu das Werkzeug `wc`, welches über den Schalter `-l` die
-Anzahl der Zeilen zählt. Mit `awk` können Sie dieses recht einfach
-nachbauen.
+Anzahl der Zeilen zählt. 
 
-In 'Variante 1' definieren Sie zunächst eine Variable namens `count`,
-die Sie mit dem Wert Null initialisieren. Im Aktionsteil zählen Sie
-diese pro gelesener Zeile um eins hoch. Am Ende geben Sie einfach den
-Wert der Variable aus.
+.Zeilen einer Datei zählen
+----
+$ wc -l rechnung
+3 rechnung
+$
+----
+
+Mit `awk` können Sie dieses Verhalten recht einfach nachbauen. In
+'Variante 1' definieren Sie zunächst im einführenden Block eine Variable
+namens `count`, die Sie mit dem Wert Null initialisieren. Im Aktionsteil
+zählen Sie diese pro gelesener Zeile um eins hoch. Am Ende geben Sie
+einfach den Wert der Variable aus.
 
 .Zeilen zählen (Version 1) (`wcl-1.awk`)
 ----
 BEGIN { count=0 }
 { count++ }
 END { printf "Anzahl Zeilen: %d\n", count }
+----
+
+Rufen Sie das Programm auf, erhalten Sie die folgende Ausgabe:
+
+.Zeilen zählen (Ausgabe)
+----
+$ awk -f wcl-1.awk rechnung
+Anzahl Zeilen: 3
+$
+----
+
+'Variante 2' ist ähnlich, greift aber auf eine interne Variable namens
+`$NR` zurück. Damit verkürzt sich das Programm auf den abschließenden
+Block mit einer einzigen Anweisung. Die Ausgabe ist identisch zu
+'Variante 1'.
+
+.Zeilen zählen (Version 2) (`wcl-2.awk`)
+----
+END { printf "Anzahl Zeilen: %d\n", NR }
 ----
 
 [[spalten-und-felder]]
