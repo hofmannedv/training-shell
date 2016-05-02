@@ -609,6 +609,28 @@ sys
 $
 ----
 
+Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
+Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
+`awk` die Zeichenkette jedoch als Regulären Ausdruck, so daß auch
+komplexere Zeichenfolgen möglich sind. Befinden sich in ihrer Datendatei
+zwischen den Spalten eine wechselnde Menge an Tabulatoren, definieren
+Sie als Spaltentrenner den Regulären Ausdruck `\t+`. Das Auslesen der
+dritten Spalte erreichen Sie dann wie folgt:
+
+.Trennzeichen als Regulärer Ausdruck
+----
+$ cat rechnung
+1	Floppy 3.5"			3.00	3.00
+5	DVD					1.50	7.50
+2	SDHC memory card	8.00	16.00
+$
+$ awk -F '\t+' '{ print $3 }' rechnung
+3.00
+1.50
+8.00
+$
+----
+
 == Danksagung ==
 
 Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
