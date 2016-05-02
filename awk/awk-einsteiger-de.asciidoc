@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.3.1
+:revnumber: 0.4
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 1. Mai 2016
+:date: 2. Mai 2016
 :numbered:
 
 = Vorwort =
@@ -545,6 +545,42 @@ Ausdruck benutzen.
 $ (echo "apple"; echo "banana"; echo "Banana") | awk '/[Bb]anana/'
 banana
 Banana
+$
+----
+
+== Spalten und Felder ==
+
+Wie eingangs genannt, liegt die Stärke von `awk` in der Verarbeitung von
+strukturierten Daten. `awk` kann mit Leichtigkeit spalten- bzw.
+feldweise agieren und Daten aus einer Zeile extrahieren.
+
+=== Trennzeichen zwischen Spalten und Feldern ===
+
+Als Trennzeichen verwendet `awk` die Zeichen, die in der Shellvariable
+`IFS` definiert sind. `IFS` steht als Abkürzung für 'internal field
+separator' und beinhaltet üblicherweise Leerzeichen (`\s`),
+Tabulatorzeichen (`\t`) und den Zeilenumbuch (`\n`). 
+
+`awk` selbst merkt sich diese Trennzeichen in der internen Variable
+`FS`. `FS` beinhaltet lediglich das Leerzeichen und das
+Tabulatorzeichen.
+
+Möchten Sie in ihrem `awk`-Programm ein anderes Trennzeichen verwenden,
+haben Sie zwei Möglichkeiten. In 'Variante 1' definieren Sie die
+Variable `FS` im einführenden Block um. 
+
+Nachfolgendes Beispiel setzt zunächst das Trennzeichen auf den
+Doppelpunkt und gibt anschließend die erste Spalte jeder Zeile der Datei
+`/etc/passwd` aus:
+
+.`awk`-Programm mit Doppelpunkt als Trennzeichen (`print-first-column.awk`)
+----
+$ awk 'BEGIN { FS=":" } { print $1 }' /etc/passwd
+root
+daemon
+bin
+sys
+...
 $
 ----
 

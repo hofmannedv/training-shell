@@ -26,3 +26,5 @@ Examples for awk
 * print-content.awk:                      print the lines that contain a given pattern
 * print-content-regex.awk:                print the lines that end on 44, or 45
 * print-content-case-ins.awk:             search for patterns case-insensitive
+
+* print-first-column.awk:                 print the first column of each line, only
