@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.0
+:revnumber: 1.3.1
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 27. März 2016
+:date: 1. Mai 2016
 :numbered:
 
 = Vorwort =
@@ -20,16 +20,33 @@ Ausdrücken. `sed` sieht erstmal recht einfach aus, ist aber sehr mächtig
 und flexibel im Alltagsgebrauch als Filter auf der Kommandozeile und in
 Shellskripten.
 
+= Voraussetzungen zum Verständnis =
+
+Um dieses Tutorial zu verstehen, hilft Ihnen das Basiswissen im Umgang
+mit der Kommandozeile. Die Kommandos/Werkzeuge `grep`, `vi(m)` und
+`less` sollten Ihnen nicht fremd sein. Alle diese Werkzeuge sind in etwa
+gleich, unterscheiden sich aber mit Nuancen zueinander.
+
+`sed` benutzt Reguläre Ausdrücke zur Beschreibung von Mustern für
+Zeichenketten. Dieses Tutorial setzt grundlegende Kenntnisse von RegEx
+voraus. Für ein tieferes Wissen dazu hilft Ihnen das Buch 'Reguläre
+Ausdrücke' von Jeffrey Friedl <<Friedl>>.
+
 == Struktur eines Filters ==
 
 Prinzipiell hat ein `sed`-Filter bis zu vier Teile:
-`[Adresse]Aktion/Muster/Ersetzung/Flag`. Jeder Teil wird durch einen `/`
-vom nächsten Teil separiert.
+
+----
+[Adresse]Aktion/Muster/Ersetzung/Flag
+----
+
+Jeder Teil wird durch einen `/` vom nächsten Teil separiert.
 
 * `[Adresse]Aktion`: beschreibt die Zeilen und die Aktion, auf die das
 Muster angewendet werden soll, bspw. `i` für `insert` (Zeile einfügen)
 und `s` für `substitute` (suchen und ersetzen)
-* `Muster`: Beschreibung des Filters als Regulärer Ausdruck (siehe REGEX(7))
+* `Muster`: Beschreibung des Filters als Regulärer Ausdruck (siehe dazu
+die Manpage von `REGEX(7)`)
 * `Ersetzung`: String, welcher den über das Muster gefundenen Suchtreffer ersetzt
 * `Flag`: steuert die Aktion. Es legt fest, was passiert, wenn das Muster zutrifft.
 
@@ -38,7 +55,7 @@ und `s` für `substitute` (suchen und ersetzen)
 `sed` akzeptiert verschiedene Wege, über die es Filter entgegennimmt und
 auf den Datenstrom anwendet.
 
-* über `stdin` oder als direkten Parameter beim Aufruf von `sed`
+=== Über `stdin` oder als direkten Parameter beim Aufruf von `sed` ===
 
 .Filtern mittels `sed` nach einer Pipe
 ----
@@ -50,17 +67,48 @@ $ cat datei | sed 's/alfred/friedrich/'
 $ sed 's/alfred/friedrich/' datei
 ----
 
-* in dem das `sed`-Skript in einer separaten Datei liegt. Die
-Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
-für die Skriptdatei. GNU sed versteht auch den langen Schalter `--file`.
+=== `sed`-Skript als separate Datei ===
+
+Die Referenzierung erfolgt über den Schalter `-f` gefolgt von dem Dateinamen
+für die Skriptdatei. `GNU sed` versteht auch den langen Schalter `--file`.
 
 .Filtern mittels `sed` und dem Skript `sed.skript`
 ----
 $ sed -f sed.skript datei
 ----
 
-TIP: Bei allen Listings finden Sie in Klammern den Dateinamen des
-`sed`-Beispiels.
+TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
+`sed`-Beispiels. Damit können Sie das Skript sofort ausprobieren.
+
+=== `sed`-Filter als ausführbares Programm ===
+
+Ein `sed`-Skript speichern Sie als separates, ausführbares Programm ab.
+Indem Sie der Datei Ausführungsrechte geben, können Sie das Skript wie
+ein reguläres Programm aufrufen. Der Aufbau des Skriptdatei folgt dabei
+den üblichen Regeln, wie sie bspw. auch bei Perl-, bash- und
+Python-Skripten gelten. Nach der obligatorischen, einleitenden
+Shebang-Zeile mit dem expliziten Pfad zum ausführenden Interpreter folgt
+das `sed`-Programm.
+
+.`sed`-Programm als Skriptdatei (`substitute.sh`)
+----
+#!/bin/sed -f
+
+s/user fho/benutzer/
+----
+
+Geben Sie der obigen Datei Ausführungsrechte via `chmod +x
+substitute.sh`, rufen Sie das Skript wie folgt auf der Kommandozeile
+auf:
+
+.`sed`-Programm als Skript aufrufen
+----
+$ ./substitute.sh logfile 
+2016-01-10 10:45:15 benutzer logged in on /dev/tty1
+2016-01-11 08:30:10 benutzer logged in on /dev/tty2
+...
+$
+----
 
 == Mehrere Filter miteinander kombinieren ==
 
@@ -76,19 +124,22 @@ und kleinem `h`) durch `michael`. Die Ausgabe erfolgt auf `stdout`.
 
 === Einzelne Filter voneinander über ein Semikolon trennen ===
 
-Im Aufruf geben Sie zwischen den Filtern ein `;` an.
+Im Aufruf geben Sie zwischen den einzelnen Filtern jeweils ein `;` als
+Trennzeichen an. Bitte beachten Sie, dass das Trennzeichen innerhalb der
+einfachen Anführungszeichen (`'`) steht.
 
 .Mehrere Filter mittels `;` aneinanderreihen
 ----
 $ sed 's/alfred/friedrich/; s/[Hh]olger/michael/' datei
 ----
 
-Hinweis: Sie erkennen in [Hh] einen `regulären Ausdruck`.
+TIP: `[Hh]` beinhaltet einen Regulären Ausdruck für den einzelnen
+Buchstaben `h` in Groß- oder Kleinschreibung.
 
 === Jeden Filter mit `-e` einleiten ===
 
 Über den Schalter `-e` teilen Sie `sed` mit, dass ein weiterer Filter
-folgt. GNU sed versteht auch den langen Schalter `--expression`.
+folgt. `GNU sed` versteht auch den langen Schalter `--expression`.
 
 .Mehrere Filter mittels `-e` aneinanderreihen
 ----
@@ -97,7 +148,10 @@ $ sed -e 's/alfred/friedrich/' -e 's/[Hh]olger/michael/' datei
 
 === Die Fähigkeiten der bash ausnutzen (mehrere Zeilen) ===
 
-Sie können die einzelnen Filter auch über mehrere Zeilen verteilen:
+Je komplexer die Filter werden, umso unübersichtlicher werden diese
+auch. Sie können die einzelnen Filter auch über mehrere Zeilen
+verteilen, indem Sie im Aufruf ein `\` als expliziten Zeilenumbruch
+einfügen.
 
 .Jeden Filter in einer einzelnen Zeile
 ----
@@ -109,25 +163,27 @@ $
 
 == Die Ausgabe steuern ==
 
-Im Standardfall gibt `sed` alle Zeilen der Eingabe aus. Um das zu
-unterdrücken, nutzen Sie den Schalter `-n`. Von Nutzen ist `-n`, um nur
-die Zeilen der Eingabe ausgeben, in denen ihr Filter tatsächlich
-Veränderungen bewirkt hat. Dazu schließen Sie den Filter mit dem Flag `p`
-am Ende ab:
+Im Standardfall gibt `sed` alle Zeilen des Eingabedatenstroms aus. Um
+das zu unterdrücken, nutzen Sie den Schalter `-n` (Langform `--quiet`
+und `--silent`). Von Nutzen ist `-n`, um nur die Zeilen der Eingabe
+ausgeben, in denen ihr Filter tatsächlich Veränderungen bewirkt hat.
+Dazu schließen Sie den Filter mit dem Flag `p` für `print` am Ende ab:
 
 .Lediglich die Ersetzungen ausgeben
 ----
 $ sed -n 's/alfred/friedrich/p' datei
 ----
 
-Hinweis: funktioniert auch bei der Aneinanderreihung, selbst wenn einer der anderen Filter nicht zutrifft.
+Diese Vorgehensweise funktioniert auch bei der Aneinanderreihung von
+mehreren `sed`-Skripts, selbst wenn einer der anderen Filter nicht
+zutrifft.
+
+.Veränderungen bei mehreren Filtern ausgeben
 ----
-$
 $ echo holger | sed -n 's/alfred/friedrich/p; s/[Hh]olger/michael/p' 
 michael
 $
 ----
-
 
 == Beispiele ==
 
@@ -137,6 +193,9 @@ Die nachfolgenden Aufrufe haben ihre Entsprechung in den
 UNIX/Linux-Kommandos `cat`, `tac`, `head` und `tail`. Das Kommando `nl`
 kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
 des `sed`-Kommandos besser zu zeigen.
+
+Das Ausgeben einer betreffenden Zeile erfolgt mit dem Aktionsparameter
+`p` für `print`.
 
 .Den gesamten Inhalt einfach ausgeben (`output-content.sed`)
 ----
@@ -194,13 +253,16 @@ $
 
 === Zeilen löschen ===
 
+Das Löschen einer betreffenden Zeile erfolgt mit dem Aktionsparameter
+`d` für `delete`.
+
 .Alle Zeilen löschen (`delete-content.sed`)
 ----
 $ nl logfile | sed -n 'd'
 $
 ----
 
-.Lediglich die dritte Zeile löschen (`delete-content-line3-sed`)
+.Lediglich die dritte Zeile löschen (`delete-content-line3.sed`)
 ----
 $ nl logfile | sed '3d'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -284,12 +346,14 @@ $ nl logfile | sed '1,5{/2016-01-1[12]/d;}'
 $
 ----
 
-Hinweise für die folgenden Beispiele /a, /i, /c:
-  gnu sed erlaubt auch eine einfachere, Ein-Zeilensyntax. Während beispielsweise bsd sed auf '/a\<nl>pattern' besteht, akzeptiert gnu sed auch die Notation '/a++++', oder '/a\++++'.
-
-TODO: Empfehlung: Beispiel /c aus weiter unten gehört deshalb auch in diesen Abschnitt.
-
 === Zeilen einfügen ===
+
+==== Vor dem Suchtreffer ====
+
+Das Anfügen von Inhalt nach einer betreffenden Zeile erfolgt mit dem
+Aktionsparameter `a` für `append`. `GNU sed` versteht dafür die
+einzeilige Notation `/a++++` und `/a\++++`. `BSD sed` ist pedantischer
+und erwartet nach dem Aktionsparameter einen Zeilenumbruch.
 
 .Vier `+` nach (jedem) Eintrag einfügen, der `2016-01-10` beinhaltet (`insert-after-pattern.sed`)
 ----
@@ -323,14 +387,30 @@ $ nl logfile | sed -e '/2016-01-10/a++++ 2016-01-11 ++++' -e '/2016-01-11/a++++ 
      8   2016-01-12 14:55:05 user james logged out from /dev/tty1
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $
------
+----
 
-Hinweis: funktioniert nur mit GNU sed. Kompatibiltät:
-nl logfile | sed -e '/2016-01-10/a\
+Obiges Beispiel funktioniert nur mit `GNU sed`. Um es kompatibel für
+`BSD sed` zu halten, bedarf es eines expliziten Umbruchs:
+
+----
+$ nl logfile | sed -e '/2016-01-10/a\
 ++++ 2016-01-11 ++++' -e '/2016-01-11/a\
 ++++ 2016-01-12 ++++'
-schreibt man nicht mehr von Hand, weil man die Übersicht verliert. Allenfalls erzeugt man ein patternfile mit den beiden Suchmustern (siehe insert-after-with-more-patterns.sed). Die mit '-e' getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch Leerzeilen getrennt.
+$
+----
 
+Hierbei besteht die Gefahr, dass die Übersicht im Aufruf verloren geht.
+Die Empfehlung ist, zunächst eine Musterdatei mit den beiden Suchmustern
+(siehe `insert-after-with-more-patterns.sed`) zu erzeugen. Die mit `-e`
+getrennten Muster/Aktionen werden in der Anweisungsdatei einfach durch
+Leerzeilen voneinander getrennt.
+
+==== Nach dem Suchtreffer ====
+
+Das Einfügen von Inhalt vor einer betreffenden Zeile erfolgt mit dem
+Aktionsparameter `i` für `insert`. `GNU sed` versteht dafür die
+einzeilige Notation `/i++++` und `/i\++++`. `BSD sed` ist pedantischer
+und erwartet nach dem Aktionsparameter einen Zeilenumbruch.
 
 .Markieren aller erfolgreichen Logins des Benutzers `fho` (`insert-before-pattern.sed`)
 ----
@@ -352,11 +432,12 @@ $
 
 === Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
 
-Die nachfolgenden Aufrufe sind ähnlich zu `grep`, `vi`, `less`, wobei hier die
-Verwandschaft der beiden Werkzeuge deutlich wird; beachten Sie aber die leichten syntaktischen Unterschiede.
-Ob sie im Alltag zur Lösung Ihres Problems auf `grep`, `sed` oder `awk` zurückgreifen, ist
-häufig eine Frage der Gewohnheit und mit welchem Aufwand Sie das Problem
-lösen können.
+Die nachfolgenden Aufrufe sind ähnlich zu `grep`, `vi` und `less`, wobei
+hier die Verwandschaft der drei Werkzeuge deutlich wird. Beachten Sie
+bei der Benutzung aber die leichten syntaktischen Unterschiede. Ob sie
+im Alltag zur Lösung Ihres Problems auf `grep`, `sed` oder `awk`
+zurückgreifen, ist häufig eine Frage der Gewohnheit und mit welchem
+Aufwand Sie das Problem lösen können.
 
 .Alle Zeilen der Datei `logfile` ausgeben, die das Muster `fho` enthalten (`print-content.sed`)
 ----
@@ -377,22 +458,23 @@ $ sed -n '/4[45]$/p' logfile
 $
 ----
 
-GNU sed hat einen zusätzlichen Schalter namens `I`. Dieser steht für
+`GNU sed` hat eine zusätzliches Aktionsflag namens `I`. Dieses steht für
 'case insensitive', d.h. unabhängig von Groß- und Kleinschreibung. Damit
-vereinfacht sich die Schreibweise wie folgt:
+vereinfacht sich die Schreibweise im Aufruf wie folgt:
 
 .Suche nach dem Vorkommen des Musters `banana` unabhängig von Groß- und Kleinschreibung (`print-content-case-ins.sed`)
 ----
-$ echo "Apple Banana" | sed -n '/banana/Ip' 
-Apple Banana
+$ echo "Apple Banana banana" | sed -n '/banana/Ip' 
+Apple Banana banana
 $
 ----
 
-Kompatibilitäts-Hinweis: den Befehl /I gibt es nicht bei allen sed Varianten.
+TIP: das Aktionsflag `I` gibt es nicht bei allen `sed`-Varianten.
 
+=== Zeilennummern der Suchtreffer ===
 
-Um nur die Zeilennummern zu erhalten, in denen das Suchmuster enthalten
-ist, hilft Ihnen der Schalter `=`.
+Um nur die Zeilennummern der Treffer zu erhalten, in denen das
+Suchmuster enthalten ist, hilft Ihnen der Schalter `=`.
 
 .Ausgabe der Zeilennummern der Zeilen, in denen das Muster enthalten ist (`print-match-line-numbers.sed`)
 ----
@@ -404,7 +486,7 @@ $ sed -n '/fho/ =' logfile
 $
 ----
 
-=== Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken von Zeilen die dem Muster nicht entsprechen ===
+=== Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken der Zeilen, die dem Muster nicht entsprechen ===
 
 .Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9 (`replace-in-line.sed`)
 ----
@@ -445,9 +527,36 @@ $ nl logfile | sed -n '/2016-01-12/s/10\.10\.17\.45/supercomputer/p'
 $
 ----
 
-Hinweis: beachten Sie die Notation '\'. Ein Punkt ist ein Metacharacter im Patternmatching und matcht auf jedes Zeichen; dank vorangestelltem escape-Character '\' matcht nur ein echter '.'.
+TIP: Beachten Sie die besondere Schreibweise von `\.`. Ein Punkt ist ein
+Metazeichen im RegEx-Patternmatching und trifft auf jedes beliebige
+Zeichen zu. Dank dem vorangestellten Escape-Zeichen `\` matcht lediglich
+ein echter Punkt (`.`).
 
 === Suchen und Ersetzen nach Vorkommen ===
+
+`sed` kennt verschiedene Varianten, um Suchmuster zu ersetzen. Die
+jeweilige Variante spezifizieren Sie über das Aktionsflag im letzten
+Segment des Suchen-und-Ersetzen-Ausdrucks.
+
+==== Nur das erste Vorkommen ersetzen ====
+
+Geben Sie kein Aktionsflag an, ersetzt `sed` nur den ersten Suchtreffer
+in der Zeile:
+
+.Ersetze das erste Vorkommen von `apple` durch `banana`
+----
+$ echo "apple orange melon apple" | sed 's/apple/banana/'
+banana orange melon apple
+$
+----
+
+TIP: Dieser Aufruf ist identisch mit `sed 's/apple/banana/1'`, d.h. der
+expliziten Referenzierung des ersten Suchtreffers mittels `1`.
+
+==== Alle Vorkommen ersetzen ====
+
+Um alle Vorkommen des Suchmusters in der Zeile zu ersetzen, verwenden
+Sie das Aktionsflag `g` für `global`.
 
 .Ersetze alle Vorkommen von `apple` durch `banana`
 ----
@@ -456,6 +565,13 @@ banana orange melon banana
 $
 ----
 
+==== Einen ausgewählten Suchtreffer ersetzen ====
+
+`sed` zählt, wieviele Suchtreffer es gibt. Es erlaubt Ihnen, über die
+entsprechenden Ziffer den jeweiligen Suchtreffer zu referenzieren. Im
+nachfolgenden Beispiel wird nur der zweite Suchtreffer ersetzt und alle
+anderen bleiben unverändert:
+
 .Ersetze nur das zweite Vorkommen von `apple` durch `banana`
 ----
 $ echo "apple orange melon apple" | sed 's/apple/banana/2'
@@ -463,12 +579,26 @@ apple orange melon banana
 $
 ----
 
+==== Einen ausgewählten Suchtreffer ab einer Position ersetzen ====
+
+`sed` erlaubt Ihnen, auch alle Suchtreffer ab einer Position zu
+ersetzen. Dazu versteht es bspw. die Schreibweise `2g` für eine globale
+Ersetzung ab dem zweiten Vorkommen des Suchmusters:
+
 .Ersetze ab dem zweiten Vorkommen jedes Mal `apple` durch `banana`
 ----
 $ echo "apple orange melon apple apple" | sed 's/apple/banana/2g'
 apple orange melon banana banana
 $
 ----
+
+==== Eine komplette Zeile ersetzen ====
+
+Das Aktionsflag `c` für `change` ändert bzw. ersetzt eine Zeile
+vollständig durch den darauffolgenden Text, sofern diese das gewünschte
+Suchmuster enthält. Im nachfolgenden Beispiel werden alle Zeilen, die
+das Muster `login failed` enthalten, auf den Inhalt `login failed`
+gekürzt.
 
 .Ersetze eine komplette Zeile
 ----
@@ -485,7 +615,57 @@ login failed
 $
 ----
 
+=== Zeichen zu jeder Zeile hinzufügen ===
+
+Die Metazeichen `^` und `$` sind auf den Anfang und das Ende der Zeile
+anwendbar. Damit fügen Sie flink Text zu einer Zeile hinzu.
+
+==== Am Anfang jeder Zeile ====
+
+.Den Buchstaben `A` am Zeilenanfang ergänzen
+----
+$ echo abc | sed -n 's/^/A/p'
+Aabc
+$
+----
+
+==== Am Ende jeder Zeile ====
+
+.Den Buchstaben `B` am Zeilenende ergänzen
+----
+$ echo abc | sed -n 's/$/B/p'
+abcB
+$
+----
+
+Das ganze schreiben Sie mit nachfolgendem Aufruf kürzer. Dabei erfolgen
+nur Ersetzungen, anstatt zu prüfen, ob es einen Match gibt. `$` matcht
+stets auf das Zeilenende jeder einzelnen Zeile.
+
+.Den Buchstaben `B` am Zeilenende ergänzen
+----
+$ echo abc | sed -e 's/$/B/'
+abcB
+$
+----
+
+Dass das auch mit mehreren Zeilen funktioniert, zeigt nachfolgender
+Codeausschnitt:
+
+.Den Buchstaben `B` am Zeilenende ergänzen (mehrzeilig)
+----
+$ (echo abc; echo ) | sed -e 's/$/B/'
+abcB
+B
+$
+----
+
 === Spaltenweise agieren ===
+
+Die nachfolgend vorgestellten Aktionen sind Sonderfälle für das vorige
+Kapitel. Im Alltag kommen diese häufig vor.
+
+==== Spalte entfernen ====
 
 .Entferne die erste Spalte (Trennzeichen: `:`) in den Zeilen 1 bis 10 der Datei `/etc/passwd` (ersetze alles bis zum ersten `:` durch nichts)
 ----
@@ -503,6 +683,10 @@ x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $
 ----
 
+TIP: Obiges Beispiel gelingt problemlos auf einem Linux-System. Auf
+einem OS X oder BSD kann es schiefgehen, wenn die Datei mit
+Kommentarzeichen `#` beginnt.
+
 .Nur die erste Spalte ausgeben, Trennzeichen ist `:` (entspricht `cut -d: -f1 /etc/passwd`)
 ----
 $ sed -n '1,10s/:.*$//p' /etc/passwd
@@ -519,7 +703,11 @@ news
 $
 ----
 
-Hinweis: auf Apple Mac OSX sind die ersten 10 Zeilen der /etc/passwd mit Kommentarzeichen versehen; deshalb ist auf einem solchen System die Ausgabe dieses Beispiels leer.
+TIP: Auf einem Mac OS X sind die ersten 10 Zeilen der Datei
+`/etc/passwd` mit Kommentarzeichen versehen. Deshalb ist auf einem
+solchen System die Ausgabe dieses Beispiels leer.
+
+==== Eine Spalte am Anfang hinzufügen ====
 
 .Eine weitere Spalte am Anfang hinzufügen (Inhalt: `A`)
 ----
@@ -537,10 +725,27 @@ A:news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
 $
 ----
 
-Hinweis: Das Beispiel sollte die Funktionsweise von '&' näher bringen. Kuerzer waere
-  $ sed -n '1,10s/^/A:/p' /etc/passwd
-oder, weil ohnehin jede Zeile matcht (-n nur die matchenden, /p ausgeben), am besten
-  $ sed -e 's/1,10s/^/A:/' /etc/passwd
+Obiges Beispiel zielt auf die Verwendung von `&`, um Zeichenketten
+aneinanderzufügen. Kürzere Varianten wären:
+
+----
+$ sed -n '1,10s/^/A:/p' /etc/passwd
+----
+
+Die Idee dahinter ist, den Zeilenanfang (`^`) durch die beiden Zeichen
+`A:` zu ersetzen. Da der Doppelpunkt in der Datei als Spaltentrenner
+gilt, ist dieser Schritt defacto das Ergänzen der Datei um eine weitere
+Spalte am Anfang jeder Zeile.
+
+Da im Muster ohnehin jede Zeile matcht (`-n` gibt nur die matchenden
+Zeilen mit `p` aus), geht auch diese Variante und ist nochmals kürzer
+als oben:
+
+----
+$ sed -e 's/1,10s/^/A:/' /etc/passwd
+----
+
+==== Eine Spalte am Ende hinzufügen ====
 
 .Eine weitere Spalte am Ende hinzufügen (Inhalt: `B`)
 ----
@@ -558,16 +763,29 @@ news:x:9:9:news:/var/spool/news:/usr/sbin/nologin:B
 $
 ----
 
-Hinweis: die einfachere Syntax wäre
-  $ sed -e '/1,10s/$/:B/p' /etc/passwd
+In Anlehnung an das vorherige Beispiel ist diese Schreibweise wiederum
+kürzer. Es setzt ebenso darauf auf, das Zeilenende (`$`) durch die
+beiden Zeichen `:B` zu ersetzen, was wiederum der Ergänzung um eine
+weitere Spalte am Ende der Zeile gleichkommt.
+
+----
+$ sed -e '/1,10s/$/:B/p' /etc/passwd
+----
 
 === Suchtreffer referenzieren ===
+
+`sed` erlaubt Ihnen, die einzelnen Suchtreffer zu referenzieren. Dazu
+kennt es die beiden Metazeichen `&` und `\ZAHL` (siehe Hinweis). Das
+erste Beispiel fokussiert lediglich auf den ersten Suchtreffer:
 
 .Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels `&`)
 ----
 $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/'
 (apple) orange melon apple Apple
 ----
+
+Möchten Sie alle Suchtreffer berücksichtigen, ergänzen Sie den
+`sed`-Aufruf um das Aktionsflag `g` am Ende des Ausdrucks:
 
 .Markiere jeden Suchtreffer mit runden Klammern (Referenz mittels `&`)
 ----
@@ -576,6 +794,14 @@ $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/g'
 $
 ----
 
+Das Konzept der Regulären Ausdrücke beinhaltet sogenannte 'back
+references' ("Rückverweis"). Jedem einzelnen Suchtreffer wird eine
+Ziffer zugeordnet, über die Sie dann auf den jeweiligen Suchtreffer
+zugreifen können. Den ersten Suchtreffer referenzieren Sie bei `sed`
+mittels `\1`, den zweiten mittels `\2`, etc. Dieses Konzept nutzen Sie
+in nachfolgendem Beispiel, um Suchtreffer 1 und 2 in einer umgekehrten
+Reihenfolge auszugeben.
+
 .Den ersten und zweiten Suchtreffer in umgekehrter Reihenfolge ausgeben ('back references')
 ----
 $ echo "10247 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
@@ -583,15 +809,33 @@ Berlin, 10247
 $
 ----
 
-Hinweis: GNU sed kennt die \<ZAHL>-Referenz; BSD sed leider nicht (die Ausgabe is leer, ohne Fehlermeldung).
+Um das ganze sowohl für `GNU sed`, als auch für `BSD sed` nutzbar zu
+machen, benötigen Sie den zusätzlichen Schalter `-E` im Aufruf von
+`sed`. Damit aktivieren Sie einen Modus für erweiterte Reguläre
+Ausdrücke ('extended regular expressions'). Als Ergebnis vereinfacht
+sich ebenfalls der gesamte Ausdruck.
 
-Zum Grübeln: was erwarten Sie für eine Ausgabe bei?
-  $ echo "10247 23 Berlin" | sed -n 's/\([0-9]\+\) \([A-Za-z]\+\)/\2, \1/p'
+.Den ersten und zweiten Suchtreffer in umgekehrter Reihenfolge ausgeben (kompatibel)
+----
+$ echo "10247 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'
+Berlin, 10247
+$
+----
 
+TIP: Zum Grübeln: was erwarten Sie für eine Ausgabe bei dem folgenden
+`sed`-Aufruf:
+
+----
+$ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'
+----
 
 === Alle leeren Zeilen aus der Eingabe herausfiltern ===
 
-.Muster `^d` für leere Zeilen, `d` zum Löschen
+Hier werden zwei Dinge miteinander kombiniert -- ein Muster, und eine
+Aktion. Das Muster für eine leere Zeile ist `^$`, und das Löschen einer
+Zeile erfolgt über das Aktionsflag `d`.
+
+.Muster `^$` für leere Zeilen, `d` zum Löschen
 ----
 $ sed '/^$/d' logfile-with-empty-lines
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -606,12 +850,15 @@ $ sed '/^$/d' logfile-with-empty-lines
 $
 ----
 
-Hinweis: vergleiche grep -v ^$  logfile-with-empty-lines
+Der entsprechende Aufruf des UNIX-Kommandos `grep` ist:
 
+----
+$ grep -v ^$  logfile-with-empty-lines
+----
 
 === Den ersten Absatz ausgeben ===
 
-.Alle Zeilen inklusive der ersten Leerzeile ausgeben
+.Alle Zeilen inklusive der ersten Leerzeile ausgeben (`print-first-paragraph.sed`)
 ----
 $ sed -n '1,/^$/p' logfile-with-empty-lines
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -619,11 +866,86 @@ $ sed -n '1,/^$/p' logfile-with-empty-lines
 $
 ----
 
+== Einen Dateiinhalt direkt ändern ==
+
+=== Ohne Backupdatei ===
+
+`GNU sed` unter Linux verfügt über den Schalter `-i` für 'inline edit'.
+Damit ändern Sie den Inhalt der angegebenen Datei `foobar` direkt:
+
+.Buchstaben direkt ersetzen (Linux)
+----
+$ cat foobar
+foo
+$ sed -e 's/o/e/g' -i foobar
+$ cat foobar
+fee
+$
+----
+
+Mit `BSD sed` unter OS X gibt es den Schalter `-i` auch. Hier versteckt
+sich jedoch eine kleine Besonderheit im Aufruf. Mit dem Schalter muß auch
+zwingend eine Erweiterung für die Backupdatei gegeben werden. Bleibt
+diese leer, wird vor der Änderung keine Backupdatei erzeugt.
+
+.Buchstaben direkt ersetzen (OS X)
+----
+$ cat foobar
+foo
+$ sed -e s/o/e/g -i '' foobar
+$ cat foobar
+fee
+$
+----
+
+=== Mit Backupdatei ===
+
+Gleiches erreichen Sie mit `GNU sed` auch. Möchten Sie eine Backupdatei
+erzeugen, beachten Sie bitte, dass unter Linux zwischen dem Schalter
+`-i` und der Erweiterung kein Leerzeichen stehen darf, `GNU sed` bei BSD
+hingegen eines erwartet:
+
+.Buchstaben direkt ersetzen und ein Backup erzeugen
+----
+$ cat foobar
+foo
+$ sed -e s/o/e/g -i.bak foobar
+$ cat foobar
+fee
+$ cat foobar.bak
+foo
+$
+----
+
+== Modifizierten Inhalt in eine Datei speichern ==
+
+`sed` verfügt über das Aktionsflag `w` gefolgt von einem Dateinamen, mit
+dessen Hilfe Sie das Ergebnis ihrer Recherche oder Modifikation direkt
+in eine Datei schreiben lassen können. Beachten Sie bei dem
+nachfolgenden Beispiel, dass `sed` eine bestehende Datei mit dem
+gleichen Namen `plz.dat` ohne Vorwarnung überschreibt, sofern diese
+schon existiert.
+
+.Ausgabe der Recherche in der Datei `plz.dat`
+----
+$ echo "10247 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/w plz.dat'
+$ cat plz.dat
+Berlin, 10247
+$
+----
+
+== Danksagung ==
+
+Vielen Dank an Thomas Osterried, Axel Beckert, Elmar Heeb und Wolfram
+Schneider für Kritik und Verbesserungsvorschläge zum vorliegenden
+Tutorial.
+
 == Weiterführende Dokumente ==
 
-* Sed - An Introduction and Tutorial by Bruce Barnett, http://www.grymoire.com/Unix/Sed.html
-* Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
-* Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
-* Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), http://sed.sourceforge.net/sed1line.txt
-* Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
-* Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
+* [[[Barnett]]] Sed - An Introduction and Tutorial by Bruce Barnett, http://www.grymoire.com/Unix/Sed.html
+* [[[Dougherty]]] Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
+* [[[Friedl]]] Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
+* [[[Pement]]] Eric Pement: Useful One-Line Scripts For sed (Unix stream editor), http://sed.sourceforge.net/sed1line.txt
+* [[[Wolf]]] Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+* [[[Hofmann]]] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
+

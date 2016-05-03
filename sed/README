@@ -10,7 +10,7 @@ Examples for sed
 
 * delete-content.sed:                       delete all the lines of the file
 * delete-content-line3.sed:                 delete the 3rd line of the file, only
-* delete-content-line3-5.sed:               delete from the 3rd to the 5th line of the file
+* delete-content-line3-5.sed:               delete from the 3rd up to before the 6th line of the file
 * delete-content-first-and-last-line.sed:   delete the first, and the last line, only
 * delete-content-first-up-to-match.sed:     delete from the first line up to the line with the match
 * delete-content-match-to-the-end.sed:      delete from the line with the match up to the end of file
@@ -18,6 +18,7 @@ Examples for sed
 * delete-content-with-match.sed:            delete from the 1st to the 5th line only if there is a match with a pattern
 
 * insert-after-pattern.sed:                 insert a line with 4x+ after each line that has the pattern
+* insert-after-with-more-pattern.sed:       insert a line with 4x+ after each line that has the pattern (two cases)
 * insert-before-pattern.sed:                insert a line with 4x+ before each line that has the pattern
 
 * output-content.sed:                       print the content of the file
@@ -30,11 +31,13 @@ Examples for sed
 * print-content-regex.sed:                  print all the lines that contain the specified regex pattern
 * print-content-case-ins.sed:               print all the lines that contain the specified pattern (case insensitive)
 * print-match-line-numbers.sed:             print the line numbers that contain the specified pattern
+* print-first-paragraph.sed:                print the first paragraph incl. the first empty line
 
 * replace-in-line.sed:                      replace all occurences of a pattern in a single line
-* replace-in-line-to-the-end.sed:           replace all occurences of a pattern to the end of file
+* replace-in-line-to-the-end.sed:           replace all occurences of a pattern from line 6 to the end of file
 * replace-in-line4-7.sed:                   replace all occurences of a pattern in line 4 to 7
 * replace-outside-line4-7.sed:              replace all occurences of a pattern in all but line 4 to 7
+* substitute.sh:                            sed skript as executable file
 
 Example data to play with:
 

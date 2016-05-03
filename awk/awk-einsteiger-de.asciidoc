@@ -1,0 +1,762 @@
+Die Programmiersprache `awk`. Erste Schritte.
+=============================================
+Frank Hofmann
+:subtitle:
+:doctype: book
+:copyright: Frank Hofmann
+:revnumber: 0.4
+:Author Initials: FH
+:edition: 1
+:lang: de
+:date: 2. Mai 2016
+:numbered:
+
+= Vorwort =
+
+`awk` ist eine Programmiersprache, die am besten strukturierte Textdaten
+verarbeiten kann. Das beinhaltet bspw. das Ausgeben, Löschen, Suchen und
+Ersetzen von Zeichenketten auf der Basis von Regulären Ausdrücken und
+Feldern (siehe Spalten und Felder in <<spalten-und-felder>>). Die
+einzelnen Felder unterscheidet `awk` anhand von Trennzeichen, die Sie
+auch selbst festlegen können. `awk` ist sehr mächtig und flexibel im
+Alltagsgebrauch als Filter auf der Kommandozeile und in Shellskripten.
+
+Der Name `awk` leitet sich aus den Anfangsbuchstaben der Familiennamen
+der drei ursprünglichen Entwickler Alfred V. Aho, Peter J. Weinberger
+und Brian W. Kernighan ab.
+
+= Voraussetzungen zum Verständnis =
+
+Um dieses Tutorial zu verstehen, hilft Ihnen das Basiswissen im Umgang
+mit der Kommandozeile. Die Kommandos/Werkzeuge `grep`, `vi(m)` und
+`less` sollten Ihnen nicht fremd sein. Alle diese Werkzeuge sind in etwa
+gleich, unterscheiden sich aber mit Nuancen zueinander.
+
+`awk` benutzt Reguläre Ausdrücke zur Beschreibung von Mustern für
+Zeichenketten. Dieses Tutorial setzt grundlegende Kenntnisse von RegEx
+voraus. Für ein tieferes Wissen dazu hilft Ihnen das Buch 'Reguläre
+Ausdrücke' von Jeffrey Friedl <<Friedl>>.
+
+== `awk`-Programme benutzen ==
+
+`awk`-Programme führt der `awk`-Interpreter aus. Auf Linux-Systemen
+kommt meist die GNU-Variante namens `gawk` zum Einsatz (siehe <<gawk>>
+und <<gawk-Debianpaket>>). In der Regel ist das im Betriebssystem über
+einen symbolischen Link gelöst:
+
+.Symbolischer Link von `awk` zu `gawk` bei Debian GNU/Linux
+----
+$ which awk
+/usr/bin/awk
+$ ls -la $(which awk)
+lrwxrwxrwx 1 root root 21 Apr 10 01:03 /usr/bin/awk -> /etc/alternatives/awk
+$ ls -la /etc/alternatives/awk
+lrwxrwxrwx 1 root root 13 Apr 10 14:28 /etc/alternatives/awk -> /usr/bin/gawk
+$
+----
+
+=== Über `stdin` oder als direkten Parameter beim Aufruf von `awk` ===
+
+Der Interpreter ist sehr flexibel und kann Daten und Anweisungen sowohl
+über `stdin`, als auch aus einer Datei verarbeiten. Anweisungen
+bezeichnet hier das `awk`-Programm zur Datenverarbeitung.
+
+.Filtern mittels `awk` nach einer Pipe
+----
+$ cat datei | awk 'anweisungen'
+----
+
+.Filtern mittels `awk` ohne Pipe und mit direktem Aufruf der Datei
+----
+$ awk 'anweisungen' datei
+----
+
+=== `awk`-Programm als separate Datei ===
+
+Einfache Anweisungsfolgen geben Sie noch direkt im Aufruf an. Werden
+ihre `awk`-Programme komplexer, speichern Sie diese am besten in einer
+separaten Datei. Im Aufruf erfolgt die Referenzierung über den Schalter
+`-f` gefolgt von dem Namen für die Programmdatei. 
+
+Wie Sie die Programmdatei benennen, ist unerheblich. Um die
+Programmdatei von anderen Dokumenten besser zu unterscheiden, wäre die
+Verwendung des Namensendes `.awk` eine Möglichkeit.
+
+TIP: Anstatt von `-f` versteht `awk` auch den langen Schalter `--file`.
+
+.Filtern mittels `awk` und dem Programm `skript.awk`
+----
+$ awk -f skript.awk datei
+----
+
+TIP: Bei den meisten Listings finden Sie in Klammern den Dateinamen des
+`awk`-Beispiels. Damit können Sie das Programm sofort ausprobieren, ohne
+das zuvor abtippen zu müssen.
+
+=== `awk`-Programm als ausführbares Programm ===
+
+Da `awk` auch eine (weniger bekannte) Programmiersprache ist, können Sie
+ein entsprechendes ausführbares Programm als Skript abspeichern und
+ausführen. Der Aufbau des Skriptdatei folgt dabei den üblichen Regeln,
+wie sie bspw. auch bei Perl-, bash- und Python-Skripten gelten. Nach der
+obligatorischen, einleitenden Shebang-Zeile mit dem expliziten Pfad zum
+ausführenden Interpreter folgt das `awk`-Programm.
+
+.`awk`-Programm als Skriptdatei (`output-content-with-condition.sh`)
+----
+#!/usr/bin/awk -f
+
+/2016-01-11/ {
+    print
+}
+----
+
+Geben Sie der obigen Datei Ausführungsrechte via `chmod +x
+output-content-with-condition.sh`, können Sie das Skript wie folgt auf
+der Kommandozeile aufrufen:
+
+.`awk`-Programm als Skriptdatei aufrufen
+----
+$ ./output-content-with-condition.sh logfile 
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$
+----
+
+== Aufbau eines `awk`-Programms ==
+
+Ein vollständiges `awk`-Programm besteht aus drei Blöcken -- einem
+einführenden Block, einem Anweisungsblock und einem abschließenden
+Block. Die Ausführung durch den `awk`-Interpreter erfolgt in ebendieser
+Reihenfolge.
+
+.Prinzipieller Aufbau eines `awk`-Programms
+----
+BEGIN { einführender Block }
+Muster 1 { Aktionsfolge 1 }
+Muster 2 { Aktionsfolge 2 }
+...
+Muster n { Aktionsfolge n }
+END { abschließender Block }
+----
+
+=== Einführender Block ===
+
+Dieser Block ist optional. Falls vorhanden, leiten Sie ihn mit dem
+Schlüsselwort `BEGIN` ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+bevor die Datendatei verarbeitet wird.
+
+.Minimalbeispiel mit `BEGIN`-Block (Kopfzeile)
+----
+BEGIN { print " ---- Kopfzeile ---- " }
+{ print }
+----
+
+=== Anweisungsblock ===
+
+Dieser Block ist essentiell und besteht aus minimal einer einzelnen
+Zeile. Jede Zeile besteht wiederum aus zwei Komponenten -- einem Muster
+und einer Aktionsfolge. Sie geben in der Zeile entweder das Muster an,
+oder die Aktionsfolge, oder beides (siehe Beispiele 1 bis 3).
+
+Der `awk`-Interpreter verarbeitet die von Ihnen angegebene Datendatei
+zeilenweise und wendet auf jede gelesene Zeile der Datendatei alle
+Muster und Aktionsfolgen aus dem Anweisungsblock an. Maßgeblich ist
+dabei die Reihenfolge, in der Sie Anweisungen aufgeführt haben.
+
+Eine Aktionsfolge umfaßt mindestens eine einzelne Anweisung und wird von
+`awk` in geschweiften Klammern erwartet. Damit kann `awk` dieses vom
+vorangestellten Muster unterscheiden. Bitte beachten Sie bei der
+Formulierung die beiden Leerzeichen -- eines nach der öffnenden
+geschweiften Klammer und eines vor der schließenden geschweiften
+Klammer.
+
+Nachfolgendes Beispiel 1 umfaßt als Anweisung lediglich `print` und gibt
+Zeile für Zeile den Inhalt der Datei `logfile` aus.
+
+.Beispiel 1: Ausgabe einer Datei (nur Aktionsfolge) (`output-content.awk`)
+----
+$ awk '{ print }' logfile
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+...
+$
+----
+
+Das Beispiel 2 verbindet ein Muster mit einer Aktion. Aus der Datei
+`logfile` werden nur die Zeilen ausgegeben, in denen das Muster
+`2016-01-11` enthalten ist.
+
+.Beispiel 2: Ausgabe einer Datei (Muster und Aktionsfolge) (`output-content-with-condition.awk`)
+----
+$ awk '/2016-01-11/ { print }' logfile
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$
+----
+
+Geben Sie keine Aktion an, ergänzt `awk` automatisch als Aktion das
+`print`-Statement (siehe Beispiel 3). Somit läßt sich das Beispiel 2
+markant verkürzen. 
+
+TIP: Bitte beachten Sie, daß in allen nachfolgenden Listings stets die
+`print`-Anweisung als Aktionsfolge enthalten ist. Ziel in diesem
+Tutorial ist die Verständlichkeit der gezeigten Beispiele. Im Laufe der
+Zeit steigt ihre Sicherheit im Umgang mit `awk`, so daß Ihnen auch
+"Abkürzungen" geläufig sein werden.
+
+.Beispiel 3: Ausgabe einer Datei (Muster)
+----
+$ awk '/2016-01-11/' logfile
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$
+----
+
+Wie bereits eingangs genannt, verarbeitet `awk` nicht nur einzelne
+Aktionen, sondern ganze Aktionsfolgen. Jede einzelne Aktion geben Sie
+dazu am besten auf einer separaten Zeile an. Das nachfolgende Programm
+prüft, ob in der gelesenen Zeile ein bestimmtes Muster vorkommt. Es
+prüft auf das Vorkommen von Leerzeilen, Ziffern und Buchstaben.
+
+.Beispiel 4: mehrzeiliges Programm (Aktionsfolgen) (`output-multi-action.awk`)
+----
+/[0-9]+/ { print "That is an integer." }
+/[A-z]+/ { print "This is a string." }
+/^$/ { print "This is an empty line." }
+----
+
+Der Aufruf sieht dann wie folgt aus:
+
+----
+$ cat testfile 
+10247
+10249 Berlin
+Berlin
+
+10179
+$
+awk -f output-multi-action.awk testfile 
+That is an integer.
+That is an integer.
+This is a string.
+This is a string.
+This is an empty line.
+That is an integer.
+$
+----
+
+=== Abschließender Block ===
+
+Dieser Block ist ebenfalls optional. Falls vorhanden, leiten Sie ihn mit
+dem Schlüsselwort `END` ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+nachdem die Datendatei verarbeitet wurde.
+
+.Minimalbeispiel mit `END`-Block (Fusszeile)
+----
+{ print }
+END { print " ---- Fusszeile ---- " }
+----
+
+== Beispiele ==
+
+=== Ausgeben einer Datei ===
+
+Die nachfolgenden Aufrufe haben ihre Entsprechung in den
+UNIX/Linux-Kommandos `cat`, `tac`, `head` und `tail`. Das Kommando `nl`
+kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
+des `awk`-Kommandos besser zu zeigen.
+
+Das Ausgeben der betreffenden Zeile einer Datendatei erfolgt mit der
+Anweisung `print`.
+
+.Den gesamten Inhalt einfach ausgeben (`output-content.awk`)
+----
+$ nl logfile | awk '{ print }'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+TIP: Benötigen Sie eine Lösung mit Zeilennummern `awk pur`, geht das
+ebenfalls. Diese Beispiele haben wir im Abschnitt 'Ausgabe mit
+Zeilennummern' <<ausgabe_mit_zeilennummern>> zusammengefaßt.
+
+=== Ausgeben bestimmter Zeilen einer Datei ===
+
+Über die vordefinierte Variable `$NR` und eine Bedingung geben Sie
+lediglich die vierte Zeile der Datei `logfile` aus:
+
+.Nur die vierte Zeile ausgeben (`output-content-line4.awk`)
+----
+$ nl logfile | awk 'NR == 4 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+$
+----
+
+Das Gegenstück ist die Ausgabe aller Zeilen außer der Zeile 4:
+
+.Alles außer der vierten Zeile ausgeben (`output-content-without-line4.awk`)
+----
+$ nl logfile | awk 'NR != 4 { print }'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+Für die Ausgabe ausgewählter Zeilen existieren mehrere Varianten.
+Variante 1 ist ein Mehrfachaufruf von `awk` und entspricht von der
+Denkweise her der Kombination der beiden UNIX-Kommandos `head` und
+`tail`:
+
+.Nur die Zeilen vier bis sechs ausgeben (Variante 1)
+----
+$ nl logfile | head -6 | tail -3
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+$ nl logfile | tail --lines=+4 | head -3
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+$ nl logfile | awk 'NR > 3 { print }' | awk 'NR < 4 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+----
+
+Variante 2 verwendet eine UND-Verknüpfung beider Bedingungen mittels
+`&&`:
+
+.Nur die Zeilen vier bis sechs ausgeben (Variante 2) (`output-content-line4-6.awk`)
+----
+$ nl logfile | awk 'NR > 3 && NR < 7 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+----
+
+Um nur den Inhalt der Datei ab einer bestimmten Zeile bis zum Ende der
+Datei auszugeben, nutzen Sie wiederum eine Bedingung und die Variable
+`$NR`.
+
+.Nur die Zeilen sieben bis zum Ende der Datei ausgeben (`output-content-line7-end.awk`)
+----
+$ nl logfile | awk 'NR > 6 { print }'
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+[[ausgabe_mit_zeilennummern]]
+=== Ausgabe mit Zeilennummern ===
+
+Die meisten hier genutzten Beispiele nutzen das UNIX/Linux-Kommando `nl`
+zur Illustration für Zeilennummern. `awk` kann das über die beiden
+internen Variablen `$NR` und `$0` auch vollständig selbst. Während `$NR`
+den Index des Eintrags bezeichnet ('number of record'), steht `$0` für
+die gesamte Zeile der Datendatei.
+
+.Dateiinhalt mit Zeilennummern ausgeben (`output-content-with-line-numbers-1.awk`)
+----
+$ awk '{print NR"  "$0}' logfile
+1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+Werden es mehr Zeilen und Sie wünschen eine rechtsbündige Anordnung der
+Zeilennummern, kommen Sie um die Formatierung der Ausgabe nicht herum.
+Dafür nutzen Sie das Kommando `printf` mit dem entsprechenden
+Formatstring. Im nachfolgenden Beispiel sorgt der Formatstring `%5s` für
+eine rechtsbündige Ausrichtung von bis zu fünf Ziffern. Die Ausgabe der
+Zeilennummer ist stets fünf Zeichen breit und wird -- falls die Zahl
+weniger als fünf Stellen hat -- mit der fehlenden Anzahl Leerzeichen von
+links aufgefüllt.
+
+.Dateiinhalt mit Zeilennummern ausgeben (`output-content-with-line-numbers-2.awk`)
+----
+$ awk '{printf "%5s  ", NR; print $0}' logfile
+    1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+    2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+    3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+    4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+    5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+    6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+    7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+    8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+    9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+=== Zeilen löschen ===
+
+Im Gegensatz zu `sed` verfügt `awk` nicht über ein explizites Kommando,
+um Zeilen zu löschen. Es bleibt nur, sich hier über den Mechanismus des
+Suchen und Ersetzens bzw. über die Variablen der Zeilennummern zu
+behelfen.
+
+.Alle Zeilen löschen
+----
+$ nl logfile | awk 'NR < 1' { print }
+$
+----
+
+.Lediglich die dritte Zeile löschen (`delete-content-line3.awk`)
+----
+$ nl logfile | awk 'NR != 3' { print }
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+Bei der nächsten Problemstellung kommt eine ODER-Verknüpfung beider
+Bedingungen mittels `||` ins Spiel. Es werden nur die Inhalte
+ausgegeben, die sich in den Zeilen 1-2 bzw. größer als 5 befinden:
+
+.Die Zeilen 3 bis 5 löschen (`delete-content-line3-5.awk`)
+----
+$ nl logfile | awk 'NR < 3 || NR > 5 { print }'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+Das Löschen der ersten und letzten Zeile greift auf die Interna von
+`awk` zurück. In jedem Durchlauf wird zunächst die aktuelle Zeile in der
+Variable `v` gespeichert. Falls die Zeilennummer größer als 2 ist, wird
+der Inhalt der Variable `v` ausgegeben -- somit die vorherige Zeile. Als
+Effekt werden die erste und letzte Zeile in der Ausgabe ignoriert.
+
+.Die erste und die letzte Zeile löschen (`delete-content-first-and-last-line.awk`)
+----
+$ nl logfile | awk 'NR > 2 {print v} {v = $0}'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$
+----
+
+=== Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten ===
+
+Die nachfolgenden Aufrufe sind ähnlich zu `grep`, `vi` und `less`, wobei
+hier die Verwandschaft der drei Werkzeuge deutlich wird. Beachten Sie
+bei der Benutzung aber die leichten syntaktischen Unterschiede. Ob sie
+im Alltag zur Lösung Ihres Problems auf `grep`, `sed` oder `awk`
+zurückgreifen, ist häufig eine Frage der Gewohnheit und mit welchem
+Aufwand Sie das Problem lösen können.
+
+.Alle Zeilen der Datei `logfile` ausgeben, die das Muster `fho` enthalten (`print-content.awk`)
+----
+$ nl logfile | awk '/fho/' { print }
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+$
+----
+
+.Suche alle Zeilen, die entweder auf 44 oder 45 enden (`print-content-regex.awk`)
+----
+$ nl logfile | awk '/4[45]$/' { print }
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+Für die Suche unabhängig von der Groß- und Kleinschreibung bestehen
+mehrere Möglichkeiten. In 'Variante 1' setzen Sie im einführenden Block
+einen internen `awk`-Schalter namens `IGNORECASE` auf einen Wert
+ungleich Null. Alle nachfolgenden Vergleiche mit Mustern und Regulären
+Ausdrücken respektieren diesen Schalter:
+
+.Suche nach dem Vorkommen des Musters `banana` unabhängig von Groß- und Kleinschreibung (`print-content-case-ins.awk`)
+----
+BEGIN { IGNORECASE=1 }
+/banana/ { print }
+----
+
+Rufen Sie das `awk`-Programm auf, erhalten Sie die folgende Ausgabe:
+
+.Aufruf des `awk`-Programms 
+----
+$ (echo "apple"; echo "banana"; echo "Banana") | awk -f print-content-case-ins.awk
+banana
+Banana
+$
+----
+
+Arbeiten Sie mit der Bash als Kommandozeileninterpreter, läßt sich der
+Aufruf für die Bash mit Hilfe des Schalters `-e` wie folgt verkürzen:
+
+.Aufruf des `awk`-Programms in der Bash
+----
+$ echo -e "apple\nbanana\nBanana" | awk -f print-content-case-ins.awk
+banana
+Banana
+$
+----
+
+Das Vorgehen in 'Variante 2' gelingt dadurch, daß Sie oben genannten
+Schalter nicht verwenden und stattdessen einen komplexeren Regulären
+Ausdruck benutzen.
+
+.Suche nach dem Vorkommen des Musters `banana` mit großem oder kleinem Anfangsbuchstaben
+----
+$ (echo "apple"; echo "banana"; echo "Banana") | awk '/[Bb]anana/'
+banana
+Banana
+$
+----
+
+=== Anzahl Zeilen einer Datei ===
+
+Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
+kennen Sie dazu das Werkzeug `wc`, welches über den Schalter `-l` die
+Anzahl der Zeilen zählt. 
+
+.Zeilen einer Datei zählen
+----
+$ wc -l rechnung
+3 rechnung
+$
+----
+
+Mit `awk` können Sie dieses Verhalten recht einfach nachbauen. In
+'Variante 1' definieren Sie zunächst im einführenden Block eine Variable
+namens `count`, die Sie mit dem Wert Null initialisieren. Im Aktionsteil
+zählen Sie diese pro gelesener Zeile um eins hoch. Am Ende geben Sie
+einfach den Wert der Variable aus.
+
+.Zeilen zählen (Version 1) (`wcl-1.awk`)
+----
+BEGIN { count=0 }
+{ count++ }
+END { printf "Anzahl Zeilen: %d\n", count }
+----
+
+Rufen Sie das Programm auf, erhalten Sie die folgende Ausgabe:
+
+.Zeilen zählen (Ausgabe)
+----
+$ awk -f wcl-1.awk rechnung
+Anzahl Zeilen: 3
+$
+----
+
+'Variante 2' ist ähnlich, greift aber auf eine interne Variable namens
+`$NR` zurück. Damit verkürzt sich das Programm auf den abschließenden
+Block mit einer einzigen Anweisung. Die Ausgabe ist identisch zu
+'Variante 1'.
+
+.Zeilen zählen (Version 2) (`wcl-2.awk`)
+----
+END { printf "Anzahl Zeilen: %d\n", NR }
+----
+
+[[spalten-und-felder]]
+=== Spalten und Felder ===
+
+Wie eingangs genannt, liegt die Stärke von `awk` in der Verarbeitung von
+strukturierten Daten. `awk` kann mit Leichtigkeit spalten- bzw.
+feldweise agieren und Daten aus einer Zeile extrahieren.
+
+==== Trennzeichen zwischen Spalten und Feldern ====
+
+Als Trennzeichen verwendet `awk` die Zeichen, die in der Shellvariable
+`IFS` definiert sind. `IFS` steht als Abkürzung für 'internal field
+separator' und beinhaltet üblicherweise Leerzeichen (`\s`),
+Tabulatorzeichen (`\t`) und den Zeilenumbuch (`\n`). 
+
+`awk` selbst merkt sich diese Trennzeichen in der internen Variable
+`$FS`. Beachten Sie, daß `$FS` lediglich das Leerzeichen und das
+Tabulatorzeichen beinhaltet. Nachfolgendes Beispiel zeigt den Zugriff
+auf die zweite Spalte, deren Inhalt sich `awk` in der internen Variable
+`$2` merkt.
+
+.Ausgabe der zweiten Spalte mit Leerzeichen als Trennzeichen
+----
+$ echo "apple banana orange" | awk '{ print $2 }'
+banana
+$
+----
+
+Möchten Sie in ihrem `awk`-Programm ein anderes Trennzeichen verwenden,
+haben Sie zwei Möglichkeiten. In 'Variante 1' definieren Sie die
+Variable `$FS` im einführenden Block um. Nachfolgendes Beispiel setzt
+zunächst das Trennzeichen auf den Doppelpunkt und gibt anschließend die
+erste Spalte jeder Zeile der Datei `/etc/passwd` aus:
+
+.`awk`-Programm mit Doppelpunkt als Trennzeichen (`print-first-column.awk`)
+----
+$ awk 'BEGIN { FS=":" } { print $1 }' /etc/passwd
+root
+daemon
+bin
+sys
+...
+$
+----
+
+Möchten Sie bei jedem Aufruf ihres `awk`-Programms flexibler sein, geben
+Sie `awk` beim Aufruf das gewünschte Trennzeichen mit. 'Variante 2'
+zeigt Ihnen das Vorgehen. Sie verwenden dazu den Schalter `-F` gefolgt
+vom Trennzeichen, hier wiederum beispielhaft der Doppelpunkt. `awk` ist
+hierbei so tolerant, daß es unerheblich ist, ob zwischen dem Schalter
+`-F` und dem Trennzeichen ein Leerzeichen folgt, oder nicht.
+
+.`awk`-Programm mit variablem Trennzeichen pro Aufruf
+----
+$ awk -F : '{ print $1 }' /etc/passwd
+root
+daemon
+bin
+sys
+...
+$
+----
+
+TIP: Obiger Aufruf entspricht dem UNIX/Linux-Kommando `cut -d: -f1
+/etc/passwd`.
+
+Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
+Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
+`awk` die Zeichenkette jedoch als Regulären Ausdruck, so daß auch
+komplexere Zeichenfolgen möglich sind. 
+
+Aus Gründen der Einfachheit und Schlichtheit befinden sich in ihrer
+Datendatei zwischen den Spalten eine wechselnde Menge an Tabulatoren.
+Als Spaltentrenner definieren Sie den Regulären Ausdruck `\t+`. Um
+sicherzugehen, daß die Shell, die das Kommando verarbeitet, ihren
+Regulären Ausdruck auch unverändert läßt, schließen Sie diesen
+zusätzlich in einfache Anführungszeichen ein. Das Auslesen der dritten
+Spalte erreichen Sie dann wie folgt:
+
+.Trennzeichen als Regulärer Ausdruck
+----
+$ cat rechnung
+1	Floppy 3.5"			3.00	3.00
+5	DVD					1.50	7.50
+2	SDHC memory card	8.00	16.00
+$
+$ awk -F '\t+' '{ print $3 }' rechnung
+3.00
+1.50
+8.00
+$
+----
+
+==== Auf Spalten und Felder zugreifen ====
+
+`awk` liest jede Zeile vollständig, zerlegt die Zeile anhand des
+eingestellten Trennzeichens in einzelne Spalten oder Felder und ordnet
+die Spalten bestimmten Variablen zu. Die Variablen sind nach einem
+einheitlichen Schema benannt -- der Nummer der jeweiligen Spalte. Den
+Inhalt der ersten Spalte finden Sie somit in Variable `$1`, die zweite
+Spalte in `$2` etc. 
+
+Das nachfolgende, einfache Beispiel gibt die drei Spalten der
+Eingabezeile in umgekehrter Reihenfolge wieder aus. Beachten Sie bitte,
+daß das Komma in der `print`-Anweisung in der Ausgabe ein Leerzeichen
+erzeugt.
+
+.Spalten lesen und referenzieren
+----
+$ echo "apple banana orange" | awk '{ print $3, $2, $1 }'
+orange banana apple
+$
+----
+
+In der Variable `$NF` merkt sich `awk` die Anzahl der Spalten pro Zeile.
+
+.Anzahl Spalten ermitteln
+----
+$ echo "apple banana orange" | awk '{ print NF }'
+3
+$
+----
+
+Daß `awk` auch rechnen kann, demonstrieren wir anhand obiger
+Rechnungsdatei. Die Gesamtsumme aller Artikel berechnet sich aus der
+Addition aller Zwischensummen pro Zeile. Jede Zwischensumme ergibt sich
+aus dem Produkt der Spalten 1 und 3 -- Anzahl mal Einzelpreis. Um am
+Ende eine Ausgabe mit zwei Nachkommastellen zu erhalten, ergänzen Sie
+den Aufruf von `printf` um die Angabe `.2f`, was für "Fließkommazahl mit
+zwei Nachkommastellen" steht.
+
+.Die Gesamtsumme berechnen (`sum.awk`)
+----
+BEGIN { FS="\t+" }
+{ total += $1 * $3 }
+END { printf "Gesamt: %.2f\n", total }
+----
+
+Rufen Sie obiges `awk`-Programm danach auf, erhalten Sie dieses
+Ergebnis:
+
+.Ermittlung der Gesamtsumme
+----
+$ cat rechnung
+1	Floppy 3.5"			3.00	3.00
+5	DVD					1.50	7.50
+2	SDHC memory card	8.00	16.00
+$
+$ awk -f sum.awk rechnung 
+Gesamt: 26.50
+$
+----
+
+== Danksagung ==
+
+Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
+und Verbesserungsvorschläge zum vorliegenden Tutorial.
+
+== Weiterführende Dokumente ==
+
+* [[[Barnett]]] Bruce Barnett: 'awk -- A tutorial and introduction', http://www.grymoire.com/Unix/Awk.html
+* [[[Dougherty]]] Dale Dougherty: 'sed & awk', O'Reilly, http://shop.oreilly.com/product/9781565922259.do
+* [[[Friedl]]] Jeffrey E. F. Friedl: 'Reguläre Ausdrücke', O'Reilly, http://shop.oreilly.com/product/9780596528126.do
+* [[[gawk]]] `gawk` auf der Webseite des GNU-Projekts, https://www.gnu.org/software/gawk/
+* [[[gawk-Debianpaket]]] Debianpaket zu `gawk`, https://packages.debian.org/jessie/gawk
+* [[[Hofmann]]] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, https://github.com/hofmannedv/training-shell
+* [[[Wolf]]] Jürgen Wolf: 'Shell-Programmierung. Das umfassende Handbuch', Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+

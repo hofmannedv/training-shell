@@ -1,0 +1,1535 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Die Programmiersprache <code>awk</code>. Erste Schritte.</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(4);
+/*]]>*/
+</script>
+</head>
+<body class="book">
+<div id="header">
+<h1>Die Programmiersprache <code>awk</code>. Erste Schritte.</h1>
+<span id="author">Frank Hofmann</span><br />
+<span id="revnumber">version 0.4,</span>
+<span id="revdate">2. Mai 2016</span>
+<div id="toc">
+  <div id="toctitle">Inhaltsverzeichnis</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<h1 id="_vorwort">Vorwort</h1>
+<div class="paragraph"><p><code>awk</code> ist eine Programmiersprache, die am besten strukturierte Textdaten
+verarbeiten kann. Das beinhaltet bspw. das Ausgeben, Löschen, Suchen und
+Ersetzen von Zeichenketten auf der Basis von Regulären Ausdrücken und
+Feldern (siehe Spalten und Felder in <a href="#spalten-und-felder">[spalten-und-felder]</a>). Die
+einzelnen Felder unterscheidet <code>awk</code> anhand von Trennzeichen, die Sie
+auch selbst festlegen können. <code>awk</code> ist sehr mächtig und flexibel im
+Alltagsgebrauch als Filter auf der Kommandozeile und in Shellskripten.</p></div>
+<div class="paragraph"><p>Der Name <code>awk</code> leitet sich aus den Anfangsbuchstaben der Familiennamen
+der drei ursprünglichen Entwickler Alfred V. Aho, Peter J. Weinberger
+und Brian W. Kernighan ab.</p></div>
+<h1 id="_voraussetzungen_zum_verständnis">Voraussetzungen zum Verständnis</h1>
+<div class="paragraph"><p>Um dieses Tutorial zu verstehen, hilft Ihnen das Basiswissen im Umgang
+mit der Kommandozeile. Die Kommandos/Werkzeuge <code>grep</code>, <code>vi(m)</code> und
+<code>less</code> sollten Ihnen nicht fremd sein. Alle diese Werkzeuge sind in etwa
+gleich, unterscheiden sich aber mit Nuancen zueinander.</p></div>
+<div class="paragraph"><p><code>awk</code> benutzt Reguläre Ausdrücke zur Beschreibung von Mustern für
+Zeichenketten. Dieses Tutorial setzt grundlegende Kenntnisse von RegEx
+voraus. Für ein tieferes Wissen dazu hilft Ihnen das Buch <em>Reguläre
+Ausdrücke</em> von Jeffrey Friedl <a href="#Friedl">[Friedl]</a>.</p></div>
+<div class="sect1">
+<h2 id="_code_awk_code_programme_benutzen">1. <code>awk</code>-Programme benutzen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code>awk</code>-Programme führt der <code>awk</code>-Interpreter aus. Auf Linux-Systemen
+kommt meist die GNU-Variante namens <code>gawk</code> zum Einsatz (siehe <a href="#gawk">[gawk]</a>
+und <a href="#gawk-Debianpaket">[gawk-Debianpaket]</a>). In der Regel ist das im Betriebssystem über
+einen symbolischen Link gelöst:</p></div>
+<div class="listingblock">
+<div class="title">Symbolischer Link von <code>awk</code> zu <code>gawk</code> bei Debian GNU/Linux</div>
+<div class="content">
+<pre><code>$ which awk
+/usr/bin/awk
+$ ls -la $(which awk)
+lrwxrwxrwx 1 root root 21 Apr 10 01:03 /usr/bin/awk -&gt; /etc/alternatives/awk
+$ ls -la /etc/alternatives/awk
+lrwxrwxrwx 1 root root 13 Apr 10 14:28 /etc/alternatives/awk -&gt; /usr/bin/gawk
+$</code></pre>
+</div></div>
+<div class="sect2">
+<h3 id="_über_code_stdin_code_oder_als_direkten_parameter_beim_aufruf_von_code_awk_code">1.1. Über <code>stdin</code> oder als direkten Parameter beim Aufruf von <code>awk</code></h3>
+<div class="paragraph"><p>Der Interpreter ist sehr flexibel und kann Daten und Anweisungen sowohl
+über <code>stdin</code>, als auch aus einer Datei verarbeiten. Anweisungen
+bezeichnet hier das <code>awk</code>-Programm zur Datenverarbeitung.</p></div>
+<div class="listingblock">
+<div class="title">Filtern mittels <code>awk</code> nach einer Pipe</div>
+<div class="content">
+<pre><code>$ cat datei | awk 'anweisungen'</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Filtern mittels <code>awk</code> ohne Pipe und mit direktem Aufruf der Datei</div>
+<div class="content">
+<pre><code>$ awk 'anweisungen' datei</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_code_awk_code_programm_als_separate_datei">1.2. <code>awk</code>-Programm als separate Datei</h3>
+<div class="paragraph"><p>Einfache Anweisungsfolgen geben Sie noch direkt im Aufruf an. Werden
+ihre <code>awk</code>-Programme komplexer, speichern Sie diese am besten in einer
+separaten Datei. Im Aufruf erfolgt die Referenzierung über den Schalter
+<code>-f</code> gefolgt von dem Namen für die Programmdatei.</p></div>
+<div class="paragraph"><p>Wie Sie die Programmdatei benennen, ist unerheblich. Um die
+Programmdatei von anderen Dokumenten besser zu unterscheiden, wäre die
+Verwendung des Namensendes <code>.awk</code> eine Möglichkeit.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Anstatt von <code>-f</code> versteht <code>awk</code> auch den langen Schalter <code>--file</code>.</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="title">Filtern mittels <code>awk</code> und dem Programm <code>skript.awk</code></div>
+<div class="content">
+<pre><code>$ awk -f skript.awk datei</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Bei den meisten Listings finden Sie in Klammern den Dateinamen des
+<code>awk</code>-Beispiels. Damit können Sie das Programm sofort ausprobieren, ohne
+das zuvor abtippen zu müssen.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_awk_code_programm_als_ausführbares_programm">1.3. <code>awk</code>-Programm als ausführbares Programm</h3>
+<div class="paragraph"><p>Da <code>awk</code> auch eine (weniger bekannte) Programmiersprache ist, können Sie
+ein entsprechendes ausführbares Programm als Skript abspeichern und
+ausführen. Der Aufbau des Skriptdatei folgt dabei den üblichen Regeln,
+wie sie bspw. auch bei Perl-, bash- und Python-Skripten gelten. Nach der
+obligatorischen, einleitenden Shebang-Zeile mit dem expliziten Pfad zum
+ausführenden Interpreter folgt das <code>awk</code>-Programm.</p></div>
+<div class="listingblock">
+<div class="title"><code>awk</code>-Programm als Skriptdatei (<code>output-content-with-condition.sh</code>)</div>
+<div class="content">
+<pre><code>#!/usr/bin/awk -f
+
+/2016-01-11/ {
+    print
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>Geben Sie der obigen Datei Ausführungsrechte via <code>chmod +x
+output-content-with-condition.sh</code>, können Sie das Skript wie folgt auf
+der Kommandozeile aufrufen:</p></div>
+<div class="listingblock">
+<div class="title"><code>awk</code>-Programm als Skriptdatei aufrufen</div>
+<div class="content">
+<pre><code>$ ./output-content-with-condition.sh logfile
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aufbau_eines_code_awk_code_programms">2. Aufbau eines <code>awk</code>-Programms</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Ein vollständiges <code>awk</code>-Programm besteht aus drei Blöcken&#8201;&#8212;&#8201;einem
+einführenden Block, einem Anweisungsblock und einem abschließenden
+Block. Die Ausführung durch den <code>awk</code>-Interpreter erfolgt in ebendieser
+Reihenfolge.</p></div>
+<div class="listingblock">
+<div class="title">Prinzipieller Aufbau eines <code>awk</code>-Programms</div>
+<div class="content">
+<pre><code>BEGIN { einführender Block }
+Muster 1 { Aktionsfolge 1 }
+Muster 2 { Aktionsfolge 2 }
+...
+Muster n { Aktionsfolge n }
+END { abschließender Block }</code></pre>
+</div></div>
+<div class="sect2">
+<h3 id="_einführender_block">2.1. Einführender Block</h3>
+<div class="paragraph"><p>Dieser Block ist optional. Falls vorhanden, leiten Sie ihn mit dem
+Schlüsselwort <code>BEGIN</code> ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+bevor die Datendatei verarbeitet wird.</p></div>
+<div class="listingblock">
+<div class="title">Minimalbeispiel mit <code>BEGIN</code>-Block (Kopfzeile)</div>
+<div class="content">
+<pre><code>BEGIN { print " ---- Kopfzeile ---- " }
+{ print }</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_anweisungsblock">2.2. Anweisungsblock</h3>
+<div class="paragraph"><p>Dieser Block ist essentiell und besteht aus minimal einer einzelnen
+Zeile. Jede Zeile besteht wiederum aus zwei Komponenten&#8201;&#8212;&#8201;einem Muster
+und einer Aktionsfolge. Sie geben in der Zeile entweder das Muster an,
+oder die Aktionsfolge, oder beides (siehe Beispiele 1 bis 3).</p></div>
+<div class="paragraph"><p>Der <code>awk</code>-Interpreter verarbeitet die von Ihnen angegebene Datendatei
+zeilenweise und wendet auf jede gelesene Zeile der Datendatei alle
+Muster und Aktionsfolgen aus dem Anweisungsblock an. Maßgeblich ist
+dabei die Reihenfolge, in der Sie Anweisungen aufgeführt haben.</p></div>
+<div class="paragraph"><p>Eine Aktionsfolge umfaßt mindestens eine einzelne Anweisung und wird von
+<code>awk</code> in geschweiften Klammern erwartet. Damit kann <code>awk</code> dieses vom
+vorangestellten Muster unterscheiden. Bitte beachten Sie bei der
+Formulierung die beiden Leerzeichen&#8201;&#8212;&#8201;eines nach der öffnenden
+geschweiften Klammer und eines vor der schließenden geschweiften
+Klammer.</p></div>
+<div class="paragraph"><p>Nachfolgendes Beispiel 1 umfaßt als Anweisung lediglich <code>print</code> und gibt
+Zeile für Zeile den Inhalt der Datei <code>logfile</code> aus.</p></div>
+<div class="listingblock">
+<div class="title">Beispiel 1: Ausgabe einer Datei (nur Aktionsfolge) (<code>output-content.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk '{ print }' logfile
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+...
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Das Beispiel 2 verbindet ein Muster mit einer Aktion. Aus der Datei
+<code>logfile</code> werden nur die Zeilen ausgegeben, in denen das Muster
+<code>2016-01-11</code> enthalten ist.</p></div>
+<div class="listingblock">
+<div class="title">Beispiel 2: Ausgabe einer Datei (Muster und Aktionsfolge) (<code>output-content-with-condition.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk '/2016-01-11/ { print }' logfile
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Geben Sie keine Aktion an, ergänzt <code>awk</code> automatisch als Aktion das
+<code>print</code>-Statement (siehe Beispiel 3). Somit läßt sich das Beispiel 2
+markant verkürzen.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Bitte beachten Sie, daß in allen nachfolgenden Listings stets die
+<code>print</code>-Anweisung als Aktionsfolge enthalten ist. Ziel in diesem
+Tutorial ist die Verständlichkeit der gezeigten Beispiele. Im Laufe der
+Zeit steigt ihre Sicherheit im Umgang mit <code>awk</code>, so daß Ihnen auch
+"Abkürzungen" geläufig sein werden.</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="title">Beispiel 3: Ausgabe einer Datei (Muster)</div>
+<div class="content">
+<pre><code>$ awk '/2016-01-11/' logfile
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Wie bereits eingangs genannt, verarbeitet <code>awk</code> nicht nur einzelne
+Aktionen, sondern ganze Aktionsfolgen. Jede einzelne Aktion geben Sie
+dazu am besten auf einer separaten Zeile an. Das nachfolgende Programm
+prüft, ob in der gelesenen Zeile ein bestimmtes Muster vorkommt. Es
+prüft auf das Vorkommen von Leerzeilen, Ziffern und Buchstaben.</p></div>
+<div class="listingblock">
+<div class="title">Beispiel 4: mehrzeiliges Programm (Aktionsfolgen) (<code>output-multi-action.awk</code>)</div>
+<div class="content">
+<pre><code>/[0-9]+/ { print "That is an integer." }
+/[A-z]+/ { print "This is a string." }
+/^$/ { print "This is an empty line." }</code></pre>
+</div></div>
+<div class="paragraph"><p>Der Aufruf sieht dann wie folgt aus:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ cat testfile
+10247
+10249 Berlin
+Berlin
+
+10179
+$
+awk -f output-multi-action.awk testfile
+That is an integer.
+That is an integer.
+This is a string.
+This is a string.
+This is an empty line.
+That is an integer.
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_abschließender_block">2.3. Abschließender Block</h3>
+<div class="paragraph"><p>Dieser Block ist ebenfalls optional. Falls vorhanden, leiten Sie ihn mit
+dem Schlüsselwort <code>END</code> ein. Alle Anweisungen folgen innerhalb der
+nachfolgenden, geschweiften Klammern und werden einmalig ausgeführt,
+nachdem die Datendatei verarbeitet wurde.</p></div>
+<div class="listingblock">
+<div class="title">Minimalbeispiel mit <code>END</code>-Block (Fusszeile)</div>
+<div class="content">
+<pre><code>{ print }
+END { print " ---- Fusszeile ---- " }</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_beispiele">3. Beispiele</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ausgeben_einer_datei">3.1. Ausgeben einer Datei</h3>
+<div class="paragraph"><p>Die nachfolgenden Aufrufe haben ihre Entsprechung in den
+UNIX/Linux-Kommandos <code>cat</code>, <code>tac</code>, <code>head</code> und <code>tail</code>. Das Kommando <code>nl</code>
+kommt nur zum Einsatz, um eine Zeilennummer zu ergänzen und die Wirkung
+des <code>awk</code>-Kommandos besser zu zeigen.</p></div>
+<div class="paragraph"><p>Das Ausgeben der betreffenden Zeile einer Datendatei erfolgt mit der
+Anweisung <code>print</code>.</p></div>
+<div class="listingblock">
+<div class="title">Den gesamten Inhalt einfach ausgeben (<code>output-content.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk '{ print }'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Benötigen Sie eine Lösung mit Zeilennummern <code>awk pur</code>, geht das
+ebenfalls. Diese Beispiele haben wir im Abschnitt <em>Ausgabe mit
+Zeilennummern</em> <a href="#ausgabe_mit_zeilennummern">[ausgabe_mit_zeilennummern]</a> zusammengefaßt.</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ausgeben_bestimmter_zeilen_einer_datei">3.2. Ausgeben bestimmter Zeilen einer Datei</h3>
+<div class="paragraph"><p>Über die vordefinierte Variable <code>$NR</code> und eine Bedingung geben Sie
+lediglich die vierte Zeile der Datei <code>logfile</code> aus:</p></div>
+<div class="listingblock">
+<div class="title">Nur die vierte Zeile ausgeben (<code>output-content-line4.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR == 4 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Das Gegenstück ist die Ausgabe aller Zeilen außer der Zeile 4:</p></div>
+<div class="listingblock">
+<div class="title">Alles außer der vierten Zeile ausgeben (<code>output-content-without-line4.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR != 4 { print }'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Für die Ausgabe ausgewählter Zeilen existieren mehrere Varianten.
+Variante 1 ist ein Mehrfachaufruf von <code>awk</code> und entspricht von der
+Denkweise her der Kombination der beiden UNIX-Kommandos <code>head</code> und
+<code>tail</code>:</p></div>
+<div class="listingblock">
+<div class="title">Nur die Zeilen vier bis sechs ausgeben (Variante 1)</div>
+<div class="content">
+<pre><code>$ nl logfile | head -6 | tail -3
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+$ nl logfile | tail --lines=+4 | head -3
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$
+$ nl logfile | awk 'NR &gt; 3 { print }' | awk 'NR &lt; 4 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Variante 2 verwendet eine UND-Verknüpfung beider Bedingungen mittels
+<code>&amp;&amp;</code>:</p></div>
+<div class="listingblock">
+<div class="title">Nur die Zeilen vier bis sechs ausgeben (Variante 2) (<code>output-content-line4-6.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR &gt; 3 &amp;&amp; NR &lt; 7 { print }'
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Um nur den Inhalt der Datei ab einer bestimmten Zeile bis zum Ende der
+Datei auszugeben, nutzen Sie wiederum eine Bedingung und die Variable
+<code>$NR</code>.</p></div>
+<div class="listingblock">
+<div class="title">Nur die Zeilen sieben bis zum Ende der Datei ausgeben (<code>output-content-line7-end.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR &gt; 6 { print }'
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="ausgabe_mit_zeilennummern">3.3. Ausgabe mit Zeilennummern</h3>
+<div class="paragraph"><p>Die meisten hier genutzten Beispiele nutzen das UNIX/Linux-Kommando <code>nl</code>
+zur Illustration für Zeilennummern. <code>awk</code> kann das über die beiden
+internen Variablen <code>$NR</code> und <code>$0</code> auch vollständig selbst. Während <code>$NR</code>
+den Index des Eintrags bezeichnet (<em>number of record</em>), steht <code>$0</code> für
+die gesamte Zeile der Datendatei.</p></div>
+<div class="listingblock">
+<div class="title">Dateiinhalt mit Zeilennummern ausgeben (<code>output-content-with-line-numbers-1.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk '{print NR"  "$0}' logfile
+1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Werden es mehr Zeilen und Sie wünschen eine rechtsbündige Anordnung der
+Zeilennummern, kommen Sie um die Formatierung der Ausgabe nicht herum.
+Dafür nutzen Sie das Kommando <code>printf</code> mit dem entsprechenden
+Formatstring. Im nachfolgenden Beispiel sorgt der Formatstring <code>%5s</code> für
+eine rechtsbündige Ausrichtung von bis zu fünf Ziffern. Die Ausgabe der
+Zeilennummer ist stets fünf Zeichen breit und wird&#8201;&#8212;&#8201;falls die Zahl
+weniger als fünf Stellen hat&#8201;&#8212;&#8201;mit der fehlenden Anzahl Leerzeichen von
+links aufgefüllt.</p></div>
+<div class="listingblock">
+<div class="title">Dateiinhalt mit Zeilennummern ausgeben (<code>output-content-with-line-numbers-2.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk '{printf "%5s  ", NR; print $0}' logfile
+    1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+    2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+    3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+    4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+    5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+    6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+    7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+    8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+    9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_zeilen_löschen">3.4. Zeilen löschen</h3>
+<div class="paragraph"><p>Im Gegensatz zu <code>sed</code> verfügt <code>awk</code> nicht über ein explizites Kommando,
+um Zeilen zu löschen. Es bleibt nur, sich hier über den Mechanismus des
+Suchen und Ersetzens bzw. über die Variablen der Zeilennummern zu
+behelfen.</p></div>
+<div class="listingblock">
+<div class="title">Alle Zeilen löschen</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR &lt; 1' { print }
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Lediglich die dritte Zeile löschen (<code>delete-content-line3.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR != 3' { print }
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Bei der nächsten Problemstellung kommt eine ODER-Verknüpfung beider
+Bedingungen mittels <code>||</code> ins Spiel. Es werden nur die Inhalte
+ausgegeben, die sich in den Zeilen 1-2 bzw. größer als 5 befinden:</p></div>
+<div class="listingblock">
+<div class="title">Die Zeilen 3 bis 5 löschen (<code>delete-content-line3-5.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR &lt; 3 || NR &gt; 5 { print }'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Das Löschen der ersten und letzten Zeile greift auf die Interna von
+<code>awk</code> zurück. In jedem Durchlauf wird zunächst die aktuelle Zeile in der
+Variable <code>v</code> gespeichert. Falls die Zeilennummer größer als 2 ist, wird
+der Inhalt der Variable <code>v</code> ausgegeben&#8201;&#8212;&#8201;somit die vorherige Zeile. Als
+Effekt werden die erste und letzte Zeile in der Ausgabe ignoriert.</p></div>
+<div class="listingblock">
+<div class="title">Die erste und die letzte Zeile löschen (<code>delete-content-first-and-last-line.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR &gt; 2 {print v} {v = $0}'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_finde_alle_zeilen_der_eingabe_welches_ein_bestimmtes_muster_beinhalten">3.5. Finde alle Zeilen der Eingabe, welches ein bestimmtes Muster beinhalten</h3>
+<div class="paragraph"><p>Die nachfolgenden Aufrufe sind ähnlich zu <code>grep</code>, <code>vi</code> und <code>less</code>, wobei
+hier die Verwandschaft der drei Werkzeuge deutlich wird. Beachten Sie
+bei der Benutzung aber die leichten syntaktischen Unterschiede. Ob sie
+im Alltag zur Lösung Ihres Problems auf <code>grep</code>, <code>sed</code> oder <code>awk</code>
+zurückgreifen, ist häufig eine Frage der Gewohnheit und mit welchem
+Aufwand Sie das Problem lösen können.</p></div>
+<div class="listingblock">
+<div class="title">Alle Zeilen der Datei <code>logfile</code> ausgeben, die das Muster <code>fho</code> enthalten (<code>print-content.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk '/fho/' { print }
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Suche alle Zeilen, die entweder auf 44 oder 45 enden (<code>print-content-regex.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk '/4[45]$/' { print }
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Für die Suche unabhängig von der Groß- und Kleinschreibung bestehen
+mehrere Möglichkeiten. In <em>Variante 1</em> setzen Sie im einführenden Block
+einen internen <code>awk</code>-Schalter namens <code>IGNORECASE</code> auf einen Wert
+ungleich Null. Alle nachfolgenden Vergleiche mit Mustern und Regulären
+Ausdrücken respektieren diesen Schalter:</p></div>
+<div class="listingblock">
+<div class="title">Suche nach dem Vorkommen des Musters <code>banana</code> unabhängig von Groß- und Kleinschreibung (<code>print-content-case-ins.awk</code>)</div>
+<div class="content">
+<pre><code>BEGIN { IGNORECASE=1 }
+/banana/ { print }</code></pre>
+</div></div>
+<div class="paragraph"><p>Rufen Sie das <code>awk</code>-Programm auf, erhalten Sie die folgende Ausgabe:</p></div>
+<div class="listingblock">
+<div class="title">Aufruf des <code>awk</code>-Programms</div>
+<div class="content">
+<pre><code>$ (echo "apple"; echo "banana"; echo "Banana") | awk -f print-content-case-ins.awk
+banana
+Banana
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Arbeiten Sie mit der Bash als Kommandozeileninterpreter, läßt sich der
+Aufruf für die Bash mit Hilfe des Schalters <code>-e</code> wie folgt verkürzen:</p></div>
+<div class="listingblock">
+<div class="title">Aufruf des <code>awk</code>-Programms in der Bash</div>
+<div class="content">
+<pre><code>$ echo -e "apple\nbanana\nBanana" | awk -f print-content-case-ins.awk
+banana
+Banana
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Das Vorgehen in <em>Variante 2</em> gelingt dadurch, daß Sie oben genannten
+Schalter nicht verwenden und stattdessen einen komplexeren Regulären
+Ausdruck benutzen.</p></div>
+<div class="listingblock">
+<div class="title">Suche nach dem Vorkommen des Musters <code>banana</code> mit großem oder kleinem Anfangsbuchstaben</div>
+<div class="content">
+<pre><code>$ (echo "apple"; echo "banana"; echo "Banana") | awk '/[Bb]anana/'
+banana
+Banana
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_anzahl_zeilen_einer_datei">3.6. Anzahl Zeilen einer Datei</h3>
+<div class="paragraph"><p>Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
+kennen Sie dazu das Werkzeug <code>wc</code>, welches über den Schalter <code>-l</code> die
+Anzahl der Zeilen zählt.</p></div>
+<div class="listingblock">
+<div class="title">Zeilen einer Datei zählen</div>
+<div class="content">
+<pre><code>$ wc -l rechnung
+3 rechnung
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Mit <code>awk</code> können Sie dieses Verhalten recht einfach nachbauen. In
+<em>Variante 1</em> definieren Sie zunächst im einführenden Block eine Variable
+namens <code>count</code>, die Sie mit dem Wert Null initialisieren. Im Aktionsteil
+zählen Sie diese pro gelesener Zeile um eins hoch. Am Ende geben Sie
+einfach den Wert der Variable aus.</p></div>
+<div class="listingblock">
+<div class="title">Zeilen zählen (Version 1) (<code>wcl-1.awk</code>)</div>
+<div class="content">
+<pre><code>BEGIN { count=0 }
+{ count++ }
+END { printf "Anzahl Zeilen: %d\n", count }</code></pre>
+</div></div>
+<div class="paragraph"><p>Rufen Sie das Programm auf, erhalten Sie die folgende Ausgabe:</p></div>
+<div class="listingblock">
+<div class="title">Zeilen zählen (Ausgabe)</div>
+<div class="content">
+<pre><code>$ awk -f wcl-1.awk rechnung
+Anzahl Zeilen: 3
+$</code></pre>
+</div></div>
+<div class="paragraph"><p><em>Variante 2</em> ist ähnlich, greift aber auf eine interne Variable namens
+<code>$NR</code> zurück. Damit verkürzt sich das Programm auf den abschließenden
+Block mit einer einzigen Anweisung. Die Ausgabe ist identisch zu
+<em>Variante 1</em>.</p></div>
+<div class="listingblock">
+<div class="title">Zeilen zählen (Version 2) (<code>wcl-2.awk</code>)</div>
+<div class="content">
+<pre><code>END { printf "Anzahl Zeilen: %d\n", NR }</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="spalten-und-felder">3.7. Spalten und Felder</h3>
+<div class="paragraph"><p>Wie eingangs genannt, liegt die Stärke von <code>awk</code> in der Verarbeitung von
+strukturierten Daten. <code>awk</code> kann mit Leichtigkeit spalten- bzw.
+feldweise agieren und Daten aus einer Zeile extrahieren.</p></div>
+<div class="sect3">
+<h4 id="_trennzeichen_zwischen_spalten_und_feldern">3.7.1. Trennzeichen zwischen Spalten und Feldern</h4>
+<div class="paragraph"><p>Als Trennzeichen verwendet <code>awk</code> die Zeichen, die in der Shellvariable
+<code>IFS</code> definiert sind. <code>IFS</code> steht als Abkürzung für <em>internal field
+separator</em> und beinhaltet üblicherweise Leerzeichen (<code>\s</code>),
+Tabulatorzeichen (<code>\t</code>) und den Zeilenumbuch (<code>\n</code>).</p></div>
+<div class="paragraph"><p><code>awk</code> selbst merkt sich diese Trennzeichen in der internen Variable
+<code>$FS</code>. Beachten Sie, daß <code>$FS</code> lediglich das Leerzeichen und das
+Tabulatorzeichen beinhaltet. Nachfolgendes Beispiel zeigt den Zugriff
+auf die zweite Spalte, deren Inhalt sich <code>awk</code> in der internen Variable
+<code>$2</code> merkt.</p></div>
+<div class="listingblock">
+<div class="title">Ausgabe der zweiten Spalte mit Leerzeichen als Trennzeichen</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange" | awk '{ print $2 }'
+banana
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Möchten Sie in ihrem <code>awk</code>-Programm ein anderes Trennzeichen verwenden,
+haben Sie zwei Möglichkeiten. In <em>Variante 1</em> definieren Sie die
+Variable <code>$FS</code> im einführenden Block um. Nachfolgendes Beispiel setzt
+zunächst das Trennzeichen auf den Doppelpunkt und gibt anschließend die
+erste Spalte jeder Zeile der Datei <code>/etc/passwd</code> aus:</p></div>
+<div class="listingblock">
+<div class="title"><code>awk</code>-Programm mit Doppelpunkt als Trennzeichen (<code>print-first-column.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk 'BEGIN { FS=":" } { print $1 }' /etc/passwd
+root
+daemon
+bin
+sys
+...
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Möchten Sie bei jedem Aufruf ihres <code>awk</code>-Programms flexibler sein, geben
+Sie <code>awk</code> beim Aufruf das gewünschte Trennzeichen mit. <em>Variante 2</em>
+zeigt Ihnen das Vorgehen. Sie verwenden dazu den Schalter <code>-F</code> gefolgt
+vom Trennzeichen, hier wiederum beispielhaft der Doppelpunkt. <code>awk</code> ist
+hierbei so tolerant, daß es unerheblich ist, ob zwischen dem Schalter
+<code>-F</code> und dem Trennzeichen ein Leerzeichen folgt, oder nicht.</p></div>
+<div class="listingblock">
+<div class="title"><code>awk</code>-Programm mit variablem Trennzeichen pro Aufruf</div>
+<div class="content">
+<pre><code>$ awk -F : '{ print $1 }' /etc/passwd
+root
+daemon
+bin
+sys
+...
+$</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tipp</div>
+</td>
+<td class="content">Obiger Aufruf entspricht dem UNIX/Linux-Kommando <code>cut -d: -f1
+/etc/passwd</code>.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
+Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
+<code>awk</code> die Zeichenkette jedoch als Regulären Ausdruck, so daß auch
+komplexere Zeichenfolgen möglich sind.</p></div>
+<div class="paragraph"><p>Aus Gründen der Einfachheit und Schlichtheit befinden sich in ihrer
+Datendatei zwischen den Spalten eine wechselnde Menge an Tabulatoren.
+Als Spaltentrenner definieren Sie den Regulären Ausdruck <code>\t+</code>. Um
+sicherzugehen, daß die Shell, die das Kommando verarbeitet, ihren
+Regulären Ausdruck auch unverändert läßt, schließen Sie diesen
+zusätzlich in einfache Anführungszeichen ein. Das Auslesen der dritten
+Spalte erreichen Sie dann wie folgt:</p></div>
+<div class="listingblock">
+<div class="title">Trennzeichen als Regulärer Ausdruck</div>
+<div class="content">
+<pre><code>$ cat rechnung
+1       Floppy 3.5"                     3.00    3.00
+5       DVD                                     1.50    7.50
+2       SDHC memory card        8.00    16.00
+$
+$ awk -F '\t+' '{ print $3 }' rechnung
+3.00
+1.50
+8.00
+$</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_auf_spalten_und_felder_zugreifen">3.7.2. Auf Spalten und Felder zugreifen</h4>
+<div class="paragraph"><p><code>awk</code> liest jede Zeile vollständig, zerlegt die Zeile anhand des
+eingestellten Trennzeichens in einzelne Spalten oder Felder und ordnet
+die Spalten bestimmten Variablen zu. Die Variablen sind nach einem
+einheitlichen Schema benannt&#8201;&#8212;&#8201;der Nummer der jeweiligen Spalte. Den
+Inhalt der ersten Spalte finden Sie somit in Variable <code>$1</code>, die zweite
+Spalte in <code>$2</code> etc.</p></div>
+<div class="paragraph"><p>Das nachfolgende, einfache Beispiel gibt die drei Spalten der
+Eingabezeile in umgekehrter Reihenfolge wieder aus. Beachten Sie bitte,
+daß das Komma in der <code>print</code>-Anweisung in der Ausgabe ein Leerzeichen
+erzeugt.</p></div>
+<div class="listingblock">
+<div class="title">Spalten lesen und referenzieren</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange" | awk '{ print $3, $2, $1 }'
+orange banana apple
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>In der Variable <code>$NF</code> merkt sich <code>awk</code> die Anzahl der Spalten pro Zeile.</p></div>
+<div class="listingblock">
+<div class="title">Anzahl Spalten ermitteln</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange" | awk '{ print NF }'
+3
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Daß <code>awk</code> auch rechnen kann, demonstrieren wir anhand obiger
+Rechnungsdatei. Die Gesamtsumme aller Artikel berechnet sich aus der
+Addition aller Zwischensummen pro Zeile. Jede Zwischensumme ergibt sich
+aus dem Produkt der Spalten 1 und 3&#8201;&#8212;&#8201;Anzahl mal Einzelpreis. Um am
+Ende eine Ausgabe mit zwei Nachkommastellen zu erhalten, ergänzen Sie
+den Aufruf von <code>printf</code> um die Angabe <code>.2f</code>, was für "Fließkommazahl mit
+zwei Nachkommastellen" steht.</p></div>
+<div class="listingblock">
+<div class="title">Die Gesamtsumme berechnen (<code>sum.awk</code>)</div>
+<div class="content">
+<pre><code>BEGIN { FS="\t+" }
+{ total += $1 * $3 }
+END { printf "Gesamt: %.2f\n", total }</code></pre>
+</div></div>
+<div class="paragraph"><p>Rufen Sie obiges <code>awk</code>-Programm danach auf, erhalten Sie dieses
+Ergebnis:</p></div>
+<div class="listingblock">
+<div class="title">Ermittlung der Gesamtsumme</div>
+<div class="content">
+<pre><code>$ cat rechnung
+1       Floppy 3.5"                     3.00    3.00
+5       DVD                                     1.50    7.50
+2       SDHC memory card        8.00    16.00
+$
+$ awk -f sum.awk rechnung
+Gesamt: 26.50
+$</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_danksagung">4. Danksagung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
+und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_weiterführende_dokumente">5. Weiterführende Dokumente</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<a id="Barnett"></a>[Barnett] Bruce Barnett: <em>awk&#8201;&#8212;&#8201;A tutorial and introduction</em>, <a href="http://www.grymoire.com/Unix/Awk.html">http://www.grymoire.com/Unix/Awk.html</a>
+</p>
+</li>
+<li>
+<p>
+<a id="Dougherty"></a>[Dougherty] Dale Dougherty: <em>sed &amp; awk</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9781565922259.do">http://shop.oreilly.com/product/9781565922259.do</a>
+</p>
+</li>
+<li>
+<p>
+<a id="Friedl"></a>[Friedl] Jeffrey E. F. Friedl: <em>Reguläre Ausdrücke</em>, O&#8217;Reilly, <a href="http://shop.oreilly.com/product/9780596528126.do">http://shop.oreilly.com/product/9780596528126.do</a>
+</p>
+</li>
+<li>
+<p>
+<a id="gawk"></a>[gawk] <code>gawk</code> auf der Webseite des GNU-Projekts, <a href="https://www.gnu.org/software/gawk/">https://www.gnu.org/software/gawk/</a>
+</p>
+</li>
+<li>
+<p>
+<a id="gawk-Debianpaket"></a>[gawk-Debianpaket] Debianpaket zu <code>gawk</code>, <a href="https://packages.debian.org/jessie/gawk">https://packages.debian.org/jessie/gawk</a>
+</p>
+</li>
+<li>
+<p>
+<a id="Hofmann"></a>[Hofmann] Frank Hofmann: GitHub-Repo mit ausführlichen Beispielen, <a href="https://github.com/hofmannedv/training-shell">https://github.com/hofmannedv/training-shell</a>
+</p>
+</li>
+<li>
+<p>
+<a id="Wolf"></a>[Wolf] Jürgen Wolf: <em>Shell-Programmierung. Das umfassende Handbuch</em>, Galileo Computing/Rheinwerk Verlag, ISBN 3-89842-683-1
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 0.4<br />
+Letzte Änderung
+ 2016-05-02 18:07:46 CEST
+</div>
+</div>
+</body>
+</html>
