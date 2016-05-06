@@ -775,9 +775,9 @@ einen symbolischen Link gelöst:</p></div>
 <div class="content">
 <pre><code>$ which awk
 /usr/bin/awk
-$ ls -la $(which awk)
+$ ls -l $(which awk)
 lrwxrwxrwx 1 root root 21 Apr 10 01:03 /usr/bin/awk -&gt; /etc/alternatives/awk
-$ ls -la /etc/alternatives/awk
+$ ls -l /etc/alternatives/awk
 lrwxrwxrwx 1 root root 13 Apr 10 14:28 /etc/alternatives/awk -&gt; /usr/bin/gawk
 $</code></pre>
 </div></div>
@@ -893,9 +893,9 @@ bevor die Datendatei verarbeitet wird.</p></div>
 <div class="sect2">
 <h3 id="_anweisungsblock">2.2. Anweisungsblock</h3>
 <div class="paragraph"><p>Dieser Block ist essentiell und besteht aus minimal einer einzelnen
-Zeile. Jede Zeile besteht wiederum aus zwei Komponenten&#8201;&#8212;&#8201;einem Muster
-und einer Aktionsfolge. Sie geben in der Zeile entweder das Muster an,
-oder die Aktionsfolge, oder beides (siehe Beispiele 1 bis 3).</p></div>
+Zeile. Jede Zeile besteht wiederum aus bis zu zwei Komponenten&#8201;&#8212;&#8201;einem
+Muster und einer Aktionsfolge. Sie geben in der Zeile entweder das
+Muster an, oder die Aktionsfolge, oder beides (siehe Beispiele 1 bis 3).</p></div>
 <div class="paragraph"><p>Der <code>awk</code>-Interpreter verarbeitet die von Ihnen angegebene Datendatei
 zeilenweise und wendet auf jede gelesene Zeile der Datendatei alle
 Muster und Aktionsfolgen aus dem Anweisungsblock an. Maßgeblich ist
@@ -1082,8 +1082,8 @@ $ nl logfile | awk 'NR &gt; 3 { print }' | awk 'NR &lt; 4 { print }'
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Variante 2 verwendet eine UND-Verknüpfung beider Bedingungen mittels
-<code>&amp;&amp;</code>:</p></div>
+<div class="paragraph"><p>Variante 2 verwendet eine UND-Verknüpfung beider Bedingungen mit dem
+Operator <code>&amp;&amp;</code>:</p></div>
 <div class="listingblock">
 <div class="title">Nur die Zeilen vier bis sechs ausgeben (Variante 2) (<code>output-content-line4-6.awk</code>)</div>
 <div class="content">
@@ -1110,9 +1110,9 @@ $</code></pre>
 <h3 id="ausgabe_mit_zeilennummern">3.3. Ausgabe mit Zeilennummern</h3>
 <div class="paragraph"><p>Die meisten hier genutzten Beispiele nutzen das UNIX/Linux-Kommando <code>nl</code>
 zur Illustration für Zeilennummern. <code>awk</code> kann das über die beiden
-internen Variablen <code>$NR</code> und <code>$0</code> auch vollständig selbst. Während <code>$NR</code>
-den Index des Eintrags bezeichnet (<em>number of record</em>), steht <code>$0</code> für
-die gesamte Zeile der Datendatei.</p></div>
+internen Variablen <code>$NR</code> und <code>$0</code> auch vollständig selbst. Dabei
+bezeichnet <code>$NR</code> (<em>number of record</em>), den Index des Eintrags, und <code>$0</code>
+referenziert die gesamte Zeile.</p></div>
 <div class="listingblock">
 <div class="title">Dateiinhalt mit Zeilennummern ausgeben (<code>output-content-with-line-numbers-1.awk</code>)</div>
 <div class="content">
@@ -1133,9 +1133,9 @@ Zeilennummern, kommen Sie um die Formatierung der Ausgabe nicht herum.
 Dafür nutzen Sie das Kommando <code>printf</code> mit dem entsprechenden
 Formatstring. Im nachfolgenden Beispiel sorgt der Formatstring <code>%5s</code> für
 eine rechtsbündige Ausrichtung von bis zu fünf Ziffern. Die Ausgabe der
-Zeilennummer ist stets fünf Zeichen breit und wird&#8201;&#8212;&#8201;falls die Zahl
-weniger als fünf Stellen hat&#8201;&#8212;&#8201;mit der fehlenden Anzahl Leerzeichen von
-links aufgefüllt.</p></div>
+Zeilennummer wird, damit sie fünf Zeichen breit wird, mit der fehlenden
+Anzahl Leerzeichen von links aufgefüllt (ist die Zahl &gt; 9999, wird die
+Zahl ausgegeben wie sie ist).</p></div>
 <div class="listingblock">
 <div class="title">Dateiinhalt mit Zeilennummern ausgeben (<code>output-content-with-line-numbers-2.awk</code>)</div>
 <div class="content">
@@ -1161,13 +1161,13 @@ behelfen.</p></div>
 <div class="listingblock">
 <div class="title">Alle Zeilen löschen</div>
 <div class="content">
-<pre><code>$ nl logfile | awk 'NR &lt; 1' { print }
+<pre><code>$ nl logfile | awk 'NR &lt; 1 { print }'
 $</code></pre>
 </div></div>
 <div class="listingblock">
 <div class="title">Lediglich die dritte Zeile löschen (<code>delete-content-line3.awk</code>)</div>
 <div class="content">
-<pre><code>$ nl logfile | awk 'NR != 3' { print }
+<pre><code>$ nl logfile | awk 'NR != 3 { print }'
      1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
      2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
@@ -1179,7 +1179,7 @@ $</code></pre>
 $</code></pre>
 </div></div>
 <div class="paragraph"><p>Bei der nächsten Problemstellung kommt eine ODER-Verknüpfung beider
-Bedingungen mittels <code>||</code> ins Spiel. Es werden nur die Inhalte
+Bedingungen mit dem Operator <code>||</code> ins Spiel. Es werden nur die Inhalte
 ausgegeben, die sich in den Zeilen 1-2 bzw. größer als 5 befinden:</p></div>
 <div class="listingblock">
 <div class="title">Die Zeilen 3 bis 5 löschen (<code>delete-content-line3-5.awk</code>)</div>
@@ -1223,7 +1223,7 @@ Aufwand Sie das Problem lösen können.</p></div>
 <div class="listingblock">
 <div class="title">Alle Zeilen der Datei <code>logfile</code> ausgeben, die das Muster <code>fho</code> enthalten (<code>print-content.awk</code>)</div>
 <div class="content">
-<pre><code>$ nl logfile | awk '/fho/' { print }
+<pre><code>$ nl logfile | awk '/fho/ { print }'
      1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
      2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
@@ -1233,7 +1233,7 @@ $</code></pre>
 <div class="listingblock">
 <div class="title">Suche alle Zeilen, die entweder auf 44 oder 45 enden (<code>print-content-regex.awk</code>)</div>
 <div class="content">
-<pre><code>$ nl logfile | awk '/4[45]$/' { print }
+<pre><code>$ nl logfile | awk '/4[45]$/ { print }'
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
      7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
      9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
@@ -1255,6 +1255,18 @@ Ausdrücken respektieren diesen Schalter:</p></div>
 <div class="title">Aufruf des <code>awk</code>-Programms</div>
 <div class="content">
 <pre><code>$ (echo "apple"; echo "banana"; echo "Banana") | awk -f print-content-case-ins.awk
+banana
+Banana
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Kompatibilitäts-Hinweis: <code>BSD awk</code> kennt den oben benutzten Schalter
+<code>IGNORECASE</code> nicht. Etwas komplizierter läßt sich die Suche wie folgt
+umschreiben, wobei hier die interne <code>awk</code>-Funktion <code>tolower</code> genutzt
+wird. Diese wandelt alle Großbuchstaben in Kleinbuchstaben um.</p></div>
+<div class="listingblock">
+<div class="title">Suche unabhängig von Groß- und Kleinschreibung auf einem <code>BSD awk</code></div>
+<div class="content">
+<pre><code>$ (echo "apple"; echo "banana"; echo "Banana")  | awk '{if (match(tolower($0), "banana")) print}'
 banana
 Banana
 $</code></pre>
@@ -1285,7 +1297,17 @@ $</code></pre>
 <h3 id="_anzahl_zeilen_einer_datei">3.6. Anzahl Zeilen einer Datei</h3>
 <div class="paragraph"><p>Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
 kennen Sie dazu das Werkzeug <code>wc</code>, welches über den Schalter <code>-l</code> die
-Anzahl der Zeilen zählt.</p></div>
+Anzahl der Zeilen zählt. Als Beispiel kommt die Textdatei <code>rechnung</code> ins
+Spiel:</p></div>
+<div class="listingblock">
+<div class="title">Inhalt der Beispieldatei <code>rechnung</code></div>
+<div class="content">
+<pre><code>$ cat rechnung
+1       Floppy 3.5"                     3.00    3.00
+5       DVD                                     1.50    7.50
+2       SDHC memory card        8.00    16.00
+$</code></pre>
+</div></div>
 <div class="listingblock">
 <div class="title">Zeilen einer Datei zählen</div>
 <div class="content">
@@ -1331,8 +1353,8 @@ feldweise agieren und Daten aus einer Zeile extrahieren.</p></div>
 <div class="sect3">
 <h4 id="_trennzeichen_zwischen_spalten_und_feldern">3.7.1. Trennzeichen zwischen Spalten und Feldern</h4>
 <div class="paragraph"><p>Als Trennzeichen verwendet <code>awk</code> die Zeichen, die in der Shellvariable
-<code>IFS</code> definiert sind. <code>IFS</code> steht als Abkürzung für <em>internal field
-separator</em> und beinhaltet üblicherweise Leerzeichen (<code>\s</code>),
+<code>IFS</code> der bash definiert sind. <code>IFS</code> steht als Abkürzung für <em>internal
+field separator</em> und beinhaltet üblicherweise Leerzeichen (<code>\s</code>),
 Tabulatorzeichen (<code>\t</code>) und den Zeilenumbuch (<code>\n</code>).</p></div>
 <div class="paragraph"><p><code>awk</code> selbst merkt sich diese Trennzeichen in der internen Variable
 <code>$FS</code>. Beachten Sie, daß <code>$FS</code> lediglich das Leerzeichen und das
@@ -1469,6 +1491,31 @@ $ awk -f sum.awk rechnung
 Gesamt: 26.50
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Verwenden Sie nicht den <code>GNU awk</code> sondern bspw. den <code>BSD awk</code>, sieht ihr
+Ergebnis anders aus&#8201;&#8212;&#8201;Sie machen Verlust:</p></div>
+<div class="listingblock">
+<div class="title">Gegenüberstellung von <code>GNU awk</code> und <code>BSD awk</code></div>
+<div class="content">
+<pre><code>$ gawk -f sum.awk rechnung
+Gesamt: 26.50
+$ awk -f sum.awk rechnung
+Gesamt: 24,00
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Die Ausgabe auf einem <code>BSD awk</code> ergibt folgendes:</p></div>
+<div class="listingblock">
+<div class="title">Rechnen mit gebrochenen Zahlen bei <code>BSD awk</code></div>
+<div class="content">
+<pre><code>$ cat rechnung|awk 'BEGIN { FS="\t+" ; } { total += ( $1 * $3 ) ; print $1, $3, $1*$3 } END { printf "Gesamt: %.2f\n", total }'
+1 3.00 3
+5 1.50 5
+2 8.00 16
+Gesamt: 24,00
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Nach aktuellem Erkenntnisstand rechnet <code>BSD awk</code> intern mit Integer
+anstatt von Floats und einen entsprechenden Schalter für gebrochene
+Zahlen kennt es nicht.</p></div>
 </div>
 </div>
 </div>
@@ -1528,7 +1575,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.4<br />
 Letzte Änderung
- 2016-05-02 18:07:46 CEST
+ 2016-05-06 19:12:15 CEST
 </div>
 </div>
 </body>
