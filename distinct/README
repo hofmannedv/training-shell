@@ -1,5 +1,7 @@
 README
 ------
 
-distinct.sh reads two files as text-based lists, and compares these
-lists to see which lines exist in list1, but not in list2.
+* distinct.sh: reads two files as text-based lists, and compares these
+  lists to see which lines exist in list1, but not in list2.
+
+* compare.sh:  compares two files, and returns if they are identical
