@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.3.1
+:revnumber: 1.3.2
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 1. Mai 2016
+:date: 26. Juni 2016
 :numbered:
 
 = Vorwort =
@@ -488,7 +488,7 @@ $
 
 === Suchen und Ersetzen nach einem Muster in ausgewählten Zeilen und Unterdrücken der Zeilen, die dem Muster nicht entsprechen ===
 
-.Ersetze alle Vorkommen von `root` durch `alex` in Zeile 9 (`replace-in-line.sed`)
+.Ersetze nur in Zeile 9 alle Vorkommen von `root` durch `alex` (`replace-in-line.sed`)
 ----
 $ sed -n '9s/root/alex/p' logfile
 2016-01-12 14:57:10 login failed for user alex from 10.10.17.45

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# replace all occurences of a pattern in a single line
+# replace in line 9all occurences of a pattern
 #o
 # (C) 2016 Frank Hofmann, Berlin, Germany
 # Released under GNU Public License (GPL)
