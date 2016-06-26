@@ -829,6 +829,24 @@ TIP: Zum Grübeln: was erwarten Sie für eine Ausgabe bei dem folgenden
 $ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'
 ----
 
+=== Klammern ersetzen ===
+
+Klammern haben in regulären Ausdrücken eine besondere Bedeutung, bspw.
+`[abc]` steht für die Auswahl einer der Buchstaben `a`, `b` oder `c`. Um
+Klammern zu ersetzen, greifen Sie auf erweiterte Reguläre Ausdrücke
+('extended regular expressions') zurück. Dafür geben Sie den
+zusätzlichen Schalter `-E` oder `-r` im `sed`-Aufruf an.
+
+Das nachfolgende Beispiel ersetzt eine Buchreferenz in eckigen Klammern
+durch einen Stern und einen Doppelpunkt.
+
+.Eckige Klammern referenzieren und ersetzen
+----
+$ echo "[12] Buchreferenz" | sed -rn 's/(\[)(.+)(\])/* \2\)/p'
+* 12) Buchreferenz
+$
+----
+
 === Alle leeren Zeilen aus der Eingabe herausfiltern ===
 
 Hier werden zwei Dinge miteinander kombiniert -- ein Muster, und eine

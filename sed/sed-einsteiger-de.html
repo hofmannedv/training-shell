@@ -1622,7 +1622,24 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.11. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
+<h3 id="_klammern_ersetzen">5.11. Klammern ersetzen</h3>
+<div class="paragraph"><p>Klammern haben in regulären Ausdrücken eine besondere Bedeutung, bspw.
+<code>[abc]</code> steht für die Auswahl einer der Buchstaben <code>a</code>, <code>b</code> oder <code>c</code>. Um
+Klammern zu ersetzen, greifen Sie auf erweiterte Reguläre Ausdrücke
+(<em>extended regular expressions</em>) zurück. Dafür geben Sie den
+zusätzlichen Schalter <code>-E</code> oder <code>-r</code> im <code>sed</code>-Aufruf an.</p></div>
+<div class="paragraph"><p>Das nachfolgende Beispiel ersetzt eine Buchreferenz in eckigen Klammern
+durch einen Stern und einen Doppelpunkt.</p></div>
+<div class="listingblock">
+<div class="title">Eckige Klammern referenzieren und ersetzen</div>
+<div class="content">
+<pre><code>$ echo "[12] Buchreferenz" | sed -rn 's/(\[)(.+)(\])/* \2\)/p'
+* 12) Buchreferenz
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_alle_leeren_zeilen_aus_der_eingabe_herausfiltern">5.12. Alle leeren Zeilen aus der Eingabe herausfiltern</h3>
 <div class="paragraph"><p>Hier werden zwei Dinge miteinander kombiniert&#8201;&#8212;&#8201;ein Muster, und eine
 Aktion. Das Muster für eine leere Zeile ist <code>^$</code>, und das Löschen einer
 Zeile erfolgt über das Aktionsflag <code>d</code>.</p></div>
@@ -1648,7 +1665,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_den_ersten_absatz_ausgeben">5.12. Den ersten Absatz ausgeben</h3>
+<h3 id="_den_ersten_absatz_ausgeben">5.13. Den ersten Absatz ausgeben</h3>
 <div class="listingblock">
 <div class="title">Alle Zeilen inklusive der ersten Leerzeile ausgeben (<code>print-first-paragraph.sed</code>)</div>
 <div class="content">
@@ -1783,7 +1800,7 @@ Tutorial.</p></div>
 <div id="footer-text">
 Version 1.3.2<br />
 Letzte Änderung
- 2016-06-26 17:16:34 CEST
+ 2016-06-26 18:03:37 CEST
 </div>
 </div>
 </body>
