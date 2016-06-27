@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.3.2
+:revnumber: 1.3.3
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 26. Juni 2016
+:date: 27. Juni 2016
 :numbered:
 
 = Vorwort =
@@ -829,20 +829,70 @@ TIP: Zum Grübeln: was erwarten Sie für eine Ausgabe bei dem folgenden
 $ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'
 ----
 
-=== Klammern ersetzen ===
+=== Klammern entfernen oder ersetzen ===
 
 Klammern haben in regulären Ausdrücken eine besondere Bedeutung, bspw.
-`[abc]` steht für die Auswahl einer der Buchstaben `a`, `b` oder `c`. Um
-Klammern zu ersetzen, greifen Sie auf erweiterte Reguläre Ausdrücke
-('extended regular expressions') zurück. Dafür geben Sie den
-zusätzlichen Schalter `-E` oder `-r` im `sed`-Aufruf an.
+`[abc]` steht für die Auswahl einer der Buchstaben `a`, `b` oder `c`.
+Diese speziellen Zeichen zu entfernen oder zu ersetzen, kann mitunter
+etwas umständlich zu formulieren sein und ist nicht unbedingt immer
+sofort lesbar.
+
+Alle schließenden Klammern (`]`) entfernen Sie wie im folgenden
+Beispiel. Der Aktionsparameter `g` sorgt dafür, daß alle Vorkommen
+berücksichtigt werden.
+
+.Alle schließenden, eckigen Klammern entfernen
+----
+$ echo "[Haus] [Boot]" | sed -e 's/\]//g'
+[Haus [Boot
+$
+----
+
+Mit einem analogen `sed`-Aufruf ersetzen Sie auch die öffnende Klammer
+(`[`). Eleganter wäre es, beide Klammern in einem einzigen Aufruf zu
+ersetzen. Nachfolgender Ausdruck ermöglicht das:
+
+.Alle öffnenden und schließenden, eckigen Klammern entfernen
+----
+$ echo "[Haus] [Boot]" | sed -e 's/[][]//g'
+Haus Boot
+$
+----
+
+Der RegEx-Interpreter ist recht 'gierig' und interpretiert alle Zeichen
+zwischen den äußeren beiden Klammern als mögliche Zeichen. Wem das zu
+unverständlich ist, kann auch zwei einfachere Ausdrücke "in Reihe
+schalten". Zunächst werden im ersten Ausdruck alle öffnenden Klammern
+entfernt, im zweiten Ausdruck alle schließenden Pendants:
+
+.Alle öffnenden und schließenden, eckigen Klammern entfernen (Version 2)
+----
+$ echo "[Haus] [Boot]" | sed -e 's/\[//g' -e 's/\]//g'
+Haus Boot
+$
+----
+
+Eine Alternative stellen erweiterte Reguläre Ausdrücke ('extended
+regular expressions') dar. Dafür geben Sie den zusätzlichen Schalter
+`-E` oder `-r` im `sed`-Aufruf an.
 
 Das nachfolgende Beispiel ersetzt eine Buchreferenz in eckigen Klammern
-durch einen Stern und einen Doppelpunkt.
+durch einen Stern mit Leerzeichen (öffnende Klammer) und einen
+Doppelpunkt (schließende Klammer).
 
 .Eckige Klammern referenzieren und ersetzen
 ----
 $ echo "[12] Buchreferenz" | sed -rn 's/(\[)(.+)(\])/* \2\)/p'
+* 12) Buchreferenz
+$
+----
+
+Sind die Referenzen auf die Klammern nicht erforderlich, vereinfacht
+sich das ganze zu folgendem:
+
+.Eckige Klammern referenzieren und ersetzen (vereinfacht)
+----
+$ echo "[12] Buchreferenz" | sed -rn 's/\[(.+)\]/* \1\)/p'
 * 12) Buchreferenz
 $
 ----
@@ -954,9 +1004,9 @@ $
 
 == Danksagung ==
 
-Vielen Dank an Thomas Osterried, Axel Beckert, Elmar Heeb und Wolfram
-Schneider für Kritik und Verbesserungsvorschläge zum vorliegenden
-Tutorial.
+Vielen Dank an Thomas Osterried, Axel Beckert, Elmar Heeb, Wolfram
+Schneider und Rebeka Catalina Trulsen für Kritik und
+Verbesserungsvorschläge zum vorliegenden Tutorial.
 
 == Weiterführende Dokumente ==
 

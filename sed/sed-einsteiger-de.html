@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.3.2,</span>
-<span id="revdate">26. Juni 2016</span>
+<span id="revnumber">version 1.3.3,</span>
+<span id="revdate">27. Juni 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1622,18 +1622,63 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_klammern_ersetzen">5.11. Klammern ersetzen</h3>
+<h3 id="_klammern_entfernen_oder_ersetzen">5.11. Klammern entfernen oder ersetzen</h3>
 <div class="paragraph"><p>Klammern haben in regulären Ausdrücken eine besondere Bedeutung, bspw.
-<code>[abc]</code> steht für die Auswahl einer der Buchstaben <code>a</code>, <code>b</code> oder <code>c</code>. Um
-Klammern zu ersetzen, greifen Sie auf erweiterte Reguläre Ausdrücke
-(<em>extended regular expressions</em>) zurück. Dafür geben Sie den
-zusätzlichen Schalter <code>-E</code> oder <code>-r</code> im <code>sed</code>-Aufruf an.</p></div>
+<code>[abc]</code> steht für die Auswahl einer der Buchstaben <code>a</code>, <code>b</code> oder <code>c</code>.
+Diese speziellen Zeichen zu entfernen oder zu ersetzen, kann mitunter
+etwas umständlich zu formulieren sein und ist nicht unbedingt immer
+sofort lesbar.</p></div>
+<div class="paragraph"><p>Alle schließenden Klammern (<code>]</code>) entfernen Sie wie im folgenden
+Beispiel. Der Aktionsparameter <code>g</code> sorgt dafür, daß alle Vorkommen
+berücksichtigt werden.</p></div>
+<div class="listingblock">
+<div class="title">Alle schließenden, eckigen Klammern entfernen</div>
+<div class="content">
+<pre><code>$ echo "[Haus] [Boot]" | sed -e 's/\]//g'
+[Haus [Boot
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Mit einem analogen <code>sed</code>-Aufruf ersetzen Sie auch die öffnende Klammer
+(<code>[</code>). Eleganter wäre es, beide Klammern in einem einzigen Aufruf zu
+ersetzen. Nachfolgender Ausdruck ermöglicht das:</p></div>
+<div class="listingblock">
+<div class="title">Alle öffnenden und schließenden, eckigen Klammern entfernen</div>
+<div class="content">
+<pre><code>$ echo "[Haus] [Boot]" | sed -e 's/[][]//g'
+Haus Boot
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Der RegEx-Interpreter ist recht <em>gierig</em> und interpretiert alle Zeichen
+zwischen den äußeren beiden Klammern als mögliche Zeichen. Wem das zu
+unverständlich ist, kann auch zwei einfachere Ausdrücke "in Reihe
+schalten". Zunächst werden im ersten Ausdruck alle öffnenden Klammern
+entfernt, im zweiten Ausdruck alle schließenden Pendants:</p></div>
+<div class="listingblock">
+<div class="title">Alle öffnenden und schließenden, eckigen Klammern entfernen (Version 2)</div>
+<div class="content">
+<pre><code>$ echo "[Haus] [Boot]" | sed -e 's/\[//g' -e 's/\]//g'
+Haus Boot
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Eine Alternative stellen erweiterte Reguläre Ausdrücke (<em>extended
+regular expressions</em>) dar. Dafür geben Sie den zusätzlichen Schalter
+<code>-E</code> oder <code>-r</code> im <code>sed</code>-Aufruf an.</p></div>
 <div class="paragraph"><p>Das nachfolgende Beispiel ersetzt eine Buchreferenz in eckigen Klammern
-durch einen Stern und einen Doppelpunkt.</p></div>
+durch einen Stern mit Leerzeichen (öffnende Klammer) und einen
+Doppelpunkt (schließende Klammer).</p></div>
 <div class="listingblock">
 <div class="title">Eckige Klammern referenzieren und ersetzen</div>
 <div class="content">
 <pre><code>$ echo "[12] Buchreferenz" | sed -rn 's/(\[)(.+)(\])/* \2\)/p'
+* 12) Buchreferenz
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Sind die Referenzen auf die Klammern nicht erforderlich, vereinfacht
+sich das ganze zu folgendem:</p></div>
+<div class="listingblock">
+<div class="title">Eckige Klammern referenzieren und ersetzen (vereinfacht)</div>
+<div class="content">
+<pre><code>$ echo "[12] Buchreferenz" | sed -rn 's/\[(.+)\]/* \1\)/p'
 * 12) Buchreferenz
 $</code></pre>
 </div></div>
@@ -1752,9 +1797,9 @@ $</code></pre>
 <div class="sect1">
 <h2 id="_danksagung">8. Danksagung</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert, Elmar Heeb und Wolfram
-Schneider für Kritik und Verbesserungsvorschläge zum vorliegenden
-Tutorial.</p></div>
+<div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert, Elmar Heeb, Wolfram
+Schneider und Rebeka Catalina Trulsen für Kritik und
+Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 </div>
 </div>
 <div class="sect1">
@@ -1798,9 +1843,9 @@ Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.2<br />
+Version 1.3.3<br />
 Letzte Änderung
- 2016-06-26 18:03:37 CEST
+ 2016-06-27 12:25:06 CEST
 </div>
 </div>
 </body>
