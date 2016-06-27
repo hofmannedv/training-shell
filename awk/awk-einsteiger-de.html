@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Die Programmiersprache <code>awk</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 0.4,</span>
-<span id="revdate">2. Mai 2016</span>
+<span id="revnumber">version 0.5,</span>
+<span id="revdate">27. Juni 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1294,7 +1294,29 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_anzahl_zeilen_einer_datei">3.6. Anzahl Zeilen einer Datei</h3>
+<h3 id="_leere_zeilen_aus_der_ausgabe_herausfiltern">3.6. Leere Zeilen aus der Ausgabe herausfiltern</h3>
+<div class="paragraph"><p>Mit Hilfe des Regulären Ausdrucks <code>.</code> beschreiben Sie ein Muster,
+welches auf alle Zeilen zutrifft, in denen mindestens ein einzelnes
+Zeichen enthalten ist. Alle anderen Zeilen werden in der Ausgabe
+ignoriert.</p></div>
+<div class="listingblock">
+<div class="title">Nur die Zeilen ausgeben, die mindestens ein Zeichen beinhalten (<code>delete-empty-lines.awk</code>)</div>
+<div class="content">
+<pre><code>$ awk '/./ { print }' logfile-with-empty-lines
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+2016-01-12 08:45:12 user james logged in on /dev/tty1
+2016-01-12 08:46:45 user fho logged in on /dev/pty1
+2016-01-12 12:13:10 user fho logged out from /dev/pty1
+2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+2016-01-12 14:55:05 user james logged out from /dev/tty1
+2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_anzahl_zeilen_einer_datei">3.7. Anzahl Zeilen einer Datei</h3>
 <div class="paragraph"><p>Mitunter ist die Anzahl der Zeilen einer Datei wichtig. Unter UNIX/Linux
 kennen Sie dazu das Werkzeug <code>wc</code>, welches über den Schalter <code>-l</code> die
 Anzahl der Zeilen zählt. Als Beispiel kommt die Textdatei <code>rechnung</code> ins
@@ -1346,12 +1368,12 @@ Block mit einer einzigen Anweisung. Die Ausgabe ist identisch zu
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="spalten-und-felder">3.7. Spalten und Felder</h3>
+<h3 id="spalten-und-felder">3.8. Spalten und Felder</h3>
 <div class="paragraph"><p>Wie eingangs genannt, liegt die Stärke von <code>awk</code> in der Verarbeitung von
 strukturierten Daten. <code>awk</code> kann mit Leichtigkeit spalten- bzw.
 feldweise agieren und Daten aus einer Zeile extrahieren.</p></div>
 <div class="sect3">
-<h4 id="_trennzeichen_zwischen_spalten_und_feldern">3.7.1. Trennzeichen zwischen Spalten und Feldern</h4>
+<h4 id="_trennzeichen_zwischen_spalten_und_feldern">3.8.1. Trennzeichen zwischen Spalten und Feldern</h4>
 <div class="paragraph"><p>Als Trennzeichen verwendet <code>awk</code> die Zeichen, die in der Shellvariable
 <code>IFS</code> der bash definiert sind. <code>IFS</code> steht als Abkürzung für <em>internal
 field separator</em> und beinhaltet üblicherweise Leerzeichen (<code>\s</code>),
@@ -1437,7 +1459,7 @@ $</code></pre>
 </div></div>
 </div>
 <div class="sect3">
-<h4 id="_auf_spalten_und_felder_zugreifen">3.7.2. Auf Spalten und Felder zugreifen</h4>
+<h4 id="_auf_spalten_und_felder_zugreifen">3.8.2. Auf Spalten und Felder zugreifen</h4>
 <div class="paragraph"><p><code>awk</code> liest jede Zeile vollständig, zerlegt die Zeile anhand des
 eingestellten Trennzeichens in einzelne Spalten oder Felder und ordnet
 die Spalten bestimmten Variablen zu. Die Variablen sind nach einem
@@ -1573,9 +1595,9 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 0.4<br />
+Version 0.5<br />
 Letzte Änderung
- 2016-05-06 19:12:15 CEST
+ 2016-06-27 14:57:51 CEST
 </div>
 </div>
 </body>

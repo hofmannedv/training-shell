@@ -22,6 +22,7 @@ Examples for awk
 * delete-content-line3.awk:               delete the 3rd line from the file content
 * delete-content-line3-5.awk:             delete line 3 to 5 from the file content
 * delete-content-first-and-last-line.awk: delete first and last line from the file content
+* delete-empty-lines.awk:                 delete (ignore) the empty lines, only
 
 * print-content.awk:                      print the lines that contain a given pattern
 * print-content-regex.awk:                print the lines that end on 44, or 45
@@ -36,4 +37,5 @@ Examples for awk
 Further files for demonstration purposes
 
 * logfile                                 a simple logfile as text file
+* logfile-with-empty-lines                a simple logfile with empty lines as text file
 * rechnung                                a simple invoice as text file
