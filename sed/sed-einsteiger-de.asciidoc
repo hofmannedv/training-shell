@@ -4,7 +4,7 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.3.3
+:revnumber: 1.3.4
 :Author Initials: FH
 :edition: 1
 :lang: de
@@ -903,7 +903,7 @@ Hier werden zwei Dinge miteinander kombiniert -- ein Muster, und eine
 Aktion. Das Muster für eine leere Zeile ist `^$`, und das Löschen einer
 Zeile erfolgt über das Aktionsflag `d`.
 
-.Muster `^$` für leere Zeilen, `d` zum Löschen
+.Muster `^$` für leere Zeilen, `d` zum Löschen (`delete-empty-lines-1.sed`)
 ----
 $ sed '/^$/d' logfile-with-empty-lines
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -918,10 +918,34 @@ $ sed '/^$/d' logfile-with-empty-lines
 $
 ----
 
-Der entsprechende Aufruf des UNIX-Kommandos `grep` ist:
+Alternativ löschen Sie mit dem folgenden Aufruf alle Zeilen, die nicht
+leer sind (doppelte Verneinung). Der Punkt im Suchmuster trifft auf alle
+Zeilen zu, die mindestens ein Zeichen beinhalten. Der Aktionsparameter
+`!d` löscht die Zeilen nicht, auf die das Suchmuster zutrifft.
 
+.Muster `.` für nicht-leere Zeilen, `!d` um diese nicht zu entfernen (`delete-empty-lines-2.sed`)
 ----
-$ grep -v ^$  logfile-with-empty-lines
+$ sed '/./!d' logfile-with-empty-lines
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+2016-01-12 08:45:12 user james logged in on /dev/tty1
+2016-01-12 08:46:45 user fho logged in on /dev/pty1
+2016-01-12 12:13:10 user fho logged out from /dev/pty1
+2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+2016-01-12 14:55:05 user james logged out from /dev/tty1
+2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+Zu diesen `sed`-Aufrufen besteht ein passendes Pendant bei dem
+UNIX-Kommando `grep`. Es wird erreicht über den Schalter `-v`, der die
+Suche invertiert. Der entsprechende Aufruf des UNIX-Kommandos `grep` ist
+wie folgt:
+
+.Invertierte Suche mittels `grep`:
+----
+$ grep -v '^$'  logfile-with-empty-lines
 ----
 
 === Den ersten Absatz ausgeben ===

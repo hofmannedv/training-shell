@@ -735,7 +735,7 @@ asciidoc.install(4);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.3.3,</span>
+<span id="revnumber">version 1.3.4,</span>
 <span id="revdate">27. Juni 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
@@ -1689,7 +1689,7 @@ $</code></pre>
 Aktion. Das Muster für eine leere Zeile ist <code>^$</code>, und das Löschen einer
 Zeile erfolgt über das Aktionsflag <code>d</code>.</p></div>
 <div class="listingblock">
-<div class="title">Muster <code>^$</code> für leere Zeilen, <code>d</code> zum Löschen</div>
+<div class="title">Muster <code>^$</code> für leere Zeilen, <code>d</code> zum Löschen (<code>delete-empty-lines-1.sed</code>)</div>
 <div class="content">
 <pre><code>$ sed '/^$/d' logfile-with-empty-lines
 2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -1703,10 +1703,33 @@ Zeile erfolgt über das Aktionsflag <code>d</code>.</p></div>
 2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
-<div class="paragraph"><p>Der entsprechende Aufruf des UNIX-Kommandos <code>grep</code> ist:</p></div>
+<div class="paragraph"><p>Alternativ löschen Sie mit dem folgenden Aufruf alle Zeilen, die nicht
+leer sind (doppelte Verneinung). Der Punkt im Suchmuster trifft auf alle
+Zeilen zu, die mindestens ein Zeichen beinhalten. Der Aktionsparameter
+<code>!d</code> löscht die Zeilen nicht, auf die das Suchmuster zutrifft.</p></div>
 <div class="listingblock">
+<div class="title">Muster <code>.</code> für nicht-leere Zeilen, <code>!d</code> um diese nicht zu entfernen (<code>delete-empty-lines-2.sed</code>)</div>
 <div class="content">
-<pre><code>$ grep -v ^$  logfile-with-empty-lines</code></pre>
+<pre><code>$ sed '/./!d' logfile-with-empty-lines
+2016-01-10 10:45:15 user fho logged in on /dev/tty1
+2016-01-11 08:30:10 user fho logged in on /dev/tty2
+2016-01-12 08:45:12 user james logged in on /dev/tty1
+2016-01-12 08:46:45 user fho logged in on /dev/pty1
+2016-01-12 12:13:10 user fho logged out from /dev/pty1
+2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+2016-01-12 14:55:05 user james logged out from /dev/tty1
+2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Zu diesen <code>sed</code>-Aufrufen besteht ein passendes Pendant bei dem
+UNIX-Kommando <code>grep</code>. Es wird erreicht über den Schalter <code>-v</code>, der die
+Suche invertiert. Der entsprechende Aufruf des UNIX-Kommandos <code>grep</code> ist
+wie folgt:</p></div>
+<div class="listingblock">
+<div class="title">Invertierte Suche mittels <code>grep</code>:</div>
+<div class="content">
+<pre><code>$ grep -v '^$'  logfile-with-empty-lines</code></pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -1843,9 +1866,9 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.3<br />
+Version 1.3.4<br />
 Letzte Änderung
- 2016-06-27 12:25:06 CEST
+ 2016-06-27 14:21:59 CEST
 </div>
 </div>
 </body>
