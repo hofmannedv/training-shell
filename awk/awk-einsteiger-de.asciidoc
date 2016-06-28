@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.5
+:revnumber: 0.6
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 27. Juni 2016
+:date: 28. Juni 2016
 :numbered:
 
 = Vorwort =
@@ -290,6 +290,8 @@ Zeilennummern' <<ausgabe_mit_zeilennummern>> zusammengefaßt.
 
 === Ausgeben bestimmter Zeilen einer Datei ===
 
+==== Mit Benennung der Zeilennummern ====
+
 Über die vordefinierte Variable `$NR` und eine Bedingung geben Sie
 lediglich die vierte Zeile der Datei `logfile` aus:
 
@@ -362,6 +364,24 @@ $ nl logfile | awk 'NR > 6 { print }'
      7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
      8  2016-01-12 14:55:05 user james logged out from /dev/tty1
      9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+==== Ohne Benennung der Zeilennummern ====
+
+Geben Sie keine Zeilennummern im `awk`-Ausdruck an, erhalten Sie alle
+Zeilen. Benötigen Sie nur jede zweite Zeile -- sprich lediglich alle
+Zeilen mit der geraden Zeilennummer -- kommen der Modulo-Operator (`%`)
+und die Negation des gesamten Ausdrucks über den Operator `!` ins Spiel.
+Nachfolgendes Beispiel nutzt diese Möglichkeiten aus.
+
+.Nur jede zweite Zeile ausgeben (gerade Zeilennummern) (`output-content-even.awk`)
+----
+$ nl logfile | awk '!(NR%2) { print }'
+     2	2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4	2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6	2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8	2016-01-12 14:55:05 user james logged out from /dev/tty1
 $
 ----
 
