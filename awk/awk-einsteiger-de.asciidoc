@@ -290,7 +290,7 @@ Zeilennummern' <<ausgabe_mit_zeilennummern>> zusammengefaßt.
 
 === Ausgeben bestimmter Zeilen einer Datei ===
 
-==== Mit Benennung der Zeilennummern ====
+==== Mit Angabe der Zeilennummern ====
 
 Über die vordefinierte Variable `$NR` und eine Bedingung geben Sie
 lediglich die vierte Zeile der Datei `logfile` aus:
@@ -367,7 +367,7 @@ $ nl logfile | awk 'NR > 6 { print }'
 $
 ----
 
-==== Ohne Benennung der Zeilennummern ====
+==== Ohne Angabe der Zeilennummern ====
 
 Geben Sie keine Zeilennummern im `awk`-Ausdruck an, erhalten Sie alle
 Zeilen. Benötigen Sie nur jede zweite Zeile -- sprich lediglich alle
@@ -395,6 +395,28 @@ $ nl logfile | awk '(NR+1)%2 { print }'
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
      8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$
+----
+
+=== Ausgabe in alternierender Reihenfolge ===
+
+Das nachfolgende Listing illustriert, wie Sie die Zeilen alternierend
+ausgeben. Jeweils zwei aufeinanderfolgende Zeilen werden in der Ausgabe
+vertauscht -- erst erscheint die gerade, darunter die ungerade Zeile. Zu
+Hilfe nehmen wir uns die `awk`-Funktion `getline`, welches die nächste
+gelesene Zeile in eine interne Variable -- hier schlicht genannt `i` --
+speichert. Die nachfolgende `print`-Anweisung gibt den Variableninhalt
+wieder aus, gefolgt von der aktuellen Zeile. Letztere wird repräsentiert
+durch die Variable `$0`.
+
+.Ausgabe der Zeilen in alternierender Reihenfolge (`output-content-alternate.awk`)
+----
+$ nl logfile | awk '{getline i; print i} $0 { print }'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     ...
 $
 ----
 

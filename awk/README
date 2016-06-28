@@ -8,6 +8,7 @@ Getting Started
 
 Examples for awk
 
+* output-content-alternate.awk:           output the lines in alternate order
 * output-content.awk:                     output the whole content of the file line by line
 * output-content-even.awk:                output the even-numbered lines, only
 * output-content-line4.awk:               output the 4th line, only
