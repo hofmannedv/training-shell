@@ -375,13 +375,26 @@ Zeilen mit der geraden Zeilennummer -- kommen der Modulo-Operator (`%`)
 und die Negation des gesamten Ausdrucks über den Operator `!` ins Spiel.
 Nachfolgendes Beispiel nutzt diese Möglichkeiten aus.
 
-.Nur jede zweite Zeile ausgeben (gerade Zeilennummern) (`output-content-even.awk`)
+.Nur jede zweite Zeile ausgeben (gerade Zeilennummern -- Version 1) (`output-content-even.awk`)
 ----
 $ nl logfile | awk '!(NR%2) { print }'
-     2	2016-01-11 08:30:10 user fho logged in on /dev/tty2
-     4	2016-01-12 08:46:45 user fho logged in on /dev/pty1
-     6	2016-01-12 14:45:12 login failed for user root from 10.10.17.44
-     8	2016-01-12 14:55:05 user james logged out from /dev/tty1
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$
+----
+
+Alternativ erlaubt `awk` die Addition um den Wert 1 im Ausdruck. In
+diesem Fall entfällt die Negation.
+
+.Nur jede zweite Zeile ausgeben (gerade Zeilennummern -- Version 2)
+----
+$ nl logfile | awk '(NR+1)%2 { print }'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
 $
 ----
 

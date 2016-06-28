@@ -1116,9 +1116,21 @@ Zeilen mit der geraden Zeilennummer&#8201;&#8212;&#8201;kommen der Modulo-Operat
 und die Negation des gesamten Ausdrucks über den Operator <code>!</code> ins Spiel.
 Nachfolgendes Beispiel nutzt diese Möglichkeiten aus.</p></div>
 <div class="listingblock">
-<div class="title">Nur jede zweite Zeile ausgeben (gerade Zeilennummern) (<code>output-content-even.awk</code>)</div>
+<div class="title">Nur jede zweite Zeile ausgeben (gerade Zeilennummern&#8201;&#8212;&#8201;Version 1) (<code>output-content-even.awk</code>)</div>
 <div class="content">
 <pre><code>$ nl logfile | awk '!(NR%2) { print }'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Alternativ erlaubt <code>awk</code> die Addition um den Wert 1 im Ausdruck. In
+diesem Fall entfällt die Negation.</p></div>
+<div class="listingblock">
+<div class="title">Nur jede zweite Zeile ausgeben (gerade Zeilennummern&#8201;&#8212;&#8201;Version 2)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk '(NR+1)%2 { print }'
      2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
@@ -1618,7 +1630,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.6<br />
 Letzte Änderung
- 2016-06-28 17:10:50 CEST
+ 2016-06-28 17:17:51 CEST
 </div>
 </div>
 </body>
