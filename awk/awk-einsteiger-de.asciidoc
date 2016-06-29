@@ -873,9 +873,9 @@ Nach aktuellem Erkenntnisstand rechnet `BSD awk` intern mit Integer
 anstatt von Floats und einen entsprechenden Schalter für gebrochene
 Zahlen kennt es nicht.
 
-== Zeilenweises Suchen und Ersetzen ==
+=== Zeilenweises Suchen und Ersetzen ===
 
-=== Suchen und Ersetzen ===
+==== Suchen und Ersetzen von Worten ====
 
 Für diesen Zweck kennt `awk` die beiden Funktionen `sub` und `gsub`.
 Während `sub` nur das erste Vorkommen des Musters ersetzt, agiert `gsub`
@@ -888,6 +888,19 @@ $ echo "apple banana orange apple" | awk '{sub("apple","melon");print}'
 melon banana orange apple
 $ echo "apple banana orange apple" | awk '{gsub("apple","melon");print}'
 melon banana orange melon
+----
+
+Beide Funktionen unterstützen als Suchmuster auch Reguläre Ausdrücke. Im
+nachfolgenden Beispiel werden alle Wörter durch `fruit ` ersetzt, die
+mit `e` enden und auf die entweder ein Leerzeichen oder das Zeilende
+folgt. Die beiden Worte `banana` und `peach` bleiben in der Ausgabe
+unverändert erhalten, da sie die Bedingungen nicht erfüllen.
+
+.Suchen und Ersetzen in einer Zeile mit Regulären Ausdrücken
+----
+$ echo "apple banana orange apple peach" | awk '{gsub("[a-z]+e[$ ]","fruit ");print}'
+fruit banana fruit fruit peach
+$
 ----
 
 == Danksagung ==

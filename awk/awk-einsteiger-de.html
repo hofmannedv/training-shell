@@ -1594,13 +1594,10 @@ anstatt von Floats und einen entsprechenden Schalter für gebrochene
 Zahlen kennt es nicht.</p></div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_zeilenweises_suchen_und_ersetzen">4. Zeilenweises Suchen und Ersetzen</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_suchen_und_ersetzen">4.1. Suchen und Ersetzen</h3>
+<h3 id="_zeilenweises_suchen_und_ersetzen">3.10. Zeilenweises Suchen und Ersetzen</h3>
+<div class="sect3">
+<h4 id="_suchen_und_ersetzen_von_worten">3.10.1. Suchen und Ersetzen von Worten</h4>
 <div class="paragraph"><p>Für diesen Zweck kennt <code>awk</code> die beiden Funktionen <code>sub</code> und <code>gsub</code>.
 Während <code>sub</code> nur das erste Vorkommen des Musters ersetzt, agiert <code>gsub</code>
 global, d.h. auf der gesamten Zeile und findet und ersetzt alle Treffer.
@@ -1613,18 +1610,31 @@ melon banana orange apple
 $ echo "apple banana orange apple" | awk '{gsub("apple","melon");print}'
 melon banana orange melon</code></pre>
 </div></div>
+<div class="paragraph"><p>Beide Funktionen unterstützen als Suchmuster auch Reguläre Ausdrücke. Im
+nachfolgenden Beispiel werden alle Wörter durch <code>fruit ` ersetzt, die
+mit `e</code> enden und auf die entweder ein Leerzeichen oder das Zeilende
+folgt. Die beiden Worte <code>banana</code> und <code>peach</code> bleiben in der Ausgabe
+unverändert erhalten, da sie die Bedingungen nicht erfüllen.</p></div>
+<div class="listingblock">
+<div class="title">Suchen und Ersetzen in einer Zeile mit Regulären Ausdrücken</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange apple peach" | awk '{gsub("[a-z]+e[$ ]","fruit ");print}'
+fruit banana fruit fruit peach
+$</code></pre>
+</div></div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_danksagung">5. Danksagung</h2>
+<h2 id="_danksagung">4. Danksagung</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Vielen Dank an Thomas Osterried, Axel Beckert und Elmar Heeb für Kritik
 und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_weiterführende_dokumente">6. Weiterführende Dokumente</h2>
+<h2 id="_weiterführende_dokumente">5. Weiterführende Dokumente</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
 <li>
@@ -1671,7 +1681,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.6.1<br />
 Letzte Änderung
- 2016-06-29 12:35:45 CEST
+ 2016-06-29 13:28:09 CEST
 </div>
 </div>
 </body>
