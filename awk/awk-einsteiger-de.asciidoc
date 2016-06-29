@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.6
+:revnumber: 0.6.1
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 28. Juni 2016
+:date: 29. Juni 2016
 :numbered:
 
 = Vorwort =
@@ -872,6 +872,23 @@ $
 Nach aktuellem Erkenntnisstand rechnet `BSD awk` intern mit Integer
 anstatt von Floats und einen entsprechenden Schalter für gebrochene
 Zahlen kennt es nicht.
+
+== Zeilenweises Suchen und Ersetzen ==
+
+=== Suchen und Ersetzen ===
+
+Für diesen Zweck kennt `awk` die beiden Funktionen `sub` und `gsub`.
+Während `sub` nur das erste Vorkommen des Musters ersetzt, agiert `gsub`
+global, d.h. auf der gesamten Zeile und findet und ersetzt alle Treffer.
+Im nachfolgenden Beispiel sehen Sie beide Funktionsaufrufe.
+
+.Suchen und Ersetzen in einer Zeile
+----
+$ echo "apple banana orange apple" | awk '{sub("apple","melon");print}'
+melon banana orange apple
+$ echo "apple banana orange apple" | awk '{gsub("apple","melon");print}'
+melon banana orange melon
+----
 
 == Danksagung ==
 
