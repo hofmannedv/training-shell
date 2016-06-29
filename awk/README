@@ -19,6 +19,7 @@ Examples for awk
 * output-content-with-line-numbers-1.awk: output the whole file content line by line with line numbers
 * output-content-with-line-numbers-2.awk: output the whole file content line by line with line numbers
 * output-content-without-line4.awk:       output all but the 4th line
+* output-match-by-line.awk:               output the matches and its positions line by line
 * output-multi-action.awk:                characterize the content -- line, character, or number
 
 * delete-content-line3.awk:               delete the 3rd line from the file content

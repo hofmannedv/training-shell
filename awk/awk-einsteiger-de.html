@@ -1590,14 +1590,53 @@ Gesamt: 24,00
 $</code></pre>
 </div></div>
 <div class="paragraph"><p>Nach aktuellem Erkenntnisstand rechnet <code>BSD awk</code> intern mit Integer
-anstatt von Floats und einen entsprechenden Schalter für gebrochene
-Zahlen kennt es nicht.</p></div>
+anstatt von Floats. Einen entsprechenden Schalter für gebrochene Zahlen
+kennt es nicht.</p></div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_zeilenweises_suchen_und_ersetzen">3.10. Zeilenweises Suchen und Ersetzen</h3>
 <div class="sect3">
-<h4 id="_suchen_und_ersetzen_von_worten">3.10.1. Suchen und Ersetzen von Worten</h4>
+<h4 id="_zeilenweises_ausgeben_aller_suchtreffer">3.10.1. Zeilenweises Ausgeben aller Suchtreffer</h4>
+<div class="paragraph"><p><code>awk</code> stellt dafür die beiden Funktionen <code>split</code> und <code>match</code> zur
+Verfügung. Erstere zerlegt die Zeichenkette in die einzelnen Worte,
+während <code>match</code> auf das Vorhandenseins eines Musters in einer
+Zeichenkette prüft. Nachfolgendes <code>awk</code>-Skript benutzt dafür eine
+<code>while</code>-Schleife, um Wort für Wort durch die Zeile zu gehen.</p></div>
+<div class="paragraph"><p>Die Ausgabe umfaßt die Zeilennummer, die Wortposition und den
+Suchtreffer. Analog zu <code>grep</code> wird als Trennzeichen zwischen den
+ausgegebenen Werten der Doppelpunkt genutzt. Das erleichtert die
+nachfolgende Verarbeitung mit anderen Kommandozeilenwerkzeugen.</p></div>
+<div class="listingblock">
+<div class="title">Ausgeben aller Suchtreffer mit Zeilennummer und Wortposition (<code>output-match-by-line.awk</code>)</div>
+<div class="content">
+<pre><code>BEGIN { pattern="[a-z]+e$" }
+
+{
+    words = split($0, term)
+    position = 1
+    while (position &lt;= words) {
+        currentWord = term[position]
+        where = match(currentWord, pattern)
+        if (where != 0) printf("line %3i:%3i:%s\n", $NR+1, position, currentWord)
+
+        position++
+    }
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>Das Ergebnis im Terminal sieht dann wie folgt aus:</p></div>
+<div class="listingblock">
+<div class="title">Ausgabe der Suche</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange apple" | awk -f output-match-by-line.awk
+line   1:  1:apple
+line   1:  3:orange
+line   1:  4:apple
+$</code></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_suchen_und_ersetzen_von_worten">3.10.2. Suchen und Ersetzen von Worten</h4>
 <div class="paragraph"><p>Für diesen Zweck kennt <code>awk</code> die beiden Funktionen <code>sub</code> und <code>gsub</code>.
 Während <code>sub</code> nur das erste Vorkommen des Musters ersetzt, agiert <code>gsub</code>
 global, d.h. auf der gesamten Zeile und findet und ersetzt alle Treffer.
@@ -1681,7 +1720,7 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 0.6.1<br />
 Letzte Änderung
- 2016-06-29 13:28:09 CEST
+ 2016-06-29 15:02:40 CEST
 </div>
 </div>
 </body>
