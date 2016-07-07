@@ -8,4 +8,9 @@
 # email frank.hofmann@efho.de
 # -----------------------------------------------------------
 
-s/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/p
+# example call: 
+# $ echo "1-7-2016" | sed -nr -f replace-date.sed
+
+s/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/g
+s/-([[:digit:]])-/-0\1-/g
+s/-([[:digit:]])$/-0\1/p
