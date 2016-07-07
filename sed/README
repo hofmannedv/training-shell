@@ -35,6 +35,7 @@ Examples for sed
 * print-match-line-numbers.sed:             print the line numbers that contain the specified pattern
 * print-first-paragraph.sed:                print the first paragraph incl. the first empty line
 
+* replace-date.sed:                         replace a date by its ISO-formatted version
 * replace-in-line.sed:                      replace in line 9 all occurences of a pattern in a single line
 * replace-in-line-to-the-end.sed:           replace all occurences of a pattern from line 6 to the end of file
 * replace-in-line4-7.sed:                   replace all occurences of a pattern in line 4 to 7
