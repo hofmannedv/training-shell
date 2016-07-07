@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.3.5,</span>
-<span id="revdate">1. Juli 2016</span>
+<span id="revnumber">version 1.3.6,</span>
+<span id="revdate">7. Juli 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1620,6 +1620,30 @@ $</code></pre>
 <div class="content">
 <pre><code>$ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'</code></pre>
 </div></div>
+<div class="paragraph"><p>Um ein Datum in das ISO-Format der Form JJJJ-MM-TT zu überführen, bietet
+sich dieser Aufruf an. Es sortiert zunächst Tag, Monat und Jahr in die
+Reihenfolge für das ISO-Format und schaut danach, ob Monat und Tag eine
+führende Null besitzen. Falls nicht vorhanden, wird diese ergänzt:</p></div>
+<div class="listingblock">
+<div class="title">Datum in das ISO-Format umwandeln (<em>replace-date.sed</em>)</div>
+<div class="content">
+<pre><code>$ echo "1-7-2016" | sed -nr -e 's/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/p' -e 's/-([[:digit:]])-/-0\1-/p' -e 's/-([[:digit:]])$/-0\1/p'
+2016-7-1
+2016-07-1
+2016-07-01
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Möchten Sie nur die letzte Zeile als Ergebnis haben, kommen die
+Buchstaben zur Steuerung der Ausgabe ins Spiel. Die ersten beiden
+Ausdrücke erhalten ein <em>g</em> anstatt dem <em>p</em>, so dass nur die letzte
+Modifikation der Zeichenkette gedruckt wird:</p></div>
+<div class="listingblock">
+<div class="title">Datum in das ISO-Format umwandeln (<em>replace-date.sed</em>)</div>
+<div class="content">
+<pre><code>$ echo "1-7-2016" | sed -nr -e 's/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/g' -e 's/-([[:digit:]])-/-0\1-/g' -e 's/-([[:digit:]])$/-0\1/p'
+2016-07-01
+$</code></pre>
+</div></div>
 </div>
 <div class="sect2">
 <h3 id="_klammern_entfernen_oder_ersetzen">5.11. Klammern entfernen oder ersetzen</h3>
@@ -1867,9 +1891,9 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.5<br />
+Version 1.3.6<br />
 Letzte Änderung
- 2016-07-01 14:29:39 CEST
+ 2016-07-07 15:21:12 CEST
 </div>
 </div>
 </body>
