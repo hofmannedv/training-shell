@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.3.6
+:revnumber: 1.3.7
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 7. Juli 2016
+:date: 8. Juli 2016
 :numbered:
 
 = Vorwort =
@@ -848,11 +848,23 @@ Buchstaben zur Steuerung der Ausgabe ins Spiel. Die ersten beiden
 Ausdrücke erhalten ein 'g' anstatt dem 'p', so dass nur die letzte
 Modifikation der Zeichenkette gedruckt wird:
 
-.Datum in das ISO-Format umwandeln ('replace-date.sed')
+.Datum in das ISO-Format umwandeln
 ----
 $ echo "1-7-2016" | sed -nr -e 's/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/g' -e 's/-([[:digit:]])-/-0\1-/g' -e 's/-([[:digit:]])$/-0\1/p'
 2016-07-01
 $
+----
+
+Beinhaltet ihre Zeichenkette Punkte und Schrägstriche, wie es bspw. in
+Deutschland und Frankreich üblich ist (`1.7.2016`), helfen Ihnen die
+folgenden vier Ausdrücke weiter:
+
+.Datum in das ISO-Format umwandeln -- mit Sonderzeichen
+----
+s/[\.\/]/-/g
+s/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/g
+s/-([[:digit:]])-/-0\1-/g
+s/-([[:digit:]])$/-0\1/p
 ----
 
 === Klammern entfernen oder ersetzen ===

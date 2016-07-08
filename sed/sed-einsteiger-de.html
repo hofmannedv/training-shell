@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.3.6,</span>
-<span id="revdate">7. Juli 2016</span>
+<span id="revnumber">version 1.3.7,</span>
+<span id="revdate">8. Juli 2016</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1638,11 +1638,22 @@ Buchstaben zur Steuerung der Ausgabe ins Spiel. Die ersten beiden
 Ausdrücke erhalten ein <em>g</em> anstatt dem <em>p</em>, so dass nur die letzte
 Modifikation der Zeichenkette gedruckt wird:</p></div>
 <div class="listingblock">
-<div class="title">Datum in das ISO-Format umwandeln (<em>replace-date.sed</em>)</div>
+<div class="title">Datum in das ISO-Format umwandeln</div>
 <div class="content">
 <pre><code>$ echo "1-7-2016" | sed -nr -e 's/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/g' -e 's/-([[:digit:]])-/-0\1-/g' -e 's/-([[:digit:]])$/-0\1/p'
 2016-07-01
 $</code></pre>
+</div></div>
+<div class="paragraph"><p>Beinhaltet ihre Zeichenkette Punkte und Schrägstriche, wie es bspw. in
+Deutschland und Frankreich üblich ist (<code>1.7.2016</code>), helfen Ihnen die
+folgenden vier Ausdrücke weiter:</p></div>
+<div class="listingblock">
+<div class="title">Datum in das ISO-Format umwandeln&#8201;&#8212;&#8201;mit Sonderzeichen</div>
+<div class="content">
+<pre><code>s/[\.\/]/-/g
+s/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/g
+s/-([[:digit:]])-/-0\1-/g
+s/-([[:digit:]])$/-0\1/p</code></pre>
 </div></div>
 </div>
 <div class="sect2">
@@ -1891,9 +1902,9 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.6<br />
+Version 1.3.7<br />
 Letzte Änderung
- 2016-07-07 15:21:12 CEST
+ 2016-07-08 11:53:14 CEST
 </div>
 </div>
 </body>
