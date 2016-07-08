@@ -775,8 +775,14 @@ $ sed -e '/1,10s/$/:B/p' /etc/passwd
 === Suchtreffer referenzieren ===
 
 `sed` erlaubt Ihnen, die einzelnen Suchtreffer zu referenzieren. Dazu
-kennt es die beiden Metazeichen `&` und `\ZAHL` (siehe Hinweis). Das
-erste Beispiel fokussiert lediglich auf den ersten Suchtreffer:
+kennt es die beiden Metazeichen `&` und `\ZAHL` (siehe Hinweis). Mittels
+`\1` verweisen Sie auf den ersten Suchtreffen, mittels `\2` auf den
+zweiten etc.
+
+==== Suchtreffer markieren ====
+
+Das nächste Beispiel fokussiert lediglich auf den ersten Suchtreffer und
+faßt den in der Ausgabe beispielhaft in runde Klammern ein.
 
 .Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels `&`)
 ----
@@ -793,6 +799,8 @@ $ echo "apple orange melon apple Apple" | sed 's/[Aa]pple/(&)/g'
 (apple) orange melon (apple) (Apple)
 $
 ----
+
+==== Suchtreffer in anderer Reihenfolge ausgeben ====
 
 Das Konzept der Regulären Ausdrücke beinhaltet sogenannte 'back
 references' ("Rückverweis"). Jedem einzelnen Suchtreffer wird eine
@@ -828,6 +836,8 @@ TIP: Zum Grübeln: was erwarten Sie für eine Ausgabe bei dem folgenden
 ----
 $ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'
 ----
+
+==== Beispiel: Datum in das ISO-Format umwandeln ====
 
 Um ein Datum in das ISO-Format der Form JJJJ-MM-TT zu überführen, bietet
 sich dieser Aufruf an. Es sortiert zunächst Tag, Monat und Jahr in die

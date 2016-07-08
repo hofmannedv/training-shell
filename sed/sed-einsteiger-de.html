@@ -1564,8 +1564,13 @@ weitere Spalte am Ende der Zeile gleichkommt.</p></div>
 <div class="sect2">
 <h3 id="_suchtreffer_referenzieren">5.10. Suchtreffer referenzieren</h3>
 <div class="paragraph"><p><code>sed</code> erlaubt Ihnen, die einzelnen Suchtreffer zu referenzieren. Dazu
-kennt es die beiden Metazeichen <code>&amp;</code> und <code>\ZAHL</code> (siehe Hinweis). Das
-erste Beispiel fokussiert lediglich auf den ersten Suchtreffer:</p></div>
+kennt es die beiden Metazeichen <code>&amp;</code> und <code>\ZAHL</code> (siehe Hinweis). Mittels
+<code>\1</code> verweisen Sie auf den ersten Suchtreffen, mittels <code>\2</code> auf den
+zweiten etc.</p></div>
+<div class="sect3">
+<h4 id="_suchtreffer_markieren">5.10.1. Suchtreffer markieren</h4>
+<div class="paragraph"><p>Das nächste Beispiel fokussiert lediglich auf den ersten Suchtreffer und
+faßt den in der Ausgabe beispielhaft in runde Klammern ein.</p></div>
 <div class="listingblock">
 <div class="title">Markiere nur den ersten Suchtreffer mit runden Klammern (Referenz mittels <code>&amp;</code>)</div>
 <div class="content">
@@ -1581,6 +1586,9 @@ erste Beispiel fokussiert lediglich auf den ersten Suchtreffer:</p></div>
 (apple) orange melon (apple) (Apple)
 $</code></pre>
 </div></div>
+</div>
+<div class="sect3">
+<h4 id="_suchtreffer_in_anderer_reihenfolge_ausgeben">5.10.2. Suchtreffer in anderer Reihenfolge ausgeben</h4>
 <div class="paragraph"><p>Das Konzept der Regulären Ausdrücke beinhaltet sogenannte <em>back
 references</em> ("Rückverweis"). Jedem einzelnen Suchtreffer wird eine
 Ziffer zugeordnet, über die Sie dann auf den jeweiligen Suchtreffer
@@ -1620,6 +1628,9 @@ $</code></pre>
 <div class="content">
 <pre><code>$ echo "10247 23 Berlin" | sed -E -n 's/([0-9]+) ([A-Za-z]+)/\2, \1/p'</code></pre>
 </div></div>
+</div>
+<div class="sect3">
+<h4 id="_beispiel_datum_in_das_iso_format_umwandeln">5.10.3. Beispiel: Datum in das ISO-Format umwandeln</h4>
 <div class="paragraph"><p>Um ein Datum in das ISO-Format der Form JJJJ-MM-TT zu überführen, bietet
 sich dieser Aufruf an. Es sortiert zunächst Tag, Monat und Jahr in die
 Reihenfolge für das ISO-Format und schaut danach, ob Monat und Tag eine
@@ -1655,6 +1666,7 @@ s/([[:digit:]]{1,2})-([[:digit:]]{1,2})-([[:digit:]]{4})/\3-\2-\1/g
 s/-([[:digit:]])-/-0\1-/g
 s/-([[:digit:]])$/-0\1/p</code></pre>
 </div></div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_klammern_entfernen_oder_ersetzen">5.11. Klammern entfernen oder ersetzen</h3>
@@ -1904,7 +1916,7 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.3.7<br />
 Letzte Änderung
- 2016-07-08 11:53:14 CEST
+ 2016-07-08 12:02:45 CEST
 </div>
 </div>
 </body>
