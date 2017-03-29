@@ -1,0 +1,4 @@
+README
+
+find-by-pattern.sh outputs all the lines from the given file that
+contain the today's date
