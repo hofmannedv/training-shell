@@ -10,3 +10,5 @@ waiting for either "exit", "quit", or "raus" to end the loop.
 
 script13.sh: reading from stdin, and post-processing the output line by
 line
+
+anpingen.sh: reading host names from a list, and output its network state
