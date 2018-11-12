@@ -12,3 +12,6 @@ script13.sh: reading from stdin, and post-processing the output line by
 line
 
 anpingen.sh: reading host names from a list, and output its network state
+
+while-passwd.sh: read fields from /etc/passwd, and print them in
+different order
