@@ -727,7 +727,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(4);
+asciidoc.install(2);
 /*]]>*/
 </script>
 </head>
@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Die Programmiersprache <code>awk</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 0.6.1,</span>
-<span id="revdate">29. Juni 2016</span>
+<span id="revnumber">version 0.6.2,</span>
+<span id="revdate">14. Februar 2022</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -781,6 +781,48 @@ $ ls -l /etc/alternatives/awk
 lrwxrwxrwx 1 root root 13 Apr 10 14:28 /etc/alternatives/awk -&gt; /usr/bin/gawk
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Welche Varianten von <code>awk</code> im Umlauf und Einsatz sind, sehen Sie hier:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>awk</code> 
+</dt>
+<dd>
+<p>
+die Originalversion. Hauptsächlich auf UNIX-Systemen zu finden.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>mawk</code> 
+</dt>
+<dd>
+<p>
+Reimplementierung von <code>awk</code>. Die Codebasis benutzt einen
+Bytecode-Interpreter. Unterstützt kein Unicode/UTF-8.
+Standardinstallation auf Debian GNU/Linux und Ubuntu.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>nawk</code> 
+</dt>
+<dd>
+<p>
+Abkürzung für <em>new awk</em>. Erweiterung von <code>awk</code> durch die Autoren
+des Originals.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>gawk</code> 
+</dt>
+<dd>
+<p>
+Abkürzung für <em>GNU awk</em>&#8201;&#8212;&#8201;die GNU-Implementierung der
+AWK-Sprache. Die einzige Variante mit i18n-Support.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>Ebenfalls existieren andere Versionen, bspw. <code>jawk</code>
+(Java-Implementierung) oder <code>bwk</code>&#8201;&#8212;&#8201;die awk-Version von Brian W.
+Kernighan,</p></div>
 <div class="sect2">
 <h3 id="_über_code_stdin_code_oder_als_direkten_parameter_beim_aufruf_von_code_awk_code">1.1. Über <code>stdin</code> oder als direkten Parameter beim Aufruf von <code>awk</code></h3>
 <div class="paragraph"><p>Der Interpreter ist sehr flexibel und kann Daten und Anweisungen sowohl
@@ -1718,9 +1760,9 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 0.6.1<br />
+Version 0.6.2<br />
 Letzte Änderung
- 2016-06-29 15:02:40 CEST
+ 2022-02-14 12:32:54 CET
 </div>
 </div>
 </body>
