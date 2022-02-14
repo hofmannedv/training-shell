@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.6.1
+:revnumber: 0.6.2
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 29. Juni 2016
+:date: 14. Februar 2022
 :numbered:
 
 = Vorwort =
@@ -54,6 +54,24 @@ $ ls -l /etc/alternatives/awk
 lrwxrwxrwx 1 root root 13 Apr 10 14:28 /etc/alternatives/awk -> /usr/bin/gawk
 $
 ----
+
+Welche Varianten von `awk` im Umlauf und Einsatz sind, sehen Sie hier:
+
+`awk` :: die Originalversion. Hauptsächlich auf UNIX-Systemen zu finden.
+
+`mawk` :: Reimplementierung von `awk`. Die Codebasis benutzt einen
+Bytecode-Interpreter. Unterstützt kein Unicode/UTF-8.
+Standardinstallation auf Debian GNU/Linux und Ubuntu.
+
+`nawk` :: Abkürzung für 'new awk'. Erweiterung von `awk` durch die Autoren
+des Originals.
+
+`gawk` :: Abkürzung für 'GNU awk' -- die GNU-Implementierung der
+AWK-Sprache. Die einzige Variante mit i18n-Support. 
+
+Ebenfalls existieren andere Versionen, bspw. `jawk`
+(Java-Implementierung) oder `bwk` -- die awk-Version von Brian W.
+Kernighan, 
 
 === Über `stdin` oder als direkten Parameter beim Aufruf von `awk` ===
 
