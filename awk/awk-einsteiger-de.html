@@ -735,8 +735,8 @@ asciidoc.install(2);
 <div id="header">
 <h1>Die Programmiersprache <code>awk</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 0.6.2,</span>
-<span id="revdate">14. Februar 2022</span>
+<span id="revnumber">version 0.6.3,</span>
+<span id="revdate">2. November 2022</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1705,6 +1705,44 @@ $</code></pre>
 </div></div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_shell_variablen_übernehmen">3.11. Shell-Variablen übernehmen</h3>
+<div class="paragraph"><p>Benötigen Sie den Wert einer Shellvariable in ihrem awk-Aufruf,
+benutzen Sie dazu den Schalter <code>-v</code>, um eine Zuordnung zu einer
+internen Variable von awk herzustellen. Die Variable ist dann in awk
+verfügbar und kann ausgewertet werden. Hier wird der Variable <code>datum</code> der
+Wert des ersten Aufrufparameters des Shellskripts mittels <code>-v
+datum="$1"</code> zugewiesen.</p></div>
+<div class="paragraph"><p>Das nachfolgende Beispiel basiert auf einem Logfile mit Einträgen aus
+Zeitstempel und Aufruf. Das Ziel besteht darin, alle Fehler aus dem
+Logfile herauszufiltern und nur die Einträge anzuzeigen, die zu dem
+genannten Datum passen.</p></div>
+<div class="paragraph"><p>Der Filterausdruck <code>$0 ~ datum &amp;&amp; !/ERROR/</code> verknüpft zwei Tests mittels
+<code>&amp;&amp;</code>-Operator miteinander: Test 1 prüft mittels <code>~</code>-Operator, ob der Wert
+der Variable <code>datum</code> in der Zeile <code>$0</code> enthalten ist. Dabei spielt die
+Position keine Rolle. Test 2 prüft, ob in der Zeile die Zeichenkette
+<code>ERROR</code> nicht vorkommt. Sind beide Bedingungen erfüllt, wird die
+gesamte Zeile mittels <code>print</code> ausgegeben.</p></div>
+<div class="listingblock">
+<div class="title">Variablen aus der Shell übernehmen (<code>filter.sh</code>)</div>
+<div class="content">
+<pre><code>#!/bin/bash
+
+awk -v datum="$1" ' $0 ~ datum &amp;&amp; !/ERROR/ { print } ' -</code></pre>
+</div></div>
+<div class="paragraph"><p>Der Aufruf von der Shell sieht folgendermaßen aus:</p></div>
+<div class="listingblock">
+<div class="title">Aufruf von der Shell aus</div>
+<div class="content">
+<pre><code>$ echo -e "Mo 12 Okt ping\nDi 13 Okt ERROR\nDi 13 Okt pong\nMi 14 Okt ping" | ./filter.sh "13 Okt"
+Di 13 Okt pong
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Gesucht wird hier nach allen Einträgen im Logfile, die das Datum <code>13
+Okt</code> tragen. Zunächst werden zwei Zeilen gefunden, wobei noch die
+Fehlerzeile aussortiert wird. Übrig bleibt lediglich die Zeile <code>Di 13
+Okt pong</code>.</p></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1760,9 +1798,9 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 0.6.2<br />
+Version 0.6.3<br />
 Letzte Änderung
- 2022-02-14 12:32:54 CET
+ 2022-11-03 01:40:37 CET
 </div>
 </div>
 </body>

@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.6.2
+:revnumber: 0.6.3
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 14. Februar 2022
+:date: 2. November 2022
 :numbered:
 
 = Vorwort =
@@ -961,6 +961,48 @@ $ echo "apple banana orange apple peach" | awk '{gsub("[a-z]+e[$ ]","fruit ");pr
 fruit banana fruit fruit peach
 $
 ----
+
+=== Shell-Variablen übernehmen ===
+
+Benötigen Sie den Wert einer Shellvariable in ihrem awk-Aufruf,
+benutzen Sie dazu den Schalter `-v`, um eine Zuordnung zu einer
+internen Variable von awk herzustellen. Die Variable ist dann in awk
+verfügbar und kann ausgewertet werden. Hier wird der Variable `datum` der
+Wert des ersten Aufrufparameters des Shellskripts mittels `-v
+datum="$1"` zugewiesen.
+ 
+Das nachfolgende Beispiel basiert auf einem Logfile mit Einträgen aus 
+Zeitstempel und Aufruf. Das Ziel besteht darin, alle Fehler aus dem 
+Logfile herauszufiltern und nur die Einträge anzuzeigen, die zu dem
+genannten Datum passen. 
+
+Der Filterausdruck `$0 ~ datum && !/ERROR/` verknüpft zwei Tests mittels 
+`&&`-Operator miteinander: Test 1 prüft mittels `~`-Operator, ob der Wert 
+der Variable `datum` in der Zeile `$0` enthalten ist. Dabei spielt die 
+Position keine Rolle. Test 2 prüft, ob in der Zeile die Zeichenkette
+`ERROR` nicht vorkommt. Sind beide Bedingungen erfüllt, wird die
+gesamte Zeile mittels `print` ausgegeben.
+
+.Variablen aus der Shell übernehmen (`filter.sh`)
+----
+#!/bin/bash
+
+awk -v datum="$1" ' $0 ~ datum && !/ERROR/ { print } ' -
+----
+
+Der Aufruf von der Shell sieht folgendermaßen aus:
+
+.Aufruf von der Shell aus
+----
+$ echo -e "Mo 12 Okt ping\nDi 13 Okt ERROR\nDi 13 Okt pong\nMi 14 Okt ping" | ./filter.sh "13 Okt"
+Di 13 Okt pong
+$
+----
+
+Gesucht wird hier nach allen Einträgen im Logfile, die das Datum `13
+Okt` tragen. Zunächst werden zwei Zeilen gefunden, wobei noch die
+Fehlerzeile aussortiert wird. Übrig bleibt lediglich die Zeile `Di 13
+Okt pong`.
 
 == Danksagung ==
 
