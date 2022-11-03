@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.3.7
+:revnumber: 1.3.8
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 8. Juli 2016
+:date: 2. November 2022
 :numbered:
 
 = Vorwort =
@@ -1006,6 +1006,41 @@ $ sed -n '1,/^$/p' logfile-with-empty-lines
 
 $
 ----
+
+=== Shell-Variablen übernehmen ===
+
+Benötigen Sie den Wert einer Shellvariable in ihrem sed-Aufruf,
+benötigen Sie dazu keine weiteren Schalter und übernehmen die Variable
+direkt. Das nachfolgende Beispiel basiert auf einem Logfile mit
+Einträgen aus Zeitstempel und Aufruf. Das Ziel besteht darin, alle
+Fehler aus dem Logfile herauszufiltern und nur die Einträge anzuzeigen,
+die zu dem genannten Datum passen.
+
+Verknüpft werden zwei Tests miteinander: Test 1 löscht mittels
+`/^.*ERROR.*$/d` alle Zeilen, die den Wert `ERROR` beinhalten. Dabei 
+spielt die Position des Wertes keine Rolle. Test 2 prüft, ob in der 
+Zeile der Inhalt des ersten Aufrufparameters des Shellskripts vorkommt.
+Nur die Zeilen erscheinen in der Ausgabe, die übrig bleiben.
+
+.Variablen aus der Shell übernehmen (`filter.sh`)
+----
+#!/bin/bash
+
+sed -E -n -e '/^.*ERROR.*$/d' -e "/$1/p"
+----
+
+Der Aufruf in der Shell sieht wie folgt aus:
+
+.Aufruf von der Shell aus
+----
+$ echo -e "Mo 12 Okt ping\nDi 13 Okt ERROR\nDi 13 Okt pong\nMi 14 Okt ping" | ./filter.sh "13 Okt"
+Di 13 Okt pong
+$
+----
+
+Gesucht wird hier nach allen Einträgen im Logfile, die das Datum `13
+Okt` tragen. Zunächst werden drei Zeilen gefunden, aus denen lediglich 
+die Zeile `Di 13 Okt pong` übrig bleibt.
 
 == Einen Dateiinhalt direkt ändern ==
 

@@ -727,7 +727,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(4);
+asciidoc.install(2);
 /*]]>*/
 </script>
 </head>
@@ -735,8 +735,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.3.7,</span>
-<span id="revdate">8. Juli 2016</span>
+<span id="revnumber">version 1.3.8,</span>
+<span id="revdate">2. November 2022</span>
 <div id="toc">
   <div id="toctitle">Inhaltsverzeichnis</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -1791,6 +1791,38 @@ wie folgt:</p></div>
 $</code></pre>
 </div></div>
 </div>
+<div class="sect2">
+<h3 id="_shell_variablen_übernehmen">5.14. Shell-Variablen übernehmen</h3>
+<div class="paragraph"><p>Benötigen Sie den Wert einer Shellvariable in ihrem sed-Aufruf,
+benötigen Sie dazu keine weiteren Schalter und übernehmen die Variable
+direkt. Das nachfolgende Beispiel basiert auf einem Logfile mit
+Einträgen aus Zeitstempel und Aufruf. Das Ziel besteht darin, alle
+Fehler aus dem Logfile herauszufiltern und nur die Einträge anzuzeigen,
+die zu dem genannten Datum passen.</p></div>
+<div class="paragraph"><p>Verknüpft werden zwei Tests miteinander: Test 1 löscht mittels
+<code>/^.*ERROR.*$/d</code> alle Zeilen, die den Wert <code>ERROR</code> beinhalten. Dabei
+spielt die Position des Wertes keine Rolle. Test 2 prüft, ob in der
+Zeile der Inhalt des ersten Aufrufparameters des Shellskripts vorkommt.
+Nur die Zeilen erscheinen in der Ausgabe, die übrig bleiben.</p></div>
+<div class="listingblock">
+<div class="title">Variablen aus der Shell übernehmen (<code>filter.sh</code>)</div>
+<div class="content">
+<pre><code>#!/bin/bash
+
+sed -E -n -e '/^.*ERROR.*$/d' -e "/$1/p"</code></pre>
+</div></div>
+<div class="paragraph"><p>Der Aufruf in der Shell sieht wie folgt aus:</p></div>
+<div class="listingblock">
+<div class="title">Aufruf von der Shell aus</div>
+<div class="content">
+<pre><code>$ echo -e "Mo 12 Okt ping\nDi 13 Okt ERROR\nDi 13 Okt pong\nMi 14 Okt ping" | ./filter.sh "13 Okt"
+Di 13 Okt pong
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Gesucht wird hier nach allen Einträgen im Logfile, die das Datum <code>13
+Okt</code> tragen. Zunächst werden drei Zeilen gefunden, aus denen lediglich
+die Zeile <code>Di 13 Okt pong</code> übrig bleibt.</p></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1914,9 +1946,9 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.7<br />
+Version 1.3.8<br />
 Letzte Änderung
- 2016-07-08 12:02:45 CEST
+ 2022-11-03 01:57:10 CET
 </div>
 </div>
 </body>
