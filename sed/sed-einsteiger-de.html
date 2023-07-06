@@ -735,7 +735,7 @@ asciidoc.install();
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.3.9,</span>
+<span id="revnumber">version 1.3.10,</span>
 <span id="revdate">6. Juli 2023</span>
 </div>
 <div id="content">
@@ -817,6 +817,14 @@ für die Skriptdatei. <code>GNU sed</code> versteht auch den langen Schalter <co
 <div class="title">Filtern mittels <code>sed</code> und dem Skript <code>sed.skript</code></div>
 <div class="content">
 <pre><code>$ sed -f sed.skript datei</code></pre>
+</div></div>
+<div class="paragraph"><p><code>sed</code> ist flexibel und akzeptiert den Schalter <code>-f</code> mehrfach. Somit
+sind Sie im Aufruf nicht auf einen einzigen Filter beschränkt. <code>sed</code>
+arbeitet die von Ihnen angegebenen Filter nacheinander ab.</p></div>
+<div class="listingblock">
+<div class="title">Filtern mittels <code>sed</code> und zwei Filtern</div>
+<div class="content">
+<pre><code>$ sed -f filter1 -f filter2 datei</code></pre>
 </div></div>
 <div class="admonitionblock">
 <table><tr>
@@ -1942,9 +1950,9 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.9<br />
+Version 1.3.10<br />
 Letzte Änderung
- 2023-07-06 11:56:33 CEST
+ 2023-07-06 12:11:31 CEST
 </div>
 </div>
 </body>
