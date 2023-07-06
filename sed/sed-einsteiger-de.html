@@ -727,7 +727,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(2);
+asciidoc.install();
 /*]]>*/
 </script>
 </head>
@@ -735,12 +735,8 @@ asciidoc.install(2);
 <div id="header">
 <h1>Der Streameditor <code>sed</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.3.8,</span>
-<span id="revdate">2. November 2022</span>
-<div id="toc">
-  <div id="toctitle">Inhaltsverzeichnis</div>
-  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
-</div>
+<span id="revnumber">version 1.3.9,</span>
+<span id="revdate">6. Juli 2023</span>
 </div>
 <div id="content">
 <h1 id="_vorwort">Vorwort</h1>
@@ -1096,7 +1092,7 @@ $</code></pre>
 $</code></pre>
 </div></div>
 <div class="listingblock">
-<div class="title">Lösche die entsprechenden Zeilen aus den Zeilen 1 bis 5 nur, wenn diese entweder das Suchmuster <code>2016-10-11</code> oder <code>2016-10-12</code> beinhalten (<code>delete-content-with-match.sed</code>)</div>
+<div class="title">Lösche die entsprechenden Zeilen aus den Zeilen 1 bis 5 nur, wenn diese entweder das Suchmuster <code>2016-01-11</code> oder <code>2016-01-12</code> beinhalten (<code>delete-content-with-match.sed</code>)</div>
 <div class="content">
 <pre><code>$ nl logfile | sed '1,5{/2016-01-1[12]/d;}'
      1   2016-01-10 10:45:15 user fho logged in on /dev/tty1
@@ -1946,9 +1942,9 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.3.8<br />
+Version 1.3.9<br />
 Letzte Änderung
- 2022-11-03 01:57:10 CET
+ 2023-07-06 11:56:33 CEST
 </div>
 </div>
 </body>
