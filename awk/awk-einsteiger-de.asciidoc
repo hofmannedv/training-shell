@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.6.3
+:revnumber: 0.7
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 2. November 2022
+:date: 27. Juli 2024
 :numbered:
 
 = Vorwort =
@@ -393,7 +393,7 @@ Zeilen mit der geraden Zeilennummer -- kommen der Modulo-Operator (`%`)
 und die Negation des gesamten Ausdrucks über den Operator `!` ins Spiel.
 Nachfolgendes Beispiel nutzt diese Möglichkeiten aus.
 
-.Nur jede zweite Zeile ausgeben (gerade Zeilennummern -- Version 1) (`output-content-even.awk`)
+.Nur jede zweite Zeile ausgeben (gerade Zeilennummern -- Version 1)
 ----
 $ nl logfile | awk '!(NR%2) { print }'
      2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
@@ -413,6 +413,33 @@ $ nl logfile | awk '(NR+1)%2 { print }'
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
      8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$
+----
+
+Eine zweite Alternative ist die Schreibweise mit einem Vergleich auf
+den Restwert 0.
+
+.Nur die geraden Zeilen der Datei ausgeben (Version 3) (`output-content-even.awk`)
+----
+$ nl logfile | awk 'NR % 2 == 0 { print }'
+     2	2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4	2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6	2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8	2016-01-12 14:55:05 user james logged out from /dev/tty1
+$
+----
+
+Für die ungeraden Zeilen gilt das analog, hier mit dem Vergleich auf 
+den Restwert 1.
+
+.Nur die ungeraden Zeilen der Datei ausgeben (`output-content-odd.awk`)
+----
+$ nl logfile | awk 'NR % 2 == 1 { print }'
+     1	2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     3	2016-01-12 08:45:12 user james logged in on /dev/tty1
+     5	2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     7	2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     9	2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $
 ----
 
