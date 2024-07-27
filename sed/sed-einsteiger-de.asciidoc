@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.3.10
+:revnumber: 1.4
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 6. Juli 2023
+:date: 27. Juli 2024
 :numbered:
 
 = Vorwort =
