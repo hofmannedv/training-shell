@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
 <head>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.6.9" />
+<meta name="generator" content="AsciiDoc 10.2.0" />
 <title>Die Programmiersprache <code>awk</code>. Erste Schritte.</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
@@ -435,7 +436,7 @@ thead, p.table.header {
 p.table {
   margin-top: 0;
 }
-/* Because the table frame attribute is overriden by CSS in most browsers. */
+/* Because the table frame attribute is overridden by CSS in most browsers. */
 div.tableblock > table[frame="void"] {
   border-style: none;
 }
@@ -727,7 +728,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(2);
+asciidoc.install();
 /*]]>*/
 </script>
 </head>
@@ -735,12 +736,8 @@ asciidoc.install(2);
 <div id="header">
 <h1>Die Programmiersprache <code>awk</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 0.6.3,</span>
-<span id="revdate">2. November 2022</span>
-<div id="toc">
-  <div id="toctitle">Inhaltsverzeichnis</div>
-  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
-</div>
+<span id="revnumber">version 0.7,</span>
+<span id="revdate">27. Juli 2024</span>
 </div>
 <div id="content">
 <h1 id="_vorwort">Vorwort</h1>
@@ -1158,7 +1155,7 @@ Zeilen mit der geraden Zeilennummer&#8201;&#8212;&#8201;kommen der Modulo-Operat
 und die Negation des gesamten Ausdrucks über den Operator <code>!</code> ins Spiel.
 Nachfolgendes Beispiel nutzt diese Möglichkeiten aus.</p></div>
 <div class="listingblock">
-<div class="title">Nur jede zweite Zeile ausgeben (gerade Zeilennummern&#8201;&#8212;&#8201;Version 1) (<code>output-content-even.awk</code>)</div>
+<div class="title">Nur jede zweite Zeile ausgeben (gerade Zeilennummern&#8201;&#8212;&#8201;Version 1)</div>
 <div class="content">
 <pre><code>$ nl logfile | awk '!(NR%2) { print }'
      2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
@@ -1177,6 +1174,31 @@ diesem Fall entfällt die Negation.</p></div>
      4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
      6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
      8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Eine zweite Alternative ist die Schreibweise mit einem Vergleich auf
+den Restwert 0.</p></div>
+<div class="listingblock">
+<div class="title">Nur die geraden Zeilen der Datei ausgeben (Version 3) (<code>output-content-even.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR % 2 == 0 { print }'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
+$</code></pre>
+</div></div>
+<div class="paragraph"><p>Für die ungeraden Zeilen gilt das analog, hier mit dem Vergleich auf
+den Restwert 1.</p></div>
+<div class="listingblock">
+<div class="title">Nur die ungeraden Zeilen der Datei ausgeben (<code>output-content-odd.awk</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | awk 'NR % 2 == 1 { print }'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
 $</code></pre>
 </div></div>
 </div>
@@ -1798,9 +1820,9 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 0.6.3<br />
+Version 0.7<br />
 Letzte Änderung
- 2022-11-03 01:40:37 CET
+ 2024-07-27 11:50:52 CEST
 </div>
 </div>
 </body>
