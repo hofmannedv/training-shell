@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
 <head>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.6.9" />
+<meta name="generator" content="AsciiDoc 10.2.0" />
 <title>Der Streameditor <code>sed</code>. Erste Schritte.</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
@@ -435,7 +436,7 @@ thead, p.table.header {
 p.table {
   margin-top: 0;
 }
-/* Because the table frame attribute is overriden by CSS in most browsers. */
+/* Because the table frame attribute is overridden by CSS in most browsers. */
 div.tableblock > table[frame="void"] {
   border-style: none;
 }
@@ -1013,6 +1014,27 @@ $</code></pre>
      7   2016-01-12 14:46:10 login failed for user root from 10.10.17.45
      8   2016-01-12 14:55:05 user james logged out from /dev/tty1
      9   2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Alle ungeraden Zeilen ausgeben (<code>output-content-odd-lines.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '1~2p'
+     1  2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     3  2016-01-12 08:45:12 user james logged in on /dev/tty1
+     5  2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     7  2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     9  2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="title">Alle geraden Zeilen ausgeben (<code>output-content-even-lines.sed</code>)</div>
+<div class="content">
+<pre><code>$ nl logfile | sed -n '2~2p'
+     2  2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4  2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6  2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8  2016-01-12 14:55:05 user james logged out from /dev/tty1
 $</code></pre>
 </div></div>
 </div>
@@ -1952,7 +1974,7 @@ Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footer-text">
 Version 1.3.10<br />
 Letzte Änderung
- 2023-07-06 12:11:31 CEST
+ 2024-07-27 10:21:04 CEST
 </div>
 </div>
 </body>
