@@ -260,6 +260,27 @@ $ nl logfile | sed -n '7,$p'
 $
 ----
 
+.Alle ungeraden Zeilen ausgeben (`output-content-odd-lines.sed`)
+----
+$ nl logfile | sed -n '1~2p'
+     1	2016-01-10 10:45:15 user fho logged in on /dev/tty1
+     3	2016-01-12 08:45:12 user james logged in on /dev/tty1
+     5	2016-01-12 12:13:10 user fho logged out from /dev/pty1
+     7	2016-01-12 14:46:10 login failed for user root from 10.10.17.45
+     9	2016-01-12 14:57:10 login failed for user root from 10.10.17.45
+$
+----
+
+.Alle geraden Zeilen ausgeben (`output-content-even-lines.sed`)
+----
+$ nl logfile | sed -n '2~2p'
+     2	2016-01-11 08:30:10 user fho logged in on /dev/tty2
+     4	2016-01-12 08:46:45 user fho logged in on /dev/pty1
+     6	2016-01-12 14:45:12 login failed for user root from 10.10.17.44
+     8	2016-01-12 14:55:05 user james logged out from /dev/tty1
+$
+----
+
 === Zeilen löschen ===
 
 Das Löschen einer betreffenden Zeile erfolgt mit dem Aktionsparameter
