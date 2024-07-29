@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 0.7
+:revnumber: 0.8
 :Author Initials: FH
 :edition: 1
 :lang: de
-:date: 27. Juli 2024
+:date: 29. Juli 2024
 :numbered:
 
 = Vorwort =
@@ -765,6 +765,16 @@ banana
 $
 ----
 
+Möchten Sie jedoch nur die letzte Spalte einer Zeile ausgeben, behelfen
+Sie sich über die Variable `$NF`, die die Anzahl der Spalten beinhaltet.
+
+.Ausgabe der letzten Spalte mit Leerzeichen als Trennzeichen
+----
+$ echo "apple banana orange" | awk '{ print $NF }'
+orange
+$
+----
+
 Möchten Sie in ihrem `awk`-Programm ein anderes Trennzeichen verwenden,
 haben Sie zwei Möglichkeiten. In 'Variante 1' definieren Sie die
 Variable `$FS` im einführenden Block um. Nachfolgendes Beispiel setzt
@@ -802,6 +812,18 @@ $
 
 TIP: Obiger Aufruf entspricht dem UNIX/Linux-Kommando `cut -d: -f1
 /etc/passwd`.
+
+Analog gelingt das für die letzte Spalte, wo wiederum die Variable
+`$NF` einbezogen wird.
+
+.`awk`-Programm mit variablem Trennzeichen pro Aufruf, Ausgabe der letzten Spalte (`print-last-column.awk`)
+----
+$ awk -F : '{ print $NF }' /etc/passwd
+/bin/bash
+/sbin/nologin
+...
+$
+----
 
 Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
 Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt

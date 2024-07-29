@@ -736,8 +736,8 @@ asciidoc.install();
 <div id="header">
 <h1>Die Programmiersprache <code>awk</code>. Erste Schritte.</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 0.7,</span>
-<span id="revdate">27. Juli 2024</span>
+<span id="revnumber">version 0.8,</span>
+<span id="revdate">29. Juli 2024</span>
 </div>
 <div id="content">
 <h1 id="_vorwort">Vorwort</h1>
@@ -1508,6 +1508,15 @@ auf die zweite Spalte, deren Inhalt sich <code>awk</code> in der internen Variab
 banana
 $</code></pre>
 </div></div>
+<div class="paragraph"><p>Möchten Sie jedoch nur die letzte Spalte einer Zeile ausgeben, behelfen
+Sie sich über die Variable <code>$NF</code>, die die Anzahl der Spalten beinhaltet.</p></div>
+<div class="listingblock">
+<div class="title">Ausgabe der letzten Spalte mit Leerzeichen als Trennzeichen</div>
+<div class="content">
+<pre><code>$ echo "apple banana orange" | awk '{ print $NF }'
+orange
+$</code></pre>
+</div></div>
 <div class="paragraph"><p>Möchten Sie in ihrem <code>awk</code>-Programm ein anderes Trennzeichen verwenden,
 haben Sie zwei Möglichkeiten. In <em>Variante 1</em> definieren Sie die
 Variable <code>$FS</code> im einführenden Block um. Nachfolgendes Beispiel setzt
@@ -1550,6 +1559,17 @@ $</code></pre>
 /etc/passwd</code>.</td>
 </tr></table>
 </div>
+<div class="paragraph"><p>Analog gelingt das für die letzte Spalte, wo wiederum die Variable
+<code>$NF</code> einbezogen wird.</p></div>
+<div class="listingblock">
+<div class="title"><code>awk</code>-Programm mit variablem Trennzeichen pro Aufruf, Ausgabe der letzten Spalte</div>
+<div class="content">
+<pre><code>$ awk -F : '{ print $NF }' /etc/passwd
+/bin/bash
+/sbin/nologin
+...
+$</code></pre>
+</div></div>
 <div class="paragraph"><p>Um präziser zu sein, betrachten wir das Trennzeichen noch etwas genauer.
 Bislang bestand es nur aus einem einzigen Zeichen. Intern behandelt
 <code>awk</code> die Zeichenkette jedoch als Regulären Ausdruck, so daß auch
@@ -1820,9 +1840,9 @@ und Verbesserungsvorschläge zum vorliegenden Tutorial.</p></div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 0.7<br />
+Version 0.8<br />
 Letzte Änderung
- 2024-07-27 11:50:52 CEST
+ 2024-07-29 10:36:20 CEST
 </div>
 </div>
 </body>
