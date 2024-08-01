@@ -39,6 +39,8 @@ Examples for awk
 * wcl-1.awk:                              count the number of lines per file (version 1)
 * wcl-2.awk:                              count the number of lines per file (version 2)
 
+* process-commandline-variables.awk	  pre-set variables on the commandline
+
 Further files for demonstration purposes
 
 * logfile                                 a simple logfile as text file
