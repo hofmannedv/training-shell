@@ -40,6 +40,7 @@ Examples for awk
 * wcl-2.awk:                              count the number of lines per file (version 2)
 
 * process-commandline-parameters.awk	  print commandline parameters
+* process-commandline-parameters-exit.awk print commandline parameters, and set exit code
 * process-commandline-variables.awk	  pre-set variables on the commandline
 
 Further files for demonstration purposes
